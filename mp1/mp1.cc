@@ -60,7 +60,9 @@ int main ()
         bool pictureTaken = false;
         std::thread leds(playLEDS, std::ref(robot), std::ref(pictureTaken));
         short d = robot.distance();
+        cout << "d is " << d << "away" << endl;
         while (d < 381 ){
+            cout << "Wall is " << d << "away" << endl;
             robot.sendDriveCommand(-165, Create::DRIVE_STRAIGHT);
             d += robot.distance();
         }
@@ -70,6 +72,7 @@ int main ()
         cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
         pictureTaken = cv::imwrite("irobot_image.jpg", rgb_image);
         leds.join();
+        cout << " Ending LEDs" << endl;
 
         short randAngle = short (rand() % 120 + 120);
         robot.sendDriveCommand(107, randAngle);
@@ -79,7 +82,6 @@ int main ()
 
       short wallSignal = robot.wallSignal();
       if (wallSignal > 0) {
-        cout << "Wall signal " << robot.wallSignal() << endl;
         playSong(robot, wallSignal);
       }
 
