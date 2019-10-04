@@ -47,7 +47,7 @@ int main ()
     cout << "Sent Stream Command" << endl;
     // Let's turn!
     int speed = 287;
-    int ledColor = Create::LED_COLOR_GREEN;
+
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
 
@@ -57,7 +57,7 @@ int main ()
        if (robot.bumpLeft () || robot.bumpRight ()) {
         cout << "Bump !" << endl;
         robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-        std::thread leds(playLEDS);
+        std::thread leds(playLEDS, robot);
         short d = robot.distance();
         while (d < 381 ){
             robot.sendDriveCommand(-165, Create::DRIVE_STRAIGHT);
@@ -72,47 +72,14 @@ int main ()
 
         short randAngle = short (rand() % 120 + 120);
         robot.sendDriveCommand(107, randAngle);
-        robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT)
+        robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
 
-
-        
         }
 
       short wallSignal = robot.wallSignal();
       if (wallSignal > 0) {
         cout << "Wall signal " << robot.wallSignal() << endl;
         playSong(robot, wallSignal);
-        /**
-        if (prevWallSignal == 0) {
-          Camera.grab();
-          Camera.retrieve (bgr_image);
-          cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
-          cv::imwrite("irobot_image.jpg", rgb_image);
-          cout << "Taking photo" << endl;
-        }
-        */
-       
-      }
-
-
-      prevWallSignal = wallSignal;
-      if (robot.advanceButton ())
-      {
-        cout << "Advance button pressed" << endl;
-        speed = -1 * speed;
-        ledColor += 10;
-        if (ledColor > 255)
-          ledColor = 0;
-
-        robot.sendDriveCommand (speed, Create::DRIVE_INPLACE_CLOCKWISE);
-        if (speed < 0)
-          robot.sendLedCommand (Create::LED_PLAY,
-              ledColor,
-              Create::LED_INTENSITY_FULL);
-        else
-          robot.sendLedCommand (Create::LED_ADVANCE,
-              ledColor,
-              Create::LED_INTENSITY_FULL);
       }
 
       // You can add more commands here.
@@ -135,20 +102,20 @@ int main ()
 }
 
 void playSong(Create& robot, short wallsensorvalue){
-    note_t note1;
-    note1.first = 64;
-    note1.second = 16;
-    note_t note2;
-    note2.first = 64;
-    note2.second = (char) wallsensorvalue;
-    song_t song;
-    song.pushback(note1);
-    song.pushback(note2);
+    Create::note_t note1;
+    Create::note1.first = 64;
+    Create::note1.second = 16;
+    Create::note_t note2;
+    Create::note2.first = 64;
+    Create::note2.second = (char) wallsensorvalue;
+    Create::song_t song;
+    Create::song.pushback(note1);
+    Create::song.pushback(note2);
     robot.sendSongCommand(1, song);
     robot.sendPlaySongCommand(1);
 }
 
-void playLEDS(){
+void playLEDS(Create& robot){
     while(true){
         robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
         this_thread::sleep_for(chrono::milliseconds(200));
