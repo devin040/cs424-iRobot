@@ -57,7 +57,7 @@ int main ()
        if (robot.bumpLeft () || robot.bumpRight ()) {
         cout << "Bump !" << endl;
         robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-        std::thread leds(playLEDS, robot);
+        //std::thread leds(playLEDS, robot);
         short d = robot.distance();
         while (d < 381 ){
             robot.sendDriveCommand(-165, Create::DRIVE_STRAIGHT);
@@ -68,7 +68,7 @@ int main ()
         Camera.retrieve (bgr_image);
         cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
         cv::imwrite("irobot_image.jpg", rgb_image);
-        leds.join();
+        //leds.join();
 
         short randAngle = short (rand() % 120 + 120);
         robot.sendDriveCommand(107, randAngle);
@@ -82,8 +82,6 @@ int main ()
         playSong(robot, wallSignal);
       }
 
-      // You can add more commands here.
-      this_thread::sleep_for(chrono::milliseconds(100));
     }
     
     cout << "Play button pressed, stopping Robot" << endl;
