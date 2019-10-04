@@ -103,14 +103,14 @@ int main ()
 
 void playSong(Create& robot, short wallsensorvalue){
     Create::note_t note1;
-    Create::note1.first = 64;
-    Create::note1.second = 16;
+    note1.first = 64;
+    note1.second = 16;
     Create::note_t note2;
-    Create::note2.first = 64;
-    Create::note2.second = (char) wallsensorvalue;
+    note2.first = 64;
+    note2.second = (char) wallsensorvalue;
     Create::song_t song;
-    Create::song.pushback(note1);
-    Create::song.pushback(note2);
+    song.pushback(note1);
+    song.pushback(note2);
     robot.sendSongCommand(1, song);
     robot.sendPlaySongCommand(1);
 }
