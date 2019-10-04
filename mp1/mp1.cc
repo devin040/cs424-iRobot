@@ -57,7 +57,7 @@ int main ()
        if (robot.bumpLeft () || robot.bumpRight ()) {
         cout << "Bump !" << endl;
         robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-        std::thread leds(playLEDS, *robot);
+        std::thread leds(playLEDS);
         short d = robot.distance();
         while (d < 381 ){
             robot.sendDriveCommand(-165, Create::DRIVE_STRAIGHT);
@@ -113,8 +113,9 @@ void playSong(Create& robot, short wallsensorvalue){
     robot.sendPlaySongCommand(1);
 }
 
-void playLEDS(Create& robot){
+void playLEDS(){
     
+    /**
     robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
     this_thread::sleep_for(chrono::milliseconds(200));
     robot.sendLedCommand (Create::LED_ALL, 0, 0);
@@ -127,5 +128,7 @@ void playLEDS(Create& robot){
     this_thread::sleep_for(chrono::milliseconds(200));
     robot.sendLedCommand (Create::LED_ADVANCE, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
     this_thread::sleep_for(chrono::milliseconds(200));
+    */
+    printf("Hello\n");
        
 }
