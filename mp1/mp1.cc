@@ -116,18 +116,18 @@ void playSong(Create& robot, short wallsensorvalue){
 }
 
 void playLEDS(Create& robot){
-    while(true){
-        robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
-        this_thread::sleep_for(chrono::milliseconds(200));
-        robot.sendLedCommand (Create::LED_ALL, 0, 0);
-        this_thread::sleep_for(chrono::milliseconds(200));
-        robot.sendLedCommand (Create::LED_ADVANCE, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
-        this_thread::sleep_for(chrono::milliseconds(200));
-        robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
-        this_thread::sleep_for(chrono::milliseconds(200));
-        robot.sendLedCommand (Create::LED_ALL, 0, 0);
-        this_thread::sleep_for(chrono::milliseconds(200));
-        robot.sendLedCommand (Create::LED_ADVANCE, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
-        this_thread::sleep_for(chrono::milliseconds(200));
-    }    
+    
+    robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
+    this_thread::sleep_for(chrono::milliseconds(200));
+    robot.sendLedCommand (Create::LED_ALL, 0, 0);
+    this_thread::sleep_for(chrono::milliseconds(200));
+    robot.sendLedCommand (Create::LED_ADVANCE, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
+    this_thread::sleep_for(chrono::milliseconds(200));
+    robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
+    this_thread::sleep_for(chrono::milliseconds(200));
+    robot.sendLedCommand (Create::LED_ALL, 0, 0);
+    this_thread::sleep_for(chrono::milliseconds(200));
+    robot.sendLedCommand (Create::LED_ADVANCE, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
+    this_thread::sleep_for(chrono::milliseconds(200));
+       
 }
