@@ -57,7 +57,7 @@ int main ()
        if (robot.bumpLeft () || robot.bumpRight ()) {
         cout << "Bump !" << endl;
         robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-        std::thread leds(playLEDS, robot);
+        std::thread leds(playLEDS, *robot);
         short d = robot.distance();
         while (d < 381 ){
             robot.sendDriveCommand(-165, Create::DRIVE_STRAIGHT);
