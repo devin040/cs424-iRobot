@@ -147,16 +147,18 @@ void playSong(Create& robot, bool& run, bool& wall ){
             }
             note1.second = songFreq;
             note2.second = songFreq;
-            cout << "freq is : " << static_cast<unsigned>(songFreq) << endl;
+            
             songFreq = songFreq - 8;
             Create::song_t song;
             song.push_back(note2);
             song.push_back(note1);
             robot.sendSongCommand(1, song);
             
-            //this_thread::sleep_for(chrono::milliseconds(15));
+            
             for (int i = 0; i < 4; i++){
+                this_thread::sleep_for(chrono::milliseconds(15));
                 robot.sendPlaySongCommand(1);
+                cout << "freq is : " << static_cast<unsigned>(songFreq) << endl;
             }
             
         }
