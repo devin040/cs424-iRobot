@@ -126,10 +126,10 @@ int main ()
 
 void playSong(Create& robot, short wallsensorvalue){
     Create::note_t note1;
-    note1.first = 64;
-    note1.second = 64;
+    note1.first = 100;
+    note1.second = 32;
     Create::note_t note2;
-    note2.first = 64;
+    note2.first = 30;
     note2.second = (char) wallsensorvalue;
     Create::song_t song;
     song.push_back(note1);
