@@ -63,11 +63,10 @@ int main ()
             short d = robot.distance();
             cout << "d is " << d << "away" << endl;
             speed = -165;
-            while (d < 381 ){
                 
-                robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-                d += robot.distance();
-            }
+            robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+            this_thread::sleep_for(chrono::milliseconds(3000))
+            d += robot.distance();
             cout << "Wall is " << d << "away" << endl;
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
