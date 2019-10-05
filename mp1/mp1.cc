@@ -132,7 +132,7 @@ int main ()
 
 void playSong(Create& robot, bool& run, bool& wall ){
     cout << "In the Song thread" << endl;
-    unsigned char songFreq = 127;
+    unsigned char songFreq = 64;
     Create::note_t note1;
     note1.first = 100;
     note1.second = 32;
@@ -142,9 +142,10 @@ void playSong(Create& robot, bool& run, bool& wall ){
 
     while (run){
         while (wall){
-            if (songFreq < 5){
-                songFreq = 5;
+            if (songFreq < 8){
+                songFreq = 8;
             }
+            note1.second = songFreq;
             note2.second = songFreq;
             cout << "freq is : " << static_cast<unsigned>(songFreq) << endl;
             songFreq = songFreq - 8;
@@ -157,7 +158,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
             robot.sendPlaySongCommand(1);
             
         }
-        songFreq = 127;
+        songFreq = 64;
         this_thread::sleep_for(chrono::milliseconds(500));   
     }    
 }
