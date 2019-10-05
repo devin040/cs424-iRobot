@@ -64,7 +64,6 @@ int main ()
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
             stopSongThread = true;
-            song.join();
             songFreq = 200;
             cout << "Bump : " << count++ << endl;
             bool pictureTaken = false;
@@ -106,7 +105,7 @@ int main ()
       if (wallSignal > 0 && prevWallSignal == 0) {
         prevWallSignal = wallSignal;
         cout << "Detected wall, song freq: " << songFreq << endl;
-        std::thread song(playSong, songFreq, stopSongThread);
+        std::thread song(playSong, std::ref(robot), songFreq, std::ref(stopSongThread);
       }
       
 
