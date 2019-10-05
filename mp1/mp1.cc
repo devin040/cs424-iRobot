@@ -31,8 +31,6 @@ int main ()
     this_thread::sleep_for(chrono::milliseconds(1000));
     Create robot(stream);
     cout << "Created iRobot Object" << endl;
-    short bat = robot.batteryCharge();
-    cout << "Battery charge: " << bat << endl;
     robot.sendFullCommand();
     cout << "Setting iRobot to Full Mode" << endl;
     this_thread::sleep_for(chrono::milliseconds(1000));
@@ -44,9 +42,12 @@ int main ()
     sensors.push_back(Create::SENSOR_WALL_SIGNAL);
     sensors.push_back (Create::SENSOR_BUTTONS);
     sensors.push_back(Create::SENSOR_DISTANCE);
+    sensors.push_back(Create::SENSOR_BATTERY_CHARGE);
 
     robot.sendStreamCommand (sensors);
     cout << "Sent Stream Command" << endl;
+    short bat = robot.batteryCharge();
+    cout << "Battery charge: " << bat << endl;
     // Let's turn!
     int speed = 287;
     short wallSignal = 0;
