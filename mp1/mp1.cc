@@ -136,14 +136,17 @@ void playSong(Create& robot, bool& run, bool& wall ){
     note1.second = 32;
     Create::note_t note2;
     note2.first = 30;
-    
     note2.second = songFreq;
+
     while (run){
         Create::song_t song;
         song.push_back(note2);
         song.push_back(note1);
         robot.sendSongCommand(1, song);
+        cout << "In the Song thread1" << endl;
+        this_thread::sleep_for(chrono::milliseconds(15));
         robot.sendPlaySongCommand(1);
+        cout << "In the Song thread1" << endl;
     }    
 }
 
