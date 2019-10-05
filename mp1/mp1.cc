@@ -155,7 +155,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
             
             
             for (int i = 0; i < 4; i++){
-                //this_thread::sleep_for(chrono::milliseconds(15));
+                this_thread::sleep_for(chrono::milliseconds(15));
                 robot.sendPlaySongCommand(1);
                 cout << "freq is : " << static_cast<unsigned>(songFreq) << endl;
             }
