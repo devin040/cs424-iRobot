@@ -48,6 +48,7 @@ int main ()
     // Let's turn!
     int speed = 287;
     short wallSignal = 0;
+    int count = 0;
 
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
@@ -58,7 +59,7 @@ int main ()
 
        if (robot.bumpLeft () || robot.bumpRight ()) {
             songFreq = 140;
-            cout << "Bump !" << endl;
+            cout << "Bump : " << count++ << endl;
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             bool pictureTaken = false;
@@ -88,6 +89,8 @@ int main ()
             this_thread::sleep_for(chrono::milliseconds(3000));
             speed = 287;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+            cout << " Leaving bump ! Drive Command Sent!" << endl;
+            this_thread::sleep_for(chrono::milliseconds(15));
 
         }
       /**  
