@@ -61,12 +61,12 @@ int main ()
     {
 
        if (robot.bumpLeft () || robot.bumpRight ()) {
-            
+            isWall = false;
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
             
-            isWall = false;
+            
             cout << "Bump : " << count++ << endl;
             
             bool pictureTaken = false;
@@ -150,7 +150,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
             robot.sendPlaySongCommand(1);
             
         }
-        cout << "Stopping beep, seen  awall" << endl;    
+        this_thread::sleep_for(chrono::milliseconds(500));   
     }    
 }
 
