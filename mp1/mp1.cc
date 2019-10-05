@@ -53,7 +53,7 @@ int main ()
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
 
-    short songFreq = 140;
+    short songFreq = 200;
     while (!robot.playButton ())
     {
 
@@ -62,7 +62,7 @@ int main ()
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
-            songFreq = 140;
+            songFreq = 200;
             cout << "Bump : " << count++ << endl;
             bool pictureTaken = false;
             std::thread leds(playLEDS, std::ref(robot), std::ref(pictureTaken));
@@ -96,13 +96,13 @@ int main ()
             this_thread::sleep_for(chrono::milliseconds(15));
 
         }
-      /**  
-      wallSignal = robot.wallSignal();
-      if (wallSignal > 0) {.
+ 
+      if (robot.wall()) {
+        if (songFreq < 16) songFreq = 16;  
         playSong(robot, songFreq--);
-        cout << "Wall Signal: " << wallSignal << endl;
+        cout << "Detected wall, song freq: " << songFreq << endl;
       }
-      */
+      
 
     }
     
@@ -124,7 +124,7 @@ int main ()
 void playSong(Create& robot, short wallsensorvalue){
     Create::note_t note1;
     note1.first = 64;
-    note1.second = 16;
+    note1.second = 64;
     Create::note_t note2;
     note2.first = 64;
     note2.second = (char) wallsensorvalue;
@@ -137,7 +137,7 @@ void playSong(Create& robot, short wallsensorvalue){
 
 void playLEDS(Create& robot, bool& term){
     while (!term){
-        cout << "Playing KEDS!!!!!!!!!!" << endl;
+        
         robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
         this_thread::sleep_for(chrono::milliseconds(200));
         robot.sendLedCommand (Create::LED_ALL, 0, 0);
