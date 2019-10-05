@@ -146,7 +146,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
                 songFreq = 16;
             }
             note2.second = songFreq;
-            cout << songFreq << endl;
+            cout << "freq is : " << songFreq << endl;
             songFreq = songFreq - 8;
             Create::song_t song;
             song.push_back(note2);
