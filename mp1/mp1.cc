@@ -157,7 +157,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
             robot.sendPlaySongCommand(1);
             
         }
-        songFreq = 128
+        songFreq = 128;
         this_thread::sleep_for(chrono::milliseconds(500));   
     }    
 }
