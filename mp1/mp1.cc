@@ -55,7 +55,7 @@ int main ()
     bool isWall = false;
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
-    std::thread song(playSong, std::ref(robot), std::ref(runSong), std::ref(isWall));
+    //std::thread song(playSong, std::ref(robot), std::ref(runSong), std::ref(isWall));
 
     while (!robot.playButton ())
     {
@@ -114,7 +114,7 @@ int main ()
     
     cout << "Play button pressed, stopping Robot" << endl;
     robot.sendDriveCommand (0, Create::DRIVE_STRAIGHT);
-    song.join();
+    //song.join();
   }
   catch (InvalidArgument& e)
   {
