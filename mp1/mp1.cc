@@ -52,7 +52,7 @@ int main ()
     short prevWallSignal = 0;
     int count = 0;
     bool runSong = true;
-    bool isWall = false;
+    bool isWall = true;
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
     std::thread song(playSong, std::ref(robot), std::ref(runSong), std::ref(isWall));
@@ -97,6 +97,7 @@ int main ()
             cout << " Leaving bump ! Drive Command Sent!" << endl;
             wallSignal = 0;
             prevWallSignal = 0;
+            isWall = true;
             this_thread::sleep_for(chrono::milliseconds(15));
 
         }
@@ -139,14 +140,17 @@ void playSong(Create& robot, bool& run, bool& wall ){
     note2.second = songFreq;
 
     while (run){
-        Create::song_t song;
-        song.push_back(note2);
-        song.push_back(note1);
-        robot.sendSongCommand(1, song);
-        cout << "In the Song thread1" << endl;
-        this_thread::sleep_for(chrono::milliseconds(15));
-        robot.sendPlaySongCommand(1);
-        cout << "In the Song thread1" << endl;
+        while (wall){
+            Create::song_t song;
+            song.push_back(note2);
+            song.push_back(note1);
+            robot.sendSongCommand(1, song);
+            
+            this_thread::sleep_for(chrono::milliseconds(15));
+            robot.sendPlaySongCommand(1);
+            
+        }
+        cout << "Stopping beep, seen  awall" << endl;    
     }    
 }
 
