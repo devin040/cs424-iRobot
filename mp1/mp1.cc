@@ -142,8 +142,8 @@ void playSong(Create& robot, bool& run, bool& wall ){
 
     while (run){
         while (wall){
-            if (songFreq < 16){
-                songFreq = 16;
+            if (songFreq < 5){
+                songFreq = 5;
             }
             note2.second = songFreq;
             cout << "freq is : " << static_cast<unsigned>(songFreq) << endl;
