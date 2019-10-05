@@ -139,7 +139,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
     note2.first = 30;
     note2.second = songFreq;
 
-    while (!robot.advanceButton()){
+    while (run){
         while (wall){
             Create::song_t song;
             song.push_back(note2);
