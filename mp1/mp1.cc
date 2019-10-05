@@ -81,7 +81,7 @@ int main ()
             short randAngle = short (rand() % 120 + 120);
             speed = 107;
             robot.sendDriveCommand(speed, randAngle);
-            this_thread::sleep_for(chrono::milliseconds(1000));
+            this_thread::sleep_for(chrono::milliseconds(3000));
             speed = 287;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
 
@@ -90,6 +90,7 @@ int main ()
       short wallSignal = robot.wallSignal();
       if (wallSignal > 0) {
         playSong(robot, wallSignal);
+        cout << "Wall Signal: " << wallSignal << endl;
       }
 
     }
