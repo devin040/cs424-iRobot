@@ -41,13 +41,11 @@ int main ()
     sensors.push_back(Create::SENSOR_BUMPS_WHEELS_DROPS);
     sensors.push_back(Create::SENSOR_WALL_SIGNAL);
     sensors.push_back (Create::SENSOR_BUTTONS);
-    sensors.push_back(Create::SENSOR_DISTANCE);
-    sensors.push_back(Create::SENSOR_BATTERY_CHARGE);
+  
 
     robot.sendStreamCommand (sensors);
     cout << "Sent Stream Command" << endl;
-    short bat = robot.batteryCharge();
-    cout << "Battery charge: " << bat << endl;
+
     // Let's turn!
     int speed = 287;
     short wallSignal = 0;
