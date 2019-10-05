@@ -99,7 +99,9 @@ int main ()
         }
  
       if (robot.wall()) {
-        if (songFreq < 16) songFreq = 16;  
+        if (songFreq < 16) {
+            songFreq = 16;
+        } 
         playSong(robot, songFreq--);
         cout << "Detected wall, song freq: " << songFreq << endl;
       }
