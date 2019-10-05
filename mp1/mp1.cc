@@ -11,7 +11,7 @@ using namespace iRobot;
 using namespace LibSerial;
 using namespace std;
 
-void playSong(Create&, short);
+void playSong(Create&, short, bool&);
 void playLEDS(Create&, bool&);
 
 int main ()
@@ -48,8 +48,9 @@ int main ()
     // Let's turn!
     int speed = 287;
     short wallSignal = 0;
+    short prevWallSignal = 0;
     int count = 0;
-
+    bool stopSongThread = false;
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
 
@@ -62,6 +63,8 @@ int main ()
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
+            stopSongThread = true;
+            song.join();
             songFreq = 200;
             cout << "Bump : " << count++ << endl;
             bool pictureTaken = false;
@@ -94,16 +97,16 @@ int main ()
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             cout << " Leaving bump ! Drive Command Sent!" << endl;
             wallSignal = 0;
+            stopSongThread = false;
+            prevWallSignal = 0;
             this_thread::sleep_for(chrono::milliseconds(15));
 
         }
       wallSignal = robot.wallSignal();  
-      if (wallSignal > 0 ) {
-        if (songFreq < 16) {
-            songFreq = 16;
-        } 
-        playSong(robot, songFreq--);
+      if (wallSignal > 0 && prevWallSignal == 0) {
+        prevWallSignal = wallSignal;
         cout << "Detected wall, song freq: " << songFreq << endl;
+        std::thread song(playSong, songFreq, stopSongThread);
       }
       
 
@@ -124,18 +127,24 @@ int main ()
   }
 }
 
-void playSong(Create& robot, short wallsensorvalue){
+void playSong(Create& robot, short wallsensorvalue, bool& bump){
     Create::note_t note1;
     note1.first = 100;
     note1.second = 32;
     Create::note_t note2;
     note2.first = 30;
-    note2.second = (char) wallsensorvalue;
     Create::song_t song;
-    song.push_back(note1);
-    song.push_back(note2);
-    robot.sendSongCommand(1, song);
-    robot.sendPlaySongCommand(1);
+    while (bump != true){
+        if (wallsensorvalue < 16) {
+            wallsensorvalue = 16;
+        } 
+        note2.second = (char) wallsensorvalue--;
+        song.push_back(note2);
+        song.push_back(note1);
+        robot.sendSongCommand(1, song);
+        robot.sendPlaySongCommand(1);
+        this_thread::sleep_for(chrono::milliseconds(500));
+    }    
 }
 
 void playLEDS(Create& robot, bool& term){
