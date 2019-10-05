@@ -50,13 +50,8 @@ int main ()
 
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
-    this_thread::sleep_for(chrono::milliseconds(1000));
 
-    short randAngle = short (rand() % 120 + 120);
-    speed = 107;
-    robot.sendDriveCommand(speed, randAngle);
-
-    short wallSignal, prevWallSignal = 0;
+    short wallSignal = 0;
     while (!robot.playButton ())
     {
        if (robot.bumpLeft () || robot.bumpRight ()) {
@@ -86,6 +81,7 @@ int main ()
             short randAngle = short (rand() % 120 + 120);
             speed = 107;
             robot.sendDriveCommand(speed, randAngle);
+            this_thread::sleep_for(chrono::milliseconds(1000));
             speed = 287;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
 
