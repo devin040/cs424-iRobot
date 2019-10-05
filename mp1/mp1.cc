@@ -135,7 +135,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
     unsigned char songFreq = 64;
     Create::note_t note1;
     note1.first = 100;
-    note1.second = 32;
+    note1.second = 8;
     Create::note_t note2;
     note2.first = 30;
     
@@ -145,7 +145,6 @@ void playSong(Create& robot, bool& run, bool& wall ){
             if (songFreq < 8){
                 songFreq = 8;
             }
-            note1.second = songFreq;
             note2.second = songFreq;
             
             songFreq = songFreq - 8;
@@ -156,7 +155,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
             
             
             for (int i = 0; i < 4; i++){
-                this_thread::sleep_for(chrono::milliseconds(15));
+                //this_thread::sleep_for(chrono::milliseconds(15));
                 robot.sendPlaySongCommand(1);
                 cout << "freq is : " << static_cast<unsigned>(songFreq) << endl;
             }
