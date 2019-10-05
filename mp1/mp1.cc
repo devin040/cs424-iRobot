@@ -111,6 +111,7 @@ int main ()
       
 
     }
+    isWall = false;
     runSong = false;
     
     cout << "Play button pressed, stopping Robot" << endl;
@@ -137,10 +138,14 @@ void playSong(Create& robot, bool& run, bool& wall ){
     note1.second = 32;
     Create::note_t note2;
     note2.first = 30;
-    note2.second = songFreq;
+    
 
     while (run){
         while (wall){
+            if (songFreq < 16){
+                songfreq = 16;
+            }
+            note2.second = songFreq--;
             Create::song_t song;
             song.push_back(note2);
             song.push_back(note1);
