@@ -46,7 +46,7 @@ int main ()
     robot.sendStreamCommand (sensors);
     cout << "Sent Stream Command" << endl;
     // Let's turn!
-    int speed = -287;
+    int speed = 287;
 
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
@@ -56,17 +56,21 @@ int main ()
     {
        if (robot.bumpLeft () || robot.bumpRight ()) {
             cout << "Bump !" << endl;
-            robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
+            speed = 0;
+            robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             bool pictureTaken = false;
             std::thread leds(playLEDS, std::ref(robot), std::ref(pictureTaken));
             short d = robot.distance();
             cout << "d is " << d << "away" << endl;
+            speed = -165;
             while (d < 381 ){
-                cout << "Wall is " << d << "away" << endl;
-                robot.sendDriveCommand(-165, Create::DRIVE_STRAIGHT);
+                
+                robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
                 d += robot.distance();
             }
-            robot.sendDriveCommand(0,Create::DRIVE_STRAIGHT);
+            cout << "Wall is " << d << "away" << endl;
+            speed = 0;
+            robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             Camera.grab();
             Camera.retrieve (bgr_image);
             cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
@@ -76,7 +80,9 @@ int main ()
             cout << " Ending LEDs" << endl;
 
             short randAngle = short (rand() % 120 + 120);
-            robot.sendDriveCommand(107, randAngle);
+            speed = 107;
+            robot.sendDriveCommand(speed, randAngle);
+            speed = 287;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
 
         }
