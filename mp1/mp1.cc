@@ -105,7 +105,7 @@ int main ()
       if (wallSignal > 0 && prevWallSignal == 0) {
         prevWallSignal = wallSignal;
         cout << "Detected wall, song freq: " << songFreq << endl;
-        std::thread song(playSong, std::ref(robot), songFreq, std::ref(stopSongThread);
+        std::thread song(playSong, std::ref(robot), songFreq, std::ref(stopSongThread));
       }
       
 
