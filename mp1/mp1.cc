@@ -31,6 +31,8 @@ int main ()
     this_thread::sleep_for(chrono::milliseconds(1000));
     Create robot(stream);
     cout << "Created iRobot Object" << endl;
+    short bat = robot.batteryCharge();
+    cout << "Battery charge: " << bat << endl;
     robot.sendFullCommand();
     cout << "Setting iRobot to Full Mode" << endl;
     this_thread::sleep_for(chrono::milliseconds(1000));
@@ -66,7 +68,6 @@ int main ()
             this_thread::sleep_for(chrono::milliseconds(15));
             
             isWall = false;
-
             cout << "Bump : " << count++ << endl;
             
             bool pictureTaken = false;
