@@ -137,7 +137,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
     note1.first = 100;
     note1.second = 8;
     Create::note_t note2;
-    note2.first = 30;
+    note2.first = 31;
     
 
     while (run){
