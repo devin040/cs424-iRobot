@@ -143,7 +143,6 @@ void playSong(Create& robot, bool& run, bool& wall ){
         song.push_back(note1);
         robot.sendSongCommand(1, song);
         robot.sendPlaySongCommand(1);
-        this_thread::sleep_for(chrono::milliseconds(500));
     }    
 }
 
