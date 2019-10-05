@@ -128,7 +128,7 @@ int main ()
 }
 
 void playSong(Create& robot, bool& run, bool& wall ){
-    char songFreq = 200
+    char songFreq = 200;
     Create::note_t note1;
     note1.first = 100;
     note1.second = 32;
