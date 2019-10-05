@@ -134,7 +134,6 @@ void playSong(Create& robot, bool& run, bool& wall ){
     Create::note_t note2;
     note2.first = 30;
     Create::song_t song;
-    this_thread::sleep_until()
     while (run){
         while (wall){
         if (songFreq < 16) {
