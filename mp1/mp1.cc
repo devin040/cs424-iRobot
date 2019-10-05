@@ -42,6 +42,7 @@ int main ()
     sensors.push_back(Create::SENSOR_WALL_SIGNAL);
     sensors.push_back (Create::SENSOR_BUTTONS);
     sensors.push_back(Create::SENSOR_DISTANCE);
+    sensors.push_back(Create::SENSOR_WALL);
 
     robot.sendStreamCommand (sensors);
     cout << "Sent Stream Command" << endl;
