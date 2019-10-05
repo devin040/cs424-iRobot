@@ -42,7 +42,6 @@ int main ()
     sensors.push_back(Create::SENSOR_WALL_SIGNAL);
     sensors.push_back (Create::SENSOR_BUTTONS);
     sensors.push_back(Create::SENSOR_DISTANCE);
-    sensors.push_back(Create::SENSOR_WALL);
 
     robot.sendStreamCommand (sensors);
     cout << "Sent Stream Command" << endl;
@@ -94,11 +93,12 @@ int main ()
             speed = 287;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             cout << " Leaving bump ! Drive Command Sent!" << endl;
+            wallSignal = 0;
             this_thread::sleep_for(chrono::milliseconds(15));
 
         }
- 
-      if (robot.wall()) {
+      wallSignal = robot.wallSignal();  
+      if (wallSignal > 0 ) {
         if (songFreq < 16) {
             songFreq = 16;
         } 
