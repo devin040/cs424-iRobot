@@ -143,7 +143,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
     while (run){
         while (wall){
             if (songFreq < 16){
-                songfreq = 16;
+                songFreq = 16;
             }
             note2.second = songFreq--;
             Create::song_t song;
