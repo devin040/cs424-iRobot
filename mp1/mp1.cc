@@ -46,7 +46,7 @@ int main ()
     robot.sendStreamCommand (sensors);
     cout << "Sent Stream Command" << endl;
     // Let's turn!
-    int speed = 287;
+    int speed = -287;
 
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
@@ -55,29 +55,29 @@ int main ()
     while (!robot.playButton ())
     {
        if (robot.bumpLeft () || robot.bumpRight ()) {
-        cout << "Bump !" << endl;
-        robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-        bool pictureTaken = false;
-        std::thread leds(playLEDS, std::ref(robot), std::ref(pictureTaken));
-        short d = robot.distance();
-        cout << "d is " << d << "away" << endl;
-        while (d < 381 ){
-            cout << "Wall is " << d << "away" << endl;
-            robot.sendDriveCommand(-165, Create::DRIVE_STRAIGHT);
-            d += robot.distance();
-        }
-        robot.sendDriveCommand(0,Create::DRIVE_STRAIGHT);
-        Camera.grab();
-        Camera.retrieve (bgr_image);
-        cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
-        pictureTaken = cv::imwrite("irobot_image.jpg", rgb_image);
-        cout << "picture taken: " << pictureTaken << endl;
-        leds.join();
-        cout << " Ending LEDs" << endl;
+            cout << "Bump !" << endl;
+            robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
+            bool pictureTaken = false;
+            std::thread leds(playLEDS, std::ref(robot), std::ref(pictureTaken));
+            short d = robot.distance();
+            cout << "d is " << d << "away" << endl;
+            while (d < 381 ){
+                cout << "Wall is " << d << "away" << endl;
+                robot.sendDriveCommand(-165, Create::DRIVE_STRAIGHT);
+                d += robot.distance();
+            }
+            robot.sendDriveCommand(0,Create::DRIVE_STRAIGHT);
+            Camera.grab();
+            Camera.retrieve (bgr_image);
+            cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
+            pictureTaken = cv::imwrite("irobot_image.jpg", rgb_image);
+            cout << "picture taken: " << pictureTaken << endl;
+            leds.join();
+            cout << " Ending LEDs" << endl;
 
-        short randAngle = short (rand() % 120 + 120);
-        robot.sendDriveCommand(107, randAngle);
-        robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+            short randAngle = short (rand() % 120 + 120);
+            robot.sendDriveCommand(107, randAngle);
+            robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
 
         }
 
