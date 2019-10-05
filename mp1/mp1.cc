@@ -78,7 +78,8 @@ int main ()
             leds.join();
             cout << " Ending LEDs" << endl;
 
-            short randAngle = short (rand() % 120 + 120);
+            short randAngle = short ((rand() % 120) + 120);
+            cout << "Angle : " <<  randAngle << endl;
             speed = 107;
             robot.sendDriveCommand(speed, randAngle);
             this_thread::sleep_for(chrono::milliseconds(3000));
