@@ -129,6 +129,7 @@ int main ()
 }
 
 void playSong(Create& robot, bool& run, bool& wall ){
+    cout << "In the Song thread" << endl;
     char songFreq = 64;
     Create::note_t note1;
     note1.first = 100;
