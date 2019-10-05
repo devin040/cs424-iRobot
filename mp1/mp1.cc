@@ -142,8 +142,8 @@ void playSong(Create& robot, bool& run, bool& wall ){
         Create::song_t song;
         song.push_back(note2);
         song.push_back(note1);
-        //robot.sendSongCommand(1, song);
-        //robot.sendPlaySongCommand(1);
+        robot.sendSongCommand(1, song);
+        robot.sendPlaySongCommand(1);
     }    
 }
 
