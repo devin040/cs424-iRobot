@@ -65,7 +65,7 @@ int main ()
             speed = -165;
                 
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(3000))
+            this_thread::sleep_for(chrono::milliseconds(3000));
             d += robot.distance();
             cout << "Wall is " << d << "away" << endl;
             speed = 0;
