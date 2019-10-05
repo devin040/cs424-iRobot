@@ -47,14 +47,19 @@ int main ()
     cout << "Sent Stream Command" << endl;
     // Let's turn!
     int speed = 287;
+    short wallSignal = 0;
 
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
 
     short wallSignal = 0;
+    short songFreq = 140;
     while (!robot.playButton ())
     {
+
        if (robot.bumpLeft () || robot.bumpRight ()) {
+            wallSignal = 0;
+            songFreq = 140;
             cout << "Bump !" << endl;
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
@@ -88,9 +93,9 @@ int main ()
 
         }
 
-      short wallSignal = robot.wallSignal();
+      wallSignal = robot.wallSignal();
       if (wallSignal > 0) {
-        playSong(robot, wallSignal);
+        playSong(robot, songFreq--);
         cout << "Wall Signal: " << wallSignal << endl;
       }
 
