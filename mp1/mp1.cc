@@ -58,10 +58,12 @@ int main ()
     {
 
        if (robot.bumpLeft () || robot.bumpRight ()) {
-            songFreq = 140;
-            cout << "Bump : " << count++ << endl;
+            
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+            this_thread::sleep_for(chrono::milliseconds(15));
+            songFreq = 140;
+            cout << "Bump : " << count++ << endl;
             bool pictureTaken = false;
             std::thread leds(playLEDS, std::ref(robot), std::ref(pictureTaken));
             short d = robot.distance();
@@ -69,6 +71,7 @@ int main ()
             speed = -165;
                 
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+            cout << " Leaving bump ! Drive Command Sent!" << endl;
             this_thread::sleep_for(chrono::milliseconds(3000));
             d += robot.distance();
             cout << "Wall is " << d << "away" << endl;
@@ -134,6 +137,7 @@ void playSong(Create& robot, short wallsensorvalue){
 
 void playLEDS(Create& robot, bool& term){
     while (!term){
+        cout << "Playing KEDS!!!!!!!!!!" << endl;
         robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
         this_thread::sleep_for(chrono::milliseconds(200));
         robot.sendLedCommand (Create::LED_ALL, 0, 0);
