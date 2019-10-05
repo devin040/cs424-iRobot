@@ -52,7 +52,6 @@ int main ()
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
 
-    short wallSignal = 0;
     short songFreq = 140;
     while (!robot.playButton ())
     {
