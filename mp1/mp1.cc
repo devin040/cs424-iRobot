@@ -153,6 +153,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
 }
 
 void playLEDS(Create& robot, bool& term){
+    cout << " starting LEDs" << endl;
     while (!term){
         
         robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
