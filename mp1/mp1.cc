@@ -100,11 +100,13 @@ int main ()
             this_thread::sleep_for(chrono::milliseconds(15));
 
         }
+      /**  
       wallSignal = robot.wallSignal();  
       if (wallSignal > 0 && prevWallSignal == 0) {
         prevWallSignal = wallSignal;
         isWall = true;
       }
+      */
       
 
     }
