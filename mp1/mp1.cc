@@ -137,13 +137,12 @@ void playSong(Create& robot, bool& run, bool& wall ){
     Create::note_t note2;
     note2.first = 30;
     Create::song_t song;
+    note2.second = songFreq;
     while (run){
-        
-        note2.second = songFreq;
         song.push_back(note2);
         song.push_back(note1);
-        robot.sendSongCommand(1, song);
-        robot.sendPlaySongCommand(1);
+        //robot.sendSongCommand(1, song);
+        //robot.sendPlaySongCommand(1);
     }    
 }
 
