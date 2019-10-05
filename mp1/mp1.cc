@@ -57,7 +57,6 @@ int main ()
     {
 
        if (robot.bumpLeft () || robot.bumpRight ()) {
-            wallSignal = 0;
             songFreq = 140;
             cout << "Bump !" << endl;
             speed = 0;
@@ -91,12 +90,13 @@ int main ()
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
 
         }
-
+      /**  
       wallSignal = robot.wallSignal();
-      if (wallSignal > 0) {
+      if (wallSignal > 0) {.
         playSong(robot, songFreq--);
         cout << "Wall Signal: " << wallSignal << endl;
       }
+      */
 
     }
     
