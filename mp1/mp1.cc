@@ -41,7 +41,7 @@ int main ()
     sensors.push_back(Create::SENSOR_BUMPS_WHEELS_DROPS);
     sensors.push_back(Create::SENSOR_WALL_SIGNAL);
     sensors.push_back(Create::SENSOR_BUTTONS);
-    sensors.push_back(Create::SENSOR_
+    
   
 
     robot.sendStreamCommand (sensors);
