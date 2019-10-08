@@ -92,9 +92,9 @@ int main ()
 
             short randAngle = short ((rand() % 120) + 120);
             cout << "Angle : " <<  randAngle << endl;
-            speed = 107;
-            robot.sendDriveCommand(speed, randAngle);
-            this_thread::sleep_for(chrono::milliseconds(3000));
+            //speed = 107;
+            //robot.sendDriveCommand(speed, randAngle);
+           // this_thread::sleep_for(chrono::milliseconds(3000));
             speed = 287;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             cout << " Leaving bump ! Drive Command Sent!" << endl;
@@ -106,7 +106,6 @@ int main ()
         }
       this_thread::sleep_for(chrono::milliseconds(15)); 
       wallSignal = robot.wallSignal();
-      cout << "Wall signal! : " << wallSignal << endl;  
       if (wallSignal > 0 && prevWallSignal == 0) {
         prevWallSignal = wallSignal;
         isWall = true;
