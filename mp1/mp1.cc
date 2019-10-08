@@ -112,7 +112,6 @@ int main ()
               robot1.sendStreamCommand(sensors);
               robot1.sendDriveCommand(-165, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(2300));
-              delete robot1;
             }
             this_thread::sleep_for(chrono::milliseconds(15));
 
