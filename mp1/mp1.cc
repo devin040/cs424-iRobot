@@ -105,6 +105,15 @@ int main ()
             robot.sendStreamCommand (sensors);
             cout << "Bump Left : " << robot.bumpLeft() << endl;
             cout << "Bump Right : " << robot.bumpRight() << endl;
+            if (robot.bumpLeft() || robot.bumpRight()){
+              Create robot1(stream);
+              robot1.sendFullCommand();
+              this_thread::sleep_for(chrono::milliseconds(1000));
+              robot1.sendStreamCommand(sensors);
+              robot1.sendDriveCommand(-165, Create::DRIVE_STRAIGHT);
+              this_thread::sleep_for(chrono::milliseconds(2300));
+              delete robot1;
+            }
             this_thread::sleep_for(chrono::milliseconds(15));
 
         }
