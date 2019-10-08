@@ -132,36 +132,27 @@ int main ()
 
 void playSong(Create& robot, bool& run, bool& wall ){
     cout << "In the Song thread" << endl;
-    unsigned char songFreq = 64;
+    int songFreq = 1000;
     Create::note_t note1;
     note1.first = 100;
-    note1.second = 8;
-    Create::note_t note2;
-    note2.first = 31;
+    note1.second = 32;
+    Create::song_t song;
+    song.push_back(note1);
+    robot.sendSongCommand(1, song);
     
 
     while (run){
         while (wall){
-            if (songFreq < 8){
-                songFreq = 8;
-            }
-            note2.second = songFreq;
-            
-            songFreq = songFreq - 8;
-            Create::song_t song;
-            song.push_back(note2);
-            song.push_back(note1);
-            robot.sendSongCommand(1, song);
-            
-            
-            for (int i = 0; i < 4; i++){
-                this_thread::sleep_for(chrono::milliseconds(15));
-                robot.sendPlaySongCommand(1);
-                cout << "freq is : " << static_cast<unsigned>(songFreq) << endl;
+            if (songFreq < 30){
+                songFreq = 30;
             }
             
+            robot.sendPlaySongCommand(1);
+            this_thread::sleep_for(chrono::milliseconds(songFreq));
+            songFreq = songFreq / 1.5;
+    
         }
-        songFreq = 64;
+        songFreq = 1000;
         this_thread::sleep_for(chrono::milliseconds(500));   
     }    
 }
