@@ -135,7 +135,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
     int songFreq = 1000;
     Create::note_t note1;
     note1.first = 100;
-    note1.second = 32;
+    note1.second = 8;
     Create::song_t song;
     song.push_back(note1);
     robot.sendSongCommand(1, song);
@@ -143,13 +143,13 @@ void playSong(Create& robot, bool& run, bool& wall ){
 
     while (run){
         while (wall){
-            if (songFreq < 30){
-                songFreq = 30;
+            if (songFreq < 180){
+                songFreq = 180;
             }
             
             robot.sendPlaySongCommand(1);
             this_thread::sleep_for(chrono::milliseconds(songFreq));
-            songFreq = songFreq / 1.5;
+            songFreq = songFreq / 1.2;
     
         }
         songFreq = 1000;
