@@ -77,7 +77,7 @@ int main ()
             speed = -165;  
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             cout << " Leaving bump ! Drive Command Sent!" << endl;
-            this_thread::sleep_for(chrono::milliseconds(2300));
+            this_thread::sleep_for(chrono::milliseconds(4000));
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             Camera.grab();
@@ -101,7 +101,7 @@ int main ()
             wallSignal = 0;
             prevWallSignal = 0;
             //isWall = true;
-            this_thread::sleep_for(chrono::milliseconds(15));
+            this_thread::sleep_for(chrono::milliseconds(30));
 
         }
       this_thread::sleep_for(chrono::milliseconds(15)); 
