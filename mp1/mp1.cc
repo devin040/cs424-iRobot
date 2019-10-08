@@ -103,6 +103,9 @@ int main ()
             //isWall = true;
             this_thread::sleep_for(chrono::milliseconds(15));
             robot.sendStreamCommand (sensors);
+            cout << "Bump Left : " << robot.bumpLeft() << endl;
+            cout << "Bump Right : " << robot.bumpRight() << endl;
+            this_thread::sleep_for(chrono::milliseconds(15));
 
         }
       this_thread::sleep_for(chrono::milliseconds(15)); 
