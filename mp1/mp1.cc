@@ -108,6 +108,7 @@ int main ()
       if (wallSignal > 0 && prevWallSignal == 0) {
         prevWallSignal = wallSignal;
         isWall = true;
+        cout << "Wall signal! : " << wallSignal << endl;
       }
       
       
