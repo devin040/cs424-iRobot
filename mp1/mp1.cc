@@ -52,7 +52,7 @@ int main ()
     short prevWallSignal = 0;
     int count = 0;
     bool runSong = true;
-    bool isWall = true;
+    bool isWall = false;
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
     std::thread song(playSong, std::ref(robot), std::ref(runSong), std::ref(isWall));
@@ -103,13 +103,13 @@ int main ()
             this_thread::sleep_for(chrono::milliseconds(15));
 
         }
-      /**  
+      this_thread::sleep_for(chrono::milliseconds(15)); 
       wallSignal = robot.wallSignal();  
       if (wallSignal > 0 && prevWallSignal == 0) {
         prevWallSignal = wallSignal;
         isWall = true;
       }
-      */
+      
       
 
     }
