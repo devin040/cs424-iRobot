@@ -92,9 +92,9 @@ int main ()
 
             short randAngle = short ((rand() % 120) + 120);
             cout << "Angle : " <<  randAngle << endl;
-            //speed = 107;
-            //robot.sendDriveCommand(speed, randAngle);
-           // this_thread::sleep_for(chrono::milliseconds(3000));
+            speed = 107;
+            robot.sendDriveCommand(speed, randAngle);
+            this_thread::sleep_for(chrono::milliseconds(3000));
             speed = 287;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             cout << " Leaving bump ! Drive Command Sent!" << endl;
@@ -105,14 +105,6 @@ int main ()
             robot.sendStreamCommand (sensors);
             cout << "Bump Left : " << robot.bumpLeft() << endl;
             cout << "Bump Right : " << robot.bumpRight() << endl;
-            if (robot.bumpLeft() || robot.bumpRight()){
-              Create robot1(stream);
-              robot1.sendFullCommand();
-              this_thread::sleep_for(chrono::milliseconds(1000));
-              robot1.sendStreamCommand(sensors);
-              robot1.sendDriveCommand(-165, Create::DRIVE_STRAIGHT);
-              this_thread::sleep_for(chrono::milliseconds(2300));
-            }
             this_thread::sleep_for(chrono::milliseconds(15));
 
         }
