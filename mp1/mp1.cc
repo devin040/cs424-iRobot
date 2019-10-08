@@ -85,6 +85,8 @@ int main ()
             pictureTaken = cv::imwrite("irobot_image.jpg", rgb_image);
             cout << "picture taken: " << pictureTaken << endl;
             leds.join();
+            robot.sendLedCommand (Create::LED_NONE, 0, Create::LED_INTENSITY_OFF);
+            this_thread::sleep_for(chrono::milliseconds(15));
             cout << " Ending LEDs" << endl;
 
             short randAngle = short ((rand() % 120) + 120);
@@ -149,7 +151,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
             
             robot.sendPlaySongCommand(1);
             this_thread::sleep_for(chrono::milliseconds(songFreq));
-            songFreq = songFreq / 1.2;
+            songFreq = songFreq / 1.3;
     
         }
         songFreq = 1000;
