@@ -99,7 +99,7 @@ int main ()
             cout << " Leaving bump ! Drive Command Sent!" << endl;
             wallSignal = 0;
             prevWallSignal = 0;
-            isWall = true;
+            //isWall = true;
             this_thread::sleep_for(chrono::milliseconds(15));
 
         }
