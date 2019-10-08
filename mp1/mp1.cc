@@ -40,7 +40,8 @@ int main ()
     Create::sensorPackets_t sensors;
     sensors.push_back(Create::SENSOR_BUMPS_WHEELS_DROPS);
     sensors.push_back(Create::SENSOR_WALL_SIGNAL);
-    sensors.push_back (Create::SENSOR_BUTTONS);
+    sensors.push_back(Create::SENSOR_BUTTONS);
+    sensors.push_back(Create::SENSOR_
   
 
     robot.sendStreamCommand (sensors);
@@ -76,7 +77,7 @@ int main ()
             speed = -165;  
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             cout << " Leaving bump ! Drive Command Sent!" << endl;
-            this_thread::sleep_for(chrono::milliseconds(3000));
+            this_thread::sleep_for(chrono::milliseconds(2300));
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             Camera.grab();
@@ -104,11 +105,12 @@ int main ()
 
         }
       this_thread::sleep_for(chrono::milliseconds(15)); 
-      wallSignal = robot.wallSignal();  
+      wallSignal = robot.wallSignal();
+      cout << "Wall signal! : " << wallSignal << endl;  
       if (wallSignal > 0 && prevWallSignal == 0) {
         prevWallSignal = wallSignal;
         isWall = true;
-        cout << "Wall signal! : " << wallSignal << endl;
+        cout << "play song Wall signal! : " << wallSignal << endl;
       }
       
       
