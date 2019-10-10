@@ -73,9 +73,6 @@ int main ()
             
             cout << "Bump : " << count++ << endl;
             
-            bool pictureTaken = false;
-            
-            std::thread leds(playLEDS, std::ref(robot), std::ref(runThreads), std::ref(pictureTaken));
             
             speed = -165;  
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
@@ -89,7 +86,7 @@ int main ()
             pictureTaken = cv::imwrite("irobot_image.jpg", rgb_image);
             runLeds = false;
             cout << "picture taken: " << pictureTaken << endl;
-            robot.sendLedCommand (Create::LED_NONE, 0, Create::LED_INTENSITY_OFF);
+            
             this_thread::sleep_for(chrono::milliseconds(15));
             cout << " Ending LEDs" << endl;
 
@@ -189,6 +186,9 @@ void playLEDS(Create& robot, bool& runThreads, bool& runLeds){
           this_thread::sleep_for(chrono::milliseconds(200));
           robot.sendLedCommand (Create::LED_ADVANCE, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
           this_thread::sleep_for(chrono::milliseconds(200));
-      } 
+          robot.sendLedCommand (Create::LED_NONE, 0, Create::LED_INTENSITY_OFF);
+          this_thread::sleep_for(chrono::milliseconds(30));
+      }
+
     }  
 }
