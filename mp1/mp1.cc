@@ -12,7 +12,7 @@ using namespace LibSerial;
 using namespace std;
 
 void playSong(Create&, bool&, bool&);
-void playLEDS(Create&, bool&);
+void playLEDS(Create&, bool&, bool&);
 
 int main ()
 {
@@ -52,11 +52,13 @@ int main ()
     short wallSignal = 0;
     short prevWallSignal = 0;
     int count = 0;
-    bool runSong = true;
+    bool runThreads = true;
     bool isWall = false;
+    bool runLeds =false;
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     cout << "Sent Drive Command" << endl;
-    std::thread song(playSong, std::ref(robot), std::ref(runSong), std::ref(isWall));
+    std::thread song(playSong, std::ref(robot), std::ref(runThreads), std::ref(isWall));
+    std::thread leds(playLEDS, std::ref(robot), std::ref(runThreads), std::ref(runLeds));
 
     while (!robot.playButton ())
     {
@@ -66,13 +68,14 @@ int main ()
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
+            runLeds = true;
             
             
             cout << "Bump : " << count++ << endl;
             
             bool pictureTaken = false;
             
-            //std::thread leds(playLEDS, std::ref(robot), std::ref(pictureTaken));
+            std::thread leds(playLEDS, std::ref(robot), std::ref(runThreads), std::ref(pictureTaken));
             
             speed = -165;  
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
@@ -84,8 +87,8 @@ int main ()
             Camera.retrieve (bgr_image);
             cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
             pictureTaken = cv::imwrite("irobot_image.jpg", rgb_image);
+            runLeds = false;
             cout << "picture taken: " << pictureTaken << endl;
-            //leds.join();
             robot.sendLedCommand (Create::LED_NONE, 0, Create::LED_INTENSITY_OFF);
             this_thread::sleep_for(chrono::milliseconds(15));
             cout << " Ending LEDs" << endl;
@@ -122,11 +125,14 @@ int main ()
 
     }
     isWall = false;
-    runSong = false;
+    runLeds = false;
+    runThreads = false;
+
     
     cout << "Play button pressed, stopping Robot" << endl;
     robot.sendDriveCommand (0, Create::DRIVE_STRAIGHT);
     song.join();
+    leds.join();
   }
   catch (InvalidArgument& e)
   {
@@ -167,21 +173,22 @@ void playSong(Create& robot, bool& run, bool& wall ){
     }    
 }
 
-void playLEDS(Create& robot, bool& term){
+void playLEDS(Create& robot, bool& run, bool& term){
     cout << " starting LEDs" << endl;
-    while (!term){
-        
-        robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
-        this_thread::sleep_for(chrono::milliseconds(200));
-        robot.sendLedCommand (Create::LED_ALL, 0, 0);
-        this_thread::sleep_for(chrono::milliseconds(200));
-        robot.sendLedCommand (Create::LED_ADVANCE, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
-        this_thread::sleep_for(chrono::milliseconds(200));
-        robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
-        this_thread::sleep_for(chrono::milliseconds(200));
-        robot.sendLedCommand (Create::LED_ALL, 0, 0);
-        this_thread::sleep_for(chrono::milliseconds(200));
-        robot.sendLedCommand (Create::LED_ADVANCE, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
-        this_thread::sleep_for(chrono::milliseconds(200));
-    }   
+    while(run){
+      while (!term){
+          robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
+          this_thread::sleep_for(chrono::milliseconds(200));
+          robot.sendLedCommand (Create::LED_ALL, 0, 0);
+          this_thread::sleep_for(chrono::milliseconds(200));
+          robot.sendLedCommand (Create::LED_ADVANCE, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
+          this_thread::sleep_for(chrono::milliseconds(200));
+          robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
+          this_thread::sleep_for(chrono::milliseconds(200));
+          robot.sendLedCommand (Create::LED_ALL, 0, 0);
+          this_thread::sleep_for(chrono::milliseconds(200));
+          robot.sendLedCommand (Create::LED_ADVANCE, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
+          this_thread::sleep_for(chrono::milliseconds(200));
+      } 
+    }  
 }
