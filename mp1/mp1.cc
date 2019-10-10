@@ -87,7 +87,7 @@ int main ()
             runLeds = false;
             cout << "picture taken: " << endl;
             
-            this_thread::sleep_for(chrono::milliseconds(15));
+            this_thread::sleep_for(chrono::milliseconds(200));
             cout << " Ending LEDs" << endl;
 
             short randAngle = short ((rand() % 120) + 120);
@@ -159,7 +159,6 @@ void playSong(Create& robot, bool& runThreads, bool& wall ){
             if (songFreq < 180){
                 songFreq = 180;
             }
-            cout << "hi" << endl;
             robot.sendPlaySongCommand(1);
             this_thread::sleep_for(chrono::milliseconds(songFreq));
             songFreq = songFreq / 1.3;
