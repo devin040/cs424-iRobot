@@ -146,7 +146,7 @@ int main ()
   }
 }
 
-void playSong(Create& robot, bool& run, bool& wall ){
+void playSong(Create& robot, bool& runThreads, bool& wall ){
     cout << "In the Song thread" << endl;
     int songFreq = 1000;
     Create::note_t note1;
@@ -157,7 +157,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
     robot.sendSongCommand(1, song);
     
 
-    while (run){
+    while (runThreads){
         while (wall){
             if (songFreq < 180){
                 songFreq = 180;
@@ -173,10 +173,10 @@ void playSong(Create& robot, bool& run, bool& wall ){
     }    
 }
 
-void playLEDS(Create& robot, bool& run, bool& term){
+void playLEDS(Create& robot, bool& runThreads, bool& runLeds){
     cout << " starting LEDs" << endl;
-    while(run){
-      while (!term){
+    while(runThreads){
+      while (runLeds){
           robot.sendLedCommand (Create::LED_PLAY, Create::LED_COLOR_GREEN, Create::LED_INTENSITY_FULL);
           this_thread::sleep_for(chrono::milliseconds(200));
           robot.sendLedCommand (Create::LED_ALL, 0, 0);
