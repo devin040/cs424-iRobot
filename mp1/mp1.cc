@@ -46,7 +46,7 @@ int main ()
 
     robot.sendStreamCommand (sensors);
     cout << "Sent Stream Command" << endl;
-
+   //test commit
     // Let's turn!
     int speed = 287;
     short wallSignal = 0;
@@ -154,7 +154,7 @@ void playSong(Create& robot, bool& run, bool& wall ){
             if (songFreq < 180){
                 songFreq = 180;
             }
-            
+            cout << "hi" << endl;
             robot.sendPlaySongCommand(1);
             this_thread::sleep_for(chrono::milliseconds(songFreq));
             songFreq = songFreq / 1.3;
