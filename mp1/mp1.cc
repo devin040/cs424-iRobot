@@ -85,7 +85,7 @@ int main ()
             cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
             cv::imwrite("irobot_image.jpg", rgb_image);
             runLeds = false;
-            cout << "picture taken: " << pictureTaken << endl;
+            cout << "picture taken: " << endl;
             
             this_thread::sleep_for(chrono::milliseconds(15));
             cout << " Ending LEDs" << endl;
