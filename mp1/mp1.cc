@@ -83,7 +83,7 @@ int main ()
             Camera.grab();
             Camera.retrieve (bgr_image);
             cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
-            pictureTaken = cv::imwrite("irobot_image.jpg", rgb_image);
+            cv::imwrite("irobot_image.jpg", rgb_image);
             runLeds = false;
             cout << "picture taken: " << pictureTaken << endl;
             
