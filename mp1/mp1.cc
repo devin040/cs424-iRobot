@@ -69,8 +69,7 @@ int main ()
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
             runLeds = true;
-            
-            
+            this_thread::sleep_for(chrono::milliseconds(35));
             cout << "Bump : " << count++ << endl;
             
             
@@ -80,14 +79,14 @@ int main ()
             this_thread::sleep_for(chrono::milliseconds(2300));
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+            runLeds = false;
             Camera.grab();
             Camera.retrieve (bgr_image);
             cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
             cv::imwrite("irobot_image.jpg", rgb_image);
-            runLeds = false;
             cout << "picture taken: " << endl;
             
-            this_thread::sleep_for(chrono::milliseconds(200));
+            this_thread::sleep_for(chrono::milliseconds(1000));
             cout << " Ending LEDs" << endl;
 
             short randAngle = short ((rand() % 120) + 120);
@@ -101,8 +100,7 @@ int main ()
             wallSignal = 0;
             prevWallSignal = 0;
             //isWall = true;
-            this_thread::sleep_for(chrono::milliseconds(15));
-            robot.sendStreamCommand (sensors);
+            
             cout << "Bump Left : " << robot.bumpLeft() << endl;
             cout << "Bump Right : " << robot.bumpRight() << endl;
             this_thread::sleep_for(chrono::milliseconds(15));
@@ -188,6 +186,7 @@ void playLEDS(Create& robot, bool& runThreads, bool& runLeds){
           robot.sendLedCommand (Create::LED_NONE, 0, Create::LED_INTENSITY_OFF);
           this_thread::sleep_for(chrono::milliseconds(30));
       }
+      this_thread::sleep_for(chrono::milliseconds(50));
 
     }  
 }
