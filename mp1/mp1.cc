@@ -86,7 +86,7 @@ int main ()
             cv::imwrite("irobot_image.jpg", rgb_image);
             cout << "picture taken: " << endl;
             
-            this_thread::sleep_for(chrono::milliseconds(1000));
+            this_thread::sleep_for(chrono::milliseconds(40));
             cout << " Ending LEDs" << endl;
 
             short randAngle = short ((rand() % 120) + 120);
