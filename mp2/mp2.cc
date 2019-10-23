@@ -48,11 +48,11 @@ int main ()
     song.push_back(Create::note_t(90, 8));
     robot.sendSongCommand(1,song);
     */
-
-    while(!robot.playButton()){
-      
       int speed = 200;
       robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
+    while(!robot.playButton()){
+      
+      
       if (robot.bumpLeft () || robot.bumpRight ()) {
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
@@ -78,13 +78,18 @@ int main ()
                   }
                   std::this_thread::sleep_for(chrono::milliseconds(30));
               }
+              cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
-              while (robot.wallSignal() < maxWallSignal){
+              while ((wallSignal = robot.wallSignal()) < maxWallSignal){
+                 cout << "Looking for max curr at :" << wallSignal << endl;
                   std::this_thread::sleep_for(chrono::milliseconds(30));
               }
               speed = 0;
               robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-              std::this_thread::sleep_for(chrono::milliseconds(200));         
+              std::this_thread::sleep_for(chrono::milliseconds(200));
+              speed = 200;
+              robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+              std::this_thread::sleep_for(chrono::milliseconds(500));         
       }
 
     }
