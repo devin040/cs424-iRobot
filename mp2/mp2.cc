@@ -41,8 +41,13 @@ int main ()
     sensors.push_back(Create::SENSOR_CLIFF_LEFT_SIGNAL);
     sensors.push_back(Create::SENSOR_CLIFF_RIGHT_SIGNAL);
     sensors.push_back(Create::SENSOR_OVERCURRENTS);
-    
+
+    Create::song_t song;
+    song.push_back(Create::note_t(100, 8));
+    song.push_back(Create::note_t(90, 8));
+    robot.sendSongComand(1,song);
+
     robot.sendStreamCommand(robot);
 
-    
+
 }
