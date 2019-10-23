@@ -17,10 +17,25 @@ void robotMotion(Create& robot, pthread_mutex_t& robomutex){
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
             cout << "Bump : " << count++ << endl;
-            speed = -100;
+            speed = -152;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+            this_thread::sleep_for(chrono::milliseconds(1000));
+            short align = 0;
+            bool localMaxFound = false;
+            rotateRight = true;
+            rotateLeft = false;
+            sendRightCommand = true;
+            while (!localMaxFound){
+                while (sendRightCommand){
+                    if (rotateRight){
+                        speed = 100;
+                        robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
+                        rotateRight = false;
+                    }
+                    
 
-
+                }
+            }
     }
 
 
