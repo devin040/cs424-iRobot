@@ -32,7 +32,7 @@ int main ()
     robot.sendFullCommand();
     cout << "Setting iRobot to Full Mode" << endl;
     cout << "Robot is ready" << endl;
-
+    int speed = 200;
     // Let's stream some sensors.
     Create::sensorPackets_t sensors;
     sensors.push_back(Create::SENSOR_BUMPS_WHEELS_DROPS);
@@ -48,10 +48,13 @@ int main ()
     song.push_back(Create::note_t(90, 8));
     robot.sendSongCommand(1,song);
     */
-      int speed = 200;
-      robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
+    
+    robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
+    this_thread::sleep_for(chrono::milliseconds(100));
+
+    cout << "Sent drive commnand" << endl;
     while(!robot.playButton()){
-      
+      cout << "in the loop" << endl;
       
       if (robot.bumpLeft () || robot.bumpRight ()) {
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
