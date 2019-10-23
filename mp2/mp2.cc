@@ -54,14 +54,11 @@ int main ()
       int speed = 200;
       robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
       if (robot.bumpLeft () || robot.bumpRight ()) {
-              speed = 0;
-              robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+              robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
-              speed = -152;
-              robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+              robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(1500));
-              speed = 0;
-              robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+              robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               short maxWallSignal = 0;
               bool localMaxFound = false;
               short wallSignal = -1;
@@ -70,7 +67,7 @@ int main ()
               bool sendRightCommand = true;
               this_thread::sleep_for(chrono::milliseconds(200));
 
-              speed = 50;
+              speed = 100;
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
               std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
               while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 3000){
@@ -79,17 +76,15 @@ int main ()
                   if (wallSignal > maxWallSignal ){
                       maxWallSignal = wallSignal;
                   }
-                  std::this_thread::sleep_for(chrono::milliseconds(20));
+                  std::this_thread::sleep_for(chrono::milliseconds(30));
               }
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
               while (robot.wallSignal() < maxWallSignal){
-                  std::this_thread::sleep_for(chrono::milliseconds(20));
+                  std::this_thread::sleep_for(chrono::milliseconds(30));
               }
               speed = 0;
               robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-              std::this_thread::sleep_for(chrono::milliseconds(200));
-              speed = 100;
-              robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);         
+              std::this_thread::sleep_for(chrono::milliseconds(200));         
       }
 
     }
