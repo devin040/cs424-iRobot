@@ -45,8 +45,8 @@ int main ()
     Create::song_t song;
     song.push_back(Create::note_t(100, 8));
     song.push_back(Create::note_t(90, 8));
-    robot.sendSongComand(1,song);
-    robot.sendStreamCommand(robot);
+    robot.sendSongCommand(1,song);
+    robot.sendStreamCommand(sensors);
 
     while(!robot.advanceButton()){
       
@@ -71,7 +71,7 @@ int main ()
 
               speed = 50;
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
-              std::chrono::time_point start = std::chrono::steady_clock::now();
+              std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
               while (std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count() < 3000){
                   wallSignal = robot.wallSignal();
                   if (wallSignal > maxWallSignal ){
@@ -91,6 +91,16 @@ int main ()
       }
 
     }
-
+  }
+  catch (InvalidArgument& e)
+  {
+    cerr << e.what () << endl;
+    return 3;
+  }
+  catch (CommandNotAvailable& e)
+  {
+    cerr << e.what () << endl;
+    return 4;
+  }
 
 }
