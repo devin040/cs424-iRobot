@@ -41,14 +41,15 @@ int main ()
     sensors.push_back(Create::SENSOR_CLIFF_LEFT_SIGNAL);
     sensors.push_back(Create::SENSOR_CLIFF_RIGHT_SIGNAL);
     sensors.push_back(Create::SENSOR_OVERCURRENTS);
-
+    robot.sendStreamCommand(sensors);
+    /**
     Create::song_t song;
     song.push_back(Create::note_t(100, 8));
     song.push_back(Create::note_t(90, 8));
     robot.sendSongCommand(1,song);
-    robot.sendStreamCommand(sensors);
+    */
 
-    while(!robot.advanceButton()){
+    while(!robot.playButton()){
       
       int speed = 200;
       robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
@@ -58,7 +59,7 @@ int main ()
               this_thread::sleep_for(chrono::milliseconds(15));
               speed = -152;
               robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-              this_thread::sleep_for(chrono::milliseconds(1000));
+              this_thread::sleep_for(chrono::milliseconds(1500));
               speed = 0;
               robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
               short maxWallSignal = 0;
@@ -72,8 +73,9 @@ int main ()
               speed = 50;
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
               std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-              while (std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - start).count() < 3000){
+              while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 3000){
                   wallSignal = robot.wallSignal();
+                  cout << "Wall signal: " << wallSignal << endl;
                   if (wallSignal > maxWallSignal ){
                       maxWallSignal = wallSignal;
                   }
@@ -91,6 +93,8 @@ int main ()
       }
 
     }
+    cout << "Play button pressed, stopping Robot" << endl;
+    robot.sendDriveCommand (0, Create::DRIVE_STRAIGHT);
   }
   catch (InvalidArgument& e)
   {
