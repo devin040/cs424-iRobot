@@ -61,7 +61,7 @@ int main ()
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
               robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
-              this_thread::sleep_for(chrono::milliseconds(500));
+              this_thread::sleep_for(chrono::milliseconds(425));
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(200));
               
@@ -72,7 +72,7 @@ int main ()
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
               std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
               std::chrono::steady_clock::time_point maxTime;
-              while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 3000){
+              while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 2500){
                   wallSignal = robot.wallSignal();
                   cout << "Wall signal: " << wallSignal << endl;
                   if (wallSignal >= maxWallSignal ){
