@@ -141,7 +141,7 @@ int main ()
           std::chrono::steady_clock::time_point maxEnd = std::chrono::steady_clock::now();
           
           int time = std::chrono::duration_cast<std::chrono::milliseconds>(maxEnd - maxTime).count() - 100;
-          if (maxWallSignal < 2){time = 3000;}
+          if (maxWallSignal < 8){time = 3000;}
           cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
           std::chrono::steady_clock::time_point startReturn = std::chrono::steady_clock::now();
           robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
