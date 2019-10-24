@@ -59,12 +59,12 @@ int main ()
     while(!robot.playButton()){
       //cout << "in the loop" << endl;
       
-      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 70)) {
+      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 80)) {
               enteredMaze = true;
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
               robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
-              this_thread::sleep_for(chrono::milliseconds(300));
+              this_thread::sleep_for(chrono::milliseconds(350));
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(200));
               
@@ -148,16 +148,18 @@ int main ()
           cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
           std::chrono::steady_clock::time_point startReturn = std::chrono::steady_clock::now();
           robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
+          /**
           while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startReturn).count() < time){
               
               std::this_thread::sleep_for(chrono::milliseconds(30));
           }
-          /**
+          */
+          
           while ((wallSignal = robot.wallSignal()) < maxWallSignal){
               cout << "Looking for max curr at :" << wallSignal << endl;
               std::this_thread::sleep_for(chrono::milliseconds(30));
           }
-          */
+          
           speed = 0;
           robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
           this_thread::sleep_for(chrono::milliseconds(200));
