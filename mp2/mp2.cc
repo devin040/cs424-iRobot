@@ -61,7 +61,7 @@ int main ()
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
               robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
-              this_thread::sleep_for(chrono::milliseconds(410));
+              this_thread::sleep_for(chrono::milliseconds(400));
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(200));
               
@@ -102,8 +102,11 @@ int main ()
               this_thread::sleep_for(chrono::milliseconds(200));
               speed = 200;
               robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-              this_thread::sleep_for(chrono::milliseconds(500));         
+              this_thread::sleep_for(chrono::milliseconds(50));         
       }
+      this_thread::sleepfor(chrono::milliseconds(15));
+      cout << "Continous wall sensor: " << robot.wallSignal() << endl;
+      this_thread::sleepfor(chrono::milliseconds(500));
 
     }
     cout << "Play button pressed, stopping Robot" << endl;
