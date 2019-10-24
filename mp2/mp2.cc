@@ -57,7 +57,7 @@ int main ()
     while(!robot.playButton()){
       //cout << "in the loop" << endl;
       
-      if (robot.bumpLeft () || robot.bumpRight ()) {
+      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSensor() > 80)) {
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
               robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
@@ -83,7 +83,7 @@ int main ()
               }
               std::chrono::steady_clock::time_point maxEnd = std::chrono::steady_clock::now();
               
-              int time = std::chrono::duration_cast<std::chrono::milliseconds>(maxEnd - maxTime).count() - 80;
+              int time = std::chrono::duration_cast<std::chrono::milliseconds>(maxEnd - maxTime).count() - 100;
               cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
               std::chrono::steady_clock::time_point startReturn = std::chrono::steady_clock::now();
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
