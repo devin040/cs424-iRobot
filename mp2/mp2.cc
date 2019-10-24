@@ -57,7 +57,7 @@ int main ()
     while(!robot.playButton()){
       //cout << "in the loop" << endl;
       
-      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSensor() > 80)) {
+      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 80)) {
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
               robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
