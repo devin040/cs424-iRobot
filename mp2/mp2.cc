@@ -53,11 +53,13 @@ int main ()
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     this_thread::sleep_for(chrono::milliseconds(100));
     bool enteredMaze = false;
+    int wallCount = 0;
+    int wallSum = 0;
     cout << "Sent drive commnand" << endl;
     while(!robot.playButton()){
       //cout << "in the loop" << endl;
       
-      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 60)) {
+      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 70)) {
               enteredMaze = true;
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
@@ -105,9 +107,18 @@ int main ()
               robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(50));         
       }
+      int wallAvg = 10;
+      wallSum += robot.wallSignal();
+      wallCount++;
+      if (wallCount == 5){
+          wallAvg = wallSum / wallCount;
+          wallCount = 0;
+          wallSum = 0;
+      }
+
       this_thread::sleep_for(chrono::milliseconds(15));
       //cout << "Continous wall sensor: " << robot.wallSignal() << endl;
-      if (enteredMaze && robot.wallSignal() == 0){
+      if (enteredMaze && wallAvg == 0){
           robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
           this_thread::sleep_for(chrono::milliseconds(15));
           
@@ -130,6 +141,7 @@ int main ()
           std::chrono::steady_clock::time_point maxEnd = std::chrono::steady_clock::now();
           
           int time = std::chrono::duration_cast<std::chrono::milliseconds>(maxEnd - maxTime).count() - 100;
+          if (maxWallSignal < 2){time = 3000;}
           cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
           std::chrono::steady_clock::time_point startReturn = std::chrono::steady_clock::now();
           robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
@@ -150,6 +162,7 @@ int main ()
           robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
           this_thread::sleep_for(chrono::milliseconds(50));   
       }
+      this_thread::sleep_for(chrono::milliseconds(200)); 
 
     }
     cout << "Play button pressed, stopping Robot" << endl;
