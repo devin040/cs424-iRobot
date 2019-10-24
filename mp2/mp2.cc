@@ -52,11 +52,11 @@ int main ()
     
     robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
     this_thread::sleep_for(chrono::milliseconds(100));
-
+    bool enteredMaze = false;
     cout << "Sent drive commnand" << endl;
     while(!robot.playButton()){
       //cout << "in the loop" << endl;
-      bool enteredMaze = false;
+      
       if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 60)) {
               enteredMaze = true;
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
