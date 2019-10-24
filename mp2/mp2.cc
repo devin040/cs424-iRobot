@@ -56,8 +56,9 @@ int main ()
     cout << "Sent drive commnand" << endl;
     while(!robot.playButton()){
       //cout << "in the loop" << endl;
-      
-      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 80)) {
+      bool enteredMaze = false;
+      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 60)) {
+              enteredMaze = true;
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
               robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
@@ -105,8 +106,50 @@ int main ()
               this_thread::sleep_for(chrono::milliseconds(50));         
       }
       this_thread::sleep_for(chrono::milliseconds(15));
-      cout << "Continous wall sensor: " << robot.wallSignal() << endl;
-      this_thread::sleep_for(chrono::milliseconds(500));
+      //cout << "Continous wall sensor: " << robot.wallSignal() << endl;
+      if (enteredMaze && robot.wallSignal() == 0){
+          robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
+          this_thread::sleep_for(chrono::milliseconds(15));
+          
+          short maxWallSignal = 0;
+          short wallSignal = -1;
+
+          speed = 100;
+          robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
+          std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+          std::chrono::steady_clock::time_point maxTime;
+          while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 2500){
+              wallSignal = robot.wallSignal();
+              cout << "Wall signal: " << wallSignal << endl;
+              if (wallSignal >= maxWallSignal ){
+                  maxWallSignal = wallSignal;
+                  maxTime = std::chrono::steady_clock::now();
+              }
+              this_thread::sleep_for(chrono::milliseconds(30));
+          }
+          std::chrono::steady_clock::time_point maxEnd = std::chrono::steady_clock::now();
+          
+          int time = std::chrono::duration_cast<std::chrono::milliseconds>(maxEnd - maxTime).count() - 100;
+          cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
+          std::chrono::steady_clock::time_point startReturn = std::chrono::steady_clock::now();
+          robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
+          while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startReturn).count() < time){
+              
+              std::this_thread::sleep_for(chrono::milliseconds(30));
+          }
+          /**
+          while ((wallSignal = robot.wallSignal()) < maxWallSignal){
+              cout << "Looking for max curr at :" << wallSignal << endl;
+              std::this_thread::sleep_for(chrono::milliseconds(30));
+          }
+          */
+          speed = 0;
+          robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+          this_thread::sleep_for(chrono::milliseconds(200));
+          speed = 200;
+          robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+          this_thread::sleep_for(chrono::milliseconds(50));   
+      }
 
     }
     cout << "Play button pressed, stopping Robot" << endl;
