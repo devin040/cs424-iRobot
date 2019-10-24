@@ -59,7 +59,7 @@ int main ()
     while(!robot.playButton()){
       //cout << "in the loop" << endl;
       
-      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 80)) {
+      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 128)) {
               enteredMaze = true;
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
