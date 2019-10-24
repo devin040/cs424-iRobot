@@ -109,6 +109,7 @@ int main ()
       }
       int wallAvg = 10;
       wallSum += robot.wallSignal();
+      cout << "Lost wall  Wall sum: " << wallSum << endl;
       wallCount++;
       if (wallCount == 5){
           wallAvg = wallSum / wallCount;
@@ -118,7 +119,7 @@ int main ()
 
       this_thread::sleep_for(chrono::milliseconds(15));
       //cout << "Continous wall sensor: " << robot.wallSignal() << endl;
-      if (enteredMaze && wallAvg == 0){
+      if (enteredMaze && wallAvg < 2){
           robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
           this_thread::sleep_for(chrono::milliseconds(15));
           
