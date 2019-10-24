@@ -61,14 +61,12 @@ int main ()
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
               robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
-              this_thread::sleep_for(chrono::milliseconds(400));
+              this_thread::sleep_for(chrono::milliseconds(500));
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(200));
               
               short maxWallSignal = 0;
               short wallSignal = -1;
-
-              
 
               speed = 100;
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
@@ -77,19 +75,20 @@ int main ()
               while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 3000){
                   wallSignal = robot.wallSignal();
                   cout << "Wall signal: " << wallSignal << endl;
-                  if (wallSignal > maxWallSignal ){
+                  if (wallSignal >= maxWallSignal ){
                       maxWallSignal = wallSignal;
                       maxTime = std::chrono::steady_clock::now();
                   }
                   this_thread::sleep_for(chrono::milliseconds(30));
               }
               std::chrono::steady_clock::time_point maxEnd = std::chrono::steady_clock::now();
-              int time = std::chrono::duration_cast<std::chrono::milliseconds>(maxEnd - maxTime).count();
+              
+              int time = std::chrono::duration_cast<std::chrono::milliseconds>(maxEnd - maxTime).count() - 30;
               cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
               std::chrono::steady_clock::time_point startReturn = std::chrono::steady_clock::now();
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
               while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startReturn).count() < time){
-                  cout << "Looking for max curr at :" << wallSignal << endl;
+                  
                   std::this_thread::sleep_for(chrono::milliseconds(30));
               }
               /**
