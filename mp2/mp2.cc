@@ -54,6 +54,7 @@ int main ()
     sensors.push_back(Create::SENSOR_CLIFF_RIGHT_SIGNAL);
     sensors.push_back(Create::SENSOR_OVERCURRENTS);
     robot.sendStreamCommand(sensors);
+    cout << "Sensors Pushed" << endl;
     this_thread::sleep_for(chrono::milliseconds(1000));
     
     Create::song_t song;
@@ -76,10 +77,12 @@ int main ()
 		pthread_attr_setschedparam (&attrMotion, &paramMotion); 
 
     pthread_t thread_motion;
-		pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);  
+		pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);
+    cout << "Motion Launced" << endl;  
 
     pthread_t thread_safety;
     pthread_create(&thread_motion, &attrSafety, RobotSafety, (void *)0);
+    cout << "Safety Launced" << endl;
 
 
     pthread_join(thread_motion, NULL);

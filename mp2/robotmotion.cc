@@ -11,7 +11,7 @@ using namespace iRobot;
 using namespace std;
 
 void robotMotion(Create& robot, pthread_mutex_t& robomutex, bool& end){
-
+    cout << "In Motion Thread" << endl;
     bool enteredMaze = false;
     int wallCount = 0;
     int wallSum = 0;

@@ -11,6 +11,7 @@ using namespace iRobot;
 using namespace std;
 
 void robotSafety(Create& robot, pthread_mutex_t& robomutex, bool& stop){
+    cout << "In safety thread" << endl;
     while(!stop){
         pthread_mutex_lock(&robomutex);
         if (robot.wheeldropLeft() || robot.wheeldropRight() || robot.wheeldropCaster() ||
