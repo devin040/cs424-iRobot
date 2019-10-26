@@ -117,6 +117,7 @@ void robotMotion(Create& robot, pthread_mutex_t& robomutex, bool& end){
     }
     cout << "Play button pressed, stopping Robot" << endl;
     robot.sendDriveCommand (0, Create::DRIVE_STRAIGHT);
+    end = true;
 
 }
 
