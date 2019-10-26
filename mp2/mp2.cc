@@ -97,13 +97,12 @@ int main ()
               }
               */
               
-              while ((wallSignal = robot.wallSignal()) < (maxWallSignal -5)){
+              while ((wallSignal = robot.wallSignal()) < (maxWallSignal -10)){
                  cout << "Looking for max curr at :" << wallSignal << endl;
                   std::this_thread::sleep_for(chrono::milliseconds(15));
               }
               
-              speed = 0;
-              robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+              robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(200));
               speed = 200;
               robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
