@@ -8,6 +8,7 @@
 
 
 using namespace iRobot;
+using namespace std;
 
 void robotMotion(Create& robot, pthread_mutex_t& robomutex, bool& end){
 
@@ -19,7 +20,7 @@ void robotMotion(Create& robot, pthread_mutex_t& robomutex, bool& end){
     this_thread::sleep_for(chrono::milliseconds(100));
 
     while(!robot.playButton()){
-      
+      pthread_mutex_lock(&robomutex);
       if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 180)) {
               enteredMaze = true;
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
@@ -112,6 +113,7 @@ void robotMotion(Create& robot, pthread_mutex_t& robomutex, bool& end){
           robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
           this_thread::sleep_for(chrono::milliseconds(50));   
       }
+      pthread_mutex_unlock(&robomutex);
       this_thread::sleep_for(chrono::milliseconds(200)); 
 
     }
