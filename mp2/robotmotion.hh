@@ -2,7 +2,7 @@
 #include "irobot-create.hh"
 #include <chrono>
 #include <thread>
-#include <iosteam>
+#include <iostream>
 #include <ctime>
 
 using namespace iRobot;
