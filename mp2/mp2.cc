@@ -97,7 +97,7 @@ int main ()
               }
               */
               
-              while ((wallSignal = robot.wallSignal()) < maxWallSignal){
+              while ((wallSignal = robot.wallSignal()) < (maxWallSignal -5){
                  cout << "Looking for max curr at :" << wallSignal << endl;
                   std::this_thread::sleep_for(chrono::milliseconds(15));
               }
