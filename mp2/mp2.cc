@@ -59,7 +59,7 @@ int main ()
     while(!robot.playButton()){
       //cout << "in the loop" << endl;
       
-      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 128)) {
+      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 180)) {
               enteredMaze = true;
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
@@ -82,7 +82,7 @@ int main ()
                       maxWallSignal = wallSignal;
                       maxTime = std::chrono::steady_clock::now();
                   }
-                  this_thread::sleep_for(chrono::milliseconds(30));
+                  this_thread::sleep_for(chrono::milliseconds(15));
               }
               std::chrono::steady_clock::time_point maxEnd = std::chrono::steady_clock::now();
               
@@ -99,7 +99,7 @@ int main ()
               
               while ((wallSignal = robot.wallSignal()) < maxWallSignal){
                  cout << "Looking for max curr at :" << wallSignal << endl;
-                  std::this_thread::sleep_for(chrono::milliseconds(20));
+                  std::this_thread::sleep_for(chrono::milliseconds(15));
               }
               
               speed = 0;
