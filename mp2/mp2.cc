@@ -128,24 +128,7 @@ int main ()
           short wallSignal = -1;
 
           speed = 100;
-          robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
-          std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-          std::chrono::steady_clock::time_point maxTime;
-          while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 2000){
-              wallSignal = robot.wallSignal();
-              cout << "Wall signal: " << wallSignal << endl;
-              if (wallSignal >= maxWallSignal ){
-                  maxWallSignal = wallSignal;
-                  maxTime = std::chrono::steady_clock::now();
-              }
-              this_thread::sleep_for(chrono::milliseconds(30));
-          }
-          std::chrono::steady_clock::time_point maxEnd = std::chrono::steady_clock::now();
           
-          int time = std::chrono::duration_cast<std::chrono::milliseconds>(maxEnd - maxTime).count() - 100;
-          if (maxWallSignal < 8){time = 3000;}
-          cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
-          std::chrono::steady_clock::time_point startReturn = std::chrono::steady_clock::now();
           robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
           this_thread::sleep_for(chrono::milliseconds(2000));
           /**
