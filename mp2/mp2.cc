@@ -112,7 +112,7 @@ int main ()
       wallSum += robot.wallSignal();
       cout << "Lost wall  Wall sum: " << wallSum << endl;
       wallCount++;
-      if (wallCount == 10){
+      if (wallCount == 7){
           wallAvg = wallSum / wallCount;
           wallCount = 0;
           wallSum = 0;
