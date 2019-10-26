@@ -65,7 +65,7 @@ int main ()
 		sched_param paramSafety;
 		pthread_attr_init (&attrSafety);
 		pthread_attr_getschedparam (&attrSafety, &paramSafety);
-		paramMotion.sched_priority = 4;
+		paramSafety.sched_priority = 4;
 		pthread_attr_setschedparam (&attrSafety, &paramSafety); 
     
 		pthread_attr_t attrMotion;
@@ -106,8 +106,8 @@ void *RobotMotion(void *x){
     pthread_exit(NULL);
 }
 
-void *RobotMotion(void *x){
-    robotMotion(std::ref(robot), std::ref(mutex_robot), std::ref(stop));
+void *RobotSafety(void *x){
+    robotSafety(std::ref(robot), std::ref(mutex_robot), std::ref(stop));
     cout << "END Safety!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }
