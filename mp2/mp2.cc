@@ -22,7 +22,8 @@ SerialStream stream (serial_loc, LibSerial::SerialStreamBuf::BAUD_57600);
 //cout << "Opened Serial Stream to" << serial_loc << endl;
 //this_thread::sleep_for(chrono::milliseconds(1000));
 Create robot(stream);
-bool end = false;
+bool stop = false;
+
 
 
 int main ()
@@ -86,7 +87,7 @@ int main ()
 }
 
 void *RobotMotion(void *x){
-    robotmotion(std::ref(robot), std::ref(mutex_robot), std::ref(end));
+    robotMotion(std::ref(robot), std::ref(mutex_robot), std::ref(stop));
     cout << "END MOTION!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }
