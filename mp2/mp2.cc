@@ -65,7 +65,7 @@ int main ()
 		sched_param paramSafety;
 		pthread_attr_init (&attrSafety);
 		pthread_attr_getschedparam (&attrSafety, &paramSafety);
-		paramSafety.sched_priority = 3;
+		paramSafety.sched_priority = 4;
 		pthread_attr_setschedparam (&attrSafety, &paramSafety); 
     
 		pthread_attr_t attrMotion;
