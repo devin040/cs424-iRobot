@@ -64,7 +64,7 @@ int main ()
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(15));
               robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
-              this_thread::sleep_for(chrono::milliseconds(100));
+              this_thread::sleep_for(chrono::milliseconds(80));
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(200));
               
@@ -112,7 +112,7 @@ int main ()
       wallSum += robot.wallSignal();
       cout << "Lost wall  Wall sum: " << wallSum << endl;
       wallCount++;
-      if (wallCount == 7){
+      if (wallCount == 6){
           wallAvg = wallSum / wallCount;
           wallCount = 0;
           wallSum = 0;
