@@ -15,12 +15,12 @@ void robotMotion(Create& robot, pthread_mutex_t& robomutex, bool& end){
     bool enteredMaze = false;
     int wallCount = 0;
     int wallSum = 0;
-    int speed = 200;
-    robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
-    this_thread::sleep_for(chrono::milliseconds(100));
 
     while(!robot.playButton()){
       pthread_mutex_lock(&robomutex);
+      int speed = 200;
+      robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
+      this_thread::sleep_for(chrono::milliseconds(20));
       if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 180)) {
               enteredMaze = true;
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);

@@ -28,7 +28,7 @@ void robotSafety(Create& robot, pthread_mutex_t& robomutex, bool& stop){
             }
 
             //start again
-            robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
+            //robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
             
         }
         pthread_mutex_unlock(&robomutex);

@@ -65,21 +65,21 @@ int main ()
 		sched_param paramSafety;
 		pthread_attr_init (&attrSafety);
 		pthread_attr_getschedparam (&attrSafety, &paramSafety);
-		paramSafety.sched_priority = 4;
+		paramSafety.sched_priority = 3;
 		pthread_attr_setschedparam (&attrSafety, &paramSafety); 
     
 		pthread_attr_t attrMotion;
 		sched_param paramMotion;
 		pthread_attr_init (&attrMotion);
 		pthread_attr_getschedparam (&attrMotion, &paramMotion);
-		paramMotion.sched_priority = 3;
+		paramMotion.sched_priority = 4;
 		pthread_attr_setschedparam (&attrMotion, &paramMotion); 
 
     pthread_t thread_motion;
 		pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);  
 
     pthread_t thread_safety;
-    pthread_create(&thread_motion, &attrSafety, RobotSafety, (void *) 0);
+    pthread_create(&thread_motion, &attrSafety, RobotSafety, (void *)0);
 
 
     pthread_join(thread_motion, NULL);
