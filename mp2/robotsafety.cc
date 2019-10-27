@@ -35,7 +35,7 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             (rightwheelo = robot.rightWheelOvercurrent())) {
             //stop
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            cout << " " + wheeldropleft << endl;
+            cout <<  wheeldropleft << endl;
             cout << wheeldropright << endl;
             cout << wheeldropcaster << endl; 
             cout << cliffleft  << endl;
