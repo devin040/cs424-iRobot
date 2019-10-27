@@ -73,7 +73,7 @@ int main ()
 		sched_param paramMotion;
 		pthread_attr_init (&attrMotion);
 		pthread_attr_getschedparam (&attrMotion, &paramMotion);
-		paramMotion.sched_priority = 4;
+		paramMotion.sched_priority = 3;
 		pthread_attr_setschedparam (&attrMotion, &paramMotion); 
 
     pthread_t thread_motion;
@@ -81,7 +81,7 @@ int main ()
     cout << "Motion Launced" << endl;  
 
     pthread_t thread_safety;
-    pthread_create(&thread_motion, &attrSafety, RobotSafety, (void *)0);
+    pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
     cout << "Safety Launced" << endl;
 
 
