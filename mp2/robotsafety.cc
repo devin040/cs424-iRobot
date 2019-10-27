@@ -33,6 +33,6 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             
         }
         pthread_mutex_unlock(robomutex);
-        this_thread::sleep_for(chrono::milliseconds(400));
+        this_thread::sleep_for(chrono::milliseconds(1100));
     } 
 }
