@@ -15,9 +15,9 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     bool enteredMaze = false;
     int wallCount = 0;
     int wallSum = 0;
-
+    pthread_mutex_lock(robomutex);
     while(!robot.playButton()){
-      pthread_mutex_lock(robomutex);
+      //pthread_mutex_lock(robomutex);
       int speed = 200;
       robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
       this_thread::sleep_for(chrono::milliseconds(20));
@@ -114,7 +114,8 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
           this_thread::sleep_for(chrono::milliseconds(50));   
       }
       pthread_mutex_unlock(robomutex);
-      this_thread::sleep_for(chrono::milliseconds(200)); 
+      this_thread::sleep_for(chrono::milliseconds(200));
+      pthread_mutex_unlock(robomutex); 
 
     }
     cout << "Play button pressed, stopping Robot" << endl;
