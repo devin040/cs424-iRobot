@@ -30,7 +30,7 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             (cliffleft = robot.cliffLeftSignal()) < 10 ||
             
             (cliffright = robot.cliffRightSignal()) < 10 || 
-            (clifffrontright = robot.cliffFrontRightSignal()) < 10 ||
+            
             (leftwheelo = robot.leftWheelOvercurrent() )|| 
             (rightwheelo = robot.rightWheelOvercurrent())) {
             //stop
@@ -63,4 +63,5 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
 
 
 // (clifffrontleft = robot.cliffFrontLeftSignal()) < 10 ||
+//(clifffrontright = robot.cliffFrontRightSignal()) < 10 ||
  
