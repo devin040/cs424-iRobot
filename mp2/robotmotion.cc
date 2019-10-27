@@ -10,14 +10,14 @@
 using namespace iRobot;
 using namespace std;
 
-void robotMotion(Create& robot, pthread_mutex_t& robomutex, bool& end){
+void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     cout << "In Motion Thread" << endl;
     bool enteredMaze = false;
     int wallCount = 0;
     int wallSum = 0;
 
     while(!robot.playButton()){
-      pthread_mutex_lock(&robomutex);
+      pthread_mutex_lock(robomutex);
       int speed = 200;
       robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
       this_thread::sleep_for(chrono::milliseconds(20));
@@ -113,7 +113,7 @@ void robotMotion(Create& robot, pthread_mutex_t& robomutex, bool& end){
           robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
           this_thread::sleep_for(chrono::milliseconds(50));   
       }
-      pthread_mutex_unlock(&robomutex);
+      pthread_mutex_unlock(robomutex);
       this_thread::sleep_for(chrono::milliseconds(200)); 
 
     }

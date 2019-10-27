@@ -9,4 +9,4 @@
 using namespace iRobot;
 using namespace std;
 
-void robotSafety(Create&, pthread_mutex_t&, bool&);
+void robotSafety(Create&, pthread_mutex_t*, bool&);

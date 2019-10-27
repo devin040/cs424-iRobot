@@ -104,13 +104,13 @@ int main ()
 }
 
 void *RobotMotion(void *x){
-    robotMotion(std::ref(robot), std::ref(mutex_robot), std::ref(stop));
+    robotMotion(std::ref(robot), &mutex_robot, std::ref(stop));
     cout << "END MOTION!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }
 
 void *RobotSafety(void *x){
-    robotSafety(std::ref(robot), std::ref(mutex_robot), std::ref(stop));
+    robotSafety(std::ref(robot), &mutex_robot, std::ref(stop));
     cout << "END Safety!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }
