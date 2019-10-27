@@ -13,14 +13,37 @@ using namespace std;
 
 void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
     cout << "In safety thread" << endl;
+    bool wheeldropright = false;
+    bool wheeldropleft = false;
+    bool wheeldropcaster = false;
+    int cliffleft = 12;
+    int cliffright = 12;
+    int clifffrontleft = 12;
+    int clifffrontright = 12;
+    bool leftwheelo = false;
+    bool rightwheelo = false;
     while(!stop){
         pthread_mutex_lock(robomutex);
-        if (robot.wheeldropLeft() || robot.wheeldropRight() || robot.wheeldropCaster() ||
-                robot.cliffLeftSignal() < 10 || robot.cliffFrontLeftSignal() < 10 ||
-                robot.cliffRightSignal() < 10 || robot.cliffFrontRightSignal() < 10 ||
-                robot.leftWheelOvercurrent() || robot.rightWheelOvercurrent()) {
+        if ((wheeldropleft = robot.wheeldropLeft()) || 
+            (wheeldropright = robot.wheeldropRight()) || 
+            (wheeldropcaster = robot.wheeldropCaster()) ||
+            (cliffleft = robot.cliffLeftSignal()) < 10 ||
+            (clifffrontleft = robot.cliffFrontLeftSignal()) < 10 ||
+            (cliffright = robot.cliffRightSignal()) < 10 || 
+            (clifffrontright = robot.cliffFrontRightSignal()) < 10 ||
+            (leftwheelo = robot.leftWheelOvercurrent() )|| 
+            (rightwheelo = robot.rightWheelOvercurrent())) {
             //stop
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
+            cout << " " + wheeldropleft << endl;
+            cout << wheeldropright << endl;
+            cout << wheeldropcaster << endl; 
+            cout << cliffleft  << endl;
+            cout << clifffrontleft << endl;
+            cout << cliffright << endl;
+            cout << clifffrontright << endl;
+            cout << leftwheelo << endl;
+            cout << rightwheelo << endl;
 
             //play song
             while (!robot.advanceButton()) {
