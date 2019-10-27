@@ -115,7 +115,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
       }
       pthread_mutex_unlock(robomutex);
       this_thread::sleep_for(chrono::milliseconds(200));
-      pthread_mutex_unlock(robomutex); 
+      pthread_mutex_lock(robomutex); 
 
     }
     cout << "Play button pressed, stopping Robot" << endl;

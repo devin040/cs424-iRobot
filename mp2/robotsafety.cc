@@ -5,6 +5,7 @@
 #include <iostream>
 #include <ctime>
 #include "robotsafety.hh"
+#include <unistd.h>
 
 
 using namespace iRobot;
@@ -24,8 +25,8 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             //play song
             while (!robot.advanceButton()) {
                 robot.sendPlaySongCommand(1);
-                this_thread::sleep_for(chrono::milliseconds(500));
-
+                //this_thread::sleep_for(chrono::milliseconds(500));
+                sleep(1);
             }  
 
             //start again
@@ -33,6 +34,6 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             
         }
         pthread_mutex_unlock(robomutex);
-        this_thread::sleep_for(chrono::milliseconds(11000));
+        this_thread::sleep_for(chrono::milliseconds(1000));
     } 
 }
