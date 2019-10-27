@@ -27,8 +27,8 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
         if ((wheeldropleft = robot.wheeldropLeft()) || 
             (wheeldropright = robot.wheeldropRight()) || 
             (wheeldropcaster = robot.wheeldropCaster()) ||
+            (cliffleft = robot.cliffLeftSignal()) < 10 ||
             
-            (clifffrontleft = robot.cliffFrontLeftSignal()) < 10 ||
             (cliffright = robot.cliffRightSignal()) < 10 || 
             (clifffrontright = robot.cliffFrontRightSignal()) < 10 ||
             (leftwheelo = robot.leftWheelOvercurrent() )|| 
@@ -62,5 +62,5 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
 }
 
 
-// (cliffleft = robot.cliffLeftSignal()) < 10 ||
+// (clifffrontleft = robot.cliffFrontLeftSignal()) < 10 ||
  
