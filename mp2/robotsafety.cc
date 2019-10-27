@@ -48,8 +48,26 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             //play song
             while (!robot.advanceButton()) {
                 robot.sendPlaySongCommand(1);
+                wheeldropleft = robot.wheeldropLeft(); 
+                wheeldropright = robot.wheeldropRight();
+                wheeldropcaster = robot.wheeldropCaster();
+                cliffleft = robot.cliffLeftSignal();
+                clifffrontright = robot.cliffFrontRightSignal();
+                clifffrontleft = robot.cliffFrontLeftSignal();
+                cliffright = robot.cliffRightSignal();
+                leftwheelo = robot.leftWheelOvercurrent(); 
+                rightwheelo = robot.rightWheelOvercurrent();
+                cout <<  wheeldropleft << endl;
+                cout << wheeldropright << endl;
+                cout << wheeldropcaster << endl; 
+                cout << cliffleft  << endl;
+                cout << clifffrontleft << endl;
+                cout << cliffright << endl;
+                cout << clifffrontright << endl;
+                cout << leftwheelo << endl;
+                cout << rightwheelo << endl;
                 //this_thread::sleep_for(chrono::milliseconds(500));
-                sleep(1);
+                sleep(2);
             }  
 
             //start again
