@@ -26,13 +26,13 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
                 robot.sendPlaySongCommand(1);
                 this_thread::sleep_for(chrono::milliseconds(500));
 
-            }
+            }  
 
             //start again
             //robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
             
         }
         pthread_mutex_unlock(robomutex);
-        this_thread::sleep_for(chrono::milliseconds(1100));
+        this_thread::sleep_for(chrono::milliseconds(11000));
     } 
 }
