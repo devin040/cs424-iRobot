@@ -76,13 +76,15 @@ int main ()
 		paramMotion.sched_priority = 3;
 		pthread_attr_setschedparam (&attrMotion, &paramMotion); 
 
-    pthread_t thread_motion;
-		pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);
-    cout << "Motion Launced" << endl;  
+    
 
     pthread_t thread_safety;
     pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
     cout << "Safety Launced" << endl;
+
+    pthread_t thread_motion;
+		pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);
+    cout << "Motion Launced" << endl;  
 
 
     pthread_join(thread_motion, NULL);
