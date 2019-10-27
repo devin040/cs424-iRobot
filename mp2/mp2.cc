@@ -15,7 +15,7 @@ using namespace LibSerial;
 using namespace std;
 
 
-pthread_mutex_t mutex_robot;
+pthread_mutex_t mutex_robot = PTHREAD_MUTEX_INITIALIZER;
 void *RobotMotion(void*);
 void *RobotSafety(void*);
 
