@@ -24,7 +24,7 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             //play song
             while (!robot.advanceButton()) {
                 robot.sendPlaySongCommand(1);
-                this_thread::sleep_for(chrono::milliseconds(200));
+                this_thread::sleep_for(chrono::milliseconds(500));
 
             }
 
