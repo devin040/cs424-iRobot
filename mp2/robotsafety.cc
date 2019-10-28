@@ -57,15 +57,15 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
                 cliffright = robot.cliffRightSignal();
                 leftwheelo = robot.leftWheelOvercurrent(); 
                 rightwheelo = robot.rightWheelOvercurrent();
-                cout <<  wheeldropleft << endl;
-                cout << wheeldropright << endl;
-                cout << wheeldropcaster << endl; 
-                cout << cliffleft  << endl;
-                cout << clifffrontleft << endl;
-                cout << cliffright << endl;
-                cout << clifffrontright << endl;
-                cout << leftwheelo << endl;
-                cout << rightwheelo << endl;
+                cout << "wheel drop left : " << wheeldropleft << endl;
+                cout << "wheel drop right: " << wheeldropright << endl;
+                cout << "wheel drop caster: " << wheeldropcaster << endl; 
+                cout << "cliff left: " << cliffleft  << endl;
+                cout << "cliff front left: " << clifffrontleft << endl;
+                cout << "cliff right: " << cliffright << endl;
+                cout << "cliff front right: " << clifffrontright << endl;
+                cout << "left wheel over : " << leftwheelo << endl;
+                cout << "right wheel over: " << rightwheelo << endl;
                 //this_thread::sleep_for(chrono::milliseconds(500));
                 sleep(2);
             }  
