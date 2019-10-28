@@ -75,7 +75,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
       wallSum += robot.wallSignal();
       cout << "Lost wall  Wall sum: " << wallSum << endl;
       wallCount++;
-      if (wallCount == 6){
+      if (wallCount == 5){
           wallAvg = wallSum / wallCount;
           wallCount = 0;
           wallSum = 0;
@@ -90,10 +90,10 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
           short maxWallSignal = 0;
           short wallSignal = -1;
 
-          speed = 100;
+          speed = 200;
           
           robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
-          this_thread::sleep_for(chrono::milliseconds(2000));
+          this_thread::sleep_for(chrono::milliseconds(1000));
           /**
           while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startReturn).count() < time){
               
