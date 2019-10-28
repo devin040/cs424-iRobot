@@ -22,26 +22,25 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
     int clifffrontright = 12;
     bool leftwheelo = false;
     bool rightwheelo = false;
+    int overcurrent = 0;
     while(!stop){
         pthread_mutex_lock(robomutex);
         if ((wheeldropleft = robot.wheeldropLeft()) || 
             (wheeldropright = robot.wheeldropRight()) || 
             (wheeldropcaster = robot.wheeldropCaster()) ||
-            
-            
-            (leftwheelo = robot.leftWheelOvercurrent() )|| 
-            (rightwheelo = robot.rightWheelOvercurrent())) {
+            overcurrent >= 3) {
             //stop
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            cout <<  wheeldropleft << endl;
-            cout << wheeldropright << endl;
-            cout << wheeldropcaster << endl; 
-            cout << cliffleft  << endl;
-            cout << clifffrontleft << endl;
-            cout << cliffright << endl;
-            cout << clifffrontright << endl;
-            cout << leftwheelo << endl;
-            cout << rightwheelo << endl;
+            cout << "wheel drop left : " << wheeldropleft << endl;
+            cout << "wheel drop right: " << wheeldropright << endl;
+            cout << "wheel drop caster: " << wheeldropcaster << endl; 
+            cout << "cliff left: " << cliffleft  << endl;
+            cout << "cliff front left: " << clifffrontleft << endl;
+            cout << "cliff right: " << cliffright << endl;
+            cout << "cliff front right: " << clifffrontright << endl;
+            cout << "left wheel over : " << leftwheelo << endl;
+            cout << "right wheel over: " << rightwheelo << endl;
+            cout << "over current counter : " << overcurrent << endl;
 
             //play song
             while (!robot.advanceButton()) {
@@ -72,8 +71,15 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             //robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
             
         }
+        if ((leftwheelo = robot.leftWheelOvercurrent() )|| 
+            (rightwheelo = robot.rightWheelOvercurrent() )) {
+                overcurrent++;
+                cout << "over current counter : " << overcurrent << endl;
+        } else {
+            overcurrent = 0;
+        }
         pthread_mutex_unlock(robomutex);
-        this_thread::sleep_for(chrono::milliseconds(1000));
+        this_thread::sleep_for(chrono::milliseconds(300));
     } 
 }
 
