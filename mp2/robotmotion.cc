@@ -75,7 +75,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
       wallSum += robot.wallSignal();
       cout << "Lost wall  Wall sum: " << wallSum << endl;
       wallCount++;
-      if (wallCount == 5){
+      if (wallCount == 6){
           wallAvg = wallSum / wallCount;
           wallCount = 0;
           wallSum = 0;
