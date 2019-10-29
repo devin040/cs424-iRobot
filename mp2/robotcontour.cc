@@ -2,7 +2,7 @@
 #include "irobot-create.hh"
 #include <chrono>
 #include <thread>
-#include <iosteam>
+#include <iostream>
 
 #define IMAGE_HEIGHT 1200
 #define IMAGE_WIDTH 1600

@@ -2,7 +2,7 @@
 #include "irobot-create.hh"
 #include <chrono>
 #include <thread>
-#include <iosteam>
+#include <iostream>
 
 Poin2f getImageCoordinates(Point2f);
 
