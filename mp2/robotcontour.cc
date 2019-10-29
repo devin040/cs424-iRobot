@@ -56,7 +56,7 @@ void robotContour(vector<float> distances, vector<float> angles){
     Rect bound = boundingRect(waypoints);
     rectangle(img_output, bound, Scalar(0, 165, 255));
 
-    imwrite("irobot_plot.png", img_output);
+    imwrite("irobot_plot1.png", img_output);
 
 
 }
