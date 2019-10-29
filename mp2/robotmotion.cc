@@ -38,7 +38,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
               if (enteredMaze && !bumpTurn){
                   distclock1 = std::chrono::steady_clock::now();
                   int bumpclock = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
-                  float distance = ((float) bumpclock / 1000 ) * (float) speed;
+                  float distance = ((float) bumpclock / 1000.0 ) * (float) speed;
                   distances.push_back(distance);
                   angles.push_back(-1.5707);  
               }
@@ -110,7 +110,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
         if (!lostTurn){
             distclock1 = std::chrono::steady_clock::now();
             int travTime = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
-            float distance = ((float) travTime/ 1000 ) * (float) speed;
+            float distance = ((float) travTime/ 1000.0 ) * (float) speed;
             distances.push_back(distance);
             angles.push_back(1.5707);
         }
