@@ -6,8 +6,6 @@
 #define IMAGE_HEIGHT 1200
 #define IMAGE_WIDTH 1600
 
-using namespace std;
-using namespace iRobot;
 
 Point2f getImageCoordinates(Point2f pos) {
     int x = IMAGE_WIDTH/2 + pos.x;

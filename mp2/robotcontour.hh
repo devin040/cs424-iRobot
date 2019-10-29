@@ -8,8 +8,11 @@
 #include <vector>
 #include <math.h>
 
+using namespace cv;
+using namespace std;
+
 Point2f getImageCoordinates(Point2f);
 
 Point2f getNextPosition(Point2f, float, float);
 
-void robotContour(vector<float>, vector<float>;
+void robotContour(vector<float>, vector<float>);
