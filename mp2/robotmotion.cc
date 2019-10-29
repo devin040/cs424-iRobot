@@ -78,13 +78,17 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
               }
               */
               
-              while ((wallSignal = robot.wallSignal()) < (maxWallSignal - 35)){
+              while ((wallSignal = robot.wallSignal()) < (maxWallSignal - 30)){
                  cout << "Looking for max curr at :" << wallSignal << endl;
                   std::this_thread::sleep_for(chrono::milliseconds(15));
               }
               
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-              this_thread::sleep_for(chrono::milliseconds(200));
+              this_thread::sleep_for(chrono::milliseconds(100));
+              robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
+              this_thread::sleep_for(chrono::milliseconds(15));
+              robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
+              this_thread::sleep_for(chrono::milliseconds(100));
               speed = 200;
               robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
               distclock0 = std::chrono::steady_clock::now();
