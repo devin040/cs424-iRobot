@@ -41,6 +41,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                   float distance = ((float) bumpclock / 1000.0 ) * (float) speed;
                   distances.push_back(distance);
                   angles.push_back(-1.5707);  
+                  cout << "Wrote a left turn" << endl;
               }
               enteredMaze = true;
               
@@ -117,6 +118,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             float distance = ((float) travTime/ 1000.0 ) * (float) speed;
             distances.push_back(distance);
             angles.push_back(1.5707);
+            cout << "Wrote a Write Turn" << endl;
         }
         
         
