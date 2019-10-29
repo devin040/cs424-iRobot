@@ -7,8 +7,8 @@ mp2: mp2.cc irobot-create.o robotmotion.o robotsafety.o
 irobot-create.o: irobot-create.cc
 	g++ -std=c++11 -c irobot-create.cc
 
-robotmotion.o: robotmotion.cc
-	g++ -std=c++11 -c robotmotion.cc
+robotmotion.o: robotmotion.cc robotcontour.cc
+	g++ -std=c++11 -c robotmotion.cc robotcontour.cc
 
 robotsafety.o: robotsafety.cc
 	g++ -std=c++11 -c robotsafety.cc
