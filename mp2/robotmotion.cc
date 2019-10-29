@@ -167,8 +167,8 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     robotContour(distances, angles);
     vector<float> distances2;
     vector<float> angles2;
-    distances2.push_back(1000.0);
-    distances2.push_back(1000.0);
+    distances2.push_back(10.0);
+    distances2.push_back(10.0);
     //distances2.push_back(1000.0);
     //distances2.push_back(1000.0);
     angles2.push_back(1.5707);
