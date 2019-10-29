@@ -86,7 +86,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(100));
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
-              this_thread::sleep_for(chrono::milliseconds(15));
+              this_thread::sleep_for(chrono::milliseconds(200));
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
               this_thread::sleep_for(chrono::milliseconds(100));
               speed = 200;
