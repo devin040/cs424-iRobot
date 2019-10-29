@@ -169,12 +169,12 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     vector<float> angles2;
     distances2.push_back(1000.0);
     distances2.push_back(1000.0);
-    distances2.push_back(1000.0);
-    distances2.push_back(1000.0);
+    //distances2.push_back(1000.0);
+    //distances2.push_back(1000.0);
     angles2.push_back(1.5707);
     angles2.push_back(-1.5707);
-    angles2.push_back(1.5707);
-    angles2.push_back(-1.5707);
+    //angles2.push_back(1.5707);
+    //angles2.push_back(-1.5707);
     robotContour(distances2, angles2);
 
     std::cout << "Play button pressed, stopping Robot" << endl;
