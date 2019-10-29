@@ -1,8 +1,7 @@
-#include <pthread.h>
+
 #include "irobot-create.hh"
-#include <chrono>
-#include <thread>
-#include <iostream>
+#include "robotcontour.hh"
+
 
 #define IMAGE_HEIGHT 1200
 #define IMAGE_WIDTH 1600
@@ -10,7 +9,7 @@
 using namespace std;
 using namespace iRobot;
 
-Poin2f getImageCoordinates(Point2f pos) {
+Point2f getImageCoordinates(Point2f pos) {
     int x = IMAGE_WIDTH/2 + pos.x;
     int y = IMAGE_HEIGHT/2 + pos.y;
     return Point2f(x, y);
