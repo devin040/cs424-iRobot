@@ -21,7 +21,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     bool lostTurn = false; 
     vector<float> distances;
     vector<float> angles;
-    float angle = -1.5707;
+    float angle = 1.5707;
     std::chrono::steady_clock::time_point distclock0;
     std::chrono::steady_clock::time_point distclock1;
     std::chrono::steady_clock::time_point progTimer0;
