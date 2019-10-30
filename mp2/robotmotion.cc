@@ -116,12 +116,12 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             distclock1 = std::chrono::steady_clock::now();
             int travTime = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
             float distance = ((float) travTime/ 1000.0 ) * (float) speed;
-            if (distance < 400){
-                break;
+            if (distance > 400){
+                distances.push_back(distance / 4 );
+                angles.push_back(1.5707);
+                cout << "Wrote a Write Turn distance: " << distance << endl;
             }
-            distances.push_back(distance / 4 );
-            angles.push_back(1.5707);
-            cout << "Wrote a Write Turn distance: " << distance << endl;
+            
         }
         
         
