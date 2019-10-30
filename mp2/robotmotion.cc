@@ -21,6 +21,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     bool lostTurn = false; 
     vector<float> distances;
     vector<float> angles;
+    float angle = -1.5707;
     std::chrono::steady_clock::time_point distclock0;
     std::chrono::steady_clock::time_point distclock1;
     std::chrono::steady_clock::time_point progTimer0;
@@ -43,7 +44,8 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                   float distance = ((float) bumpclock / 1000.0 ) * (float) speed;
                   if (distance > 400){
                     distances.push_back(distance / 4);
-                    angles.push_back(-1.5707);  
+                    angles.push_back(angle);
+                    angle *= -1;  
                     cout << "Wrote a left turn distance: " << distance << endl;
                   }
               }
@@ -116,13 +118,16 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
       if (enteredMaze && wallAvg < 2){
         robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
         bumpTurn = false;
+        bool recordTime = false;
         if (!lostTurn){
             distclock1 = std::chrono::steady_clock::now();
             int travTime = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
             float distance = ((float) travTime/ 1000.0 ) * (float) speed;
             if (distance > 400){
                 distances.push_back(distance / 4 );
-                angles.push_back(1.5707);
+                angles.push_back(angle);
+                angle *= -1;
+                recordTime = true;
                 cout << "Wrote a Write Turn distance: " << distance << endl;
             }
             
@@ -157,7 +162,9 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
           this_thread::sleep_for(chrono::milliseconds(200));
           speed = 200;
           robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-          distclock0 = std::chrono::steady_clock::now();
+          if (recordTime){
+            distclock0 = std::chrono::steady_clock::now();
+          }
           lostTurn = true;
           this_thread::sleep_for(chrono::milliseconds(50));   
       }
