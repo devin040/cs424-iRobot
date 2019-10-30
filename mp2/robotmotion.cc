@@ -39,7 +39,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                   distclock1 = std::chrono::steady_clock::now();
                   int bumpclock = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
                   float distance = ((float) bumpclock / 1000.0 ) * (float) speed;
-                  distances.push_back(distance);
+                  distances.push_back(distance / 4);
                   angles.push_back(-1.5707);  
                   cout << "Wrote a left turn distance: " << distance << endl;
               }
@@ -116,7 +116,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             distclock1 = std::chrono::steady_clock::now();
             int travTime = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
             float distance = ((float) travTime/ 1000.0 ) * (float) speed;
-            distances.push_back(distance);
+            distances.push_back(distance / 4 );
             angles.push_back(1.5707);
             cout << "Wrote a Write Turn distance: " << distance << endl;
         }
@@ -162,20 +162,10 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     distclock1 = std::chrono::steady_clock::now();
     int fintimer = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
     float distance = ((float) fintimer/ 1000 ) * (float) speed;
-    distances.push_back(distance);
+    distances.push_back(distance / 4);
     angles.push_back(1.5707);
     robotContour(distances, angles);
-    vector<float> distances2;
-    vector<float> angles2;
-    distances2.push_back(100.0);
-    distances2.push_back(100.0);
-    distances2.push_back(100.0);
-    //distances2.push_back(1000.0);
-    angles2.push_back(1.5707);
-    angles2.push_back(-1.5707);
-    angles2.push_back(1.5707);
-    //angles2.push_back(-1.5707);
-    robotContour(distances2, angles2);
+    
 
     std::cout << "Play button pressed, stopping Robot" << endl;
     robot.sendDriveCommand (0, Create::DRIVE_STRAIGHT);
