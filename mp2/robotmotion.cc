@@ -43,7 +43,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                   int bumpclock = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
                   float distance = ((float) bumpclock / 1000.0 ) * (float) speed;
                   if (distance > 400){
-                    distances.push_back(distance / 4);
+                    distances.push_back(distance / 8);
                     angles.push_back(angle);
                     angle = -angle;  
                     cout << "Wrote a left turn distance: " << distance << endl;
@@ -68,15 +68,15 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                   //cout << "Wall signal: " << wallSignal << endl;
                   if (wallSignal >= maxWallSignal ){
                       maxWallSignal = wallSignal;
-                      maxTime = std::chrono::steady_clock::now();
+                      //maxTime = std::chrono::steady_clock::now();
                   }
                   this_thread::sleep_for(chrono::milliseconds(15));
               }
-              std::chrono::steady_clock::time_point maxEnd = std::chrono::steady_clock::now();
+              //std::chrono::steady_clock::time_point maxEnd = std::chrono::steady_clock::now();
               
-              int time = std::chrono::duration_cast<std::chrono::milliseconds>(maxEnd - maxTime).count() - 100;
+              //int time = std::chrono::duration_cast<std::chrono::milliseconds>(maxEnd - maxTime).count() - 100;
               cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
-              std::chrono::steady_clock::time_point startReturn = std::chrono::steady_clock::now();
+              //std::chrono::steady_clock::time_point startReturn = std::chrono::steady_clock::now();
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
               /**
               while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startReturn).count() < time){
@@ -124,7 +124,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             int travTime = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
             float distance = ((float) travTime/ 1000.0 ) * (float) speed;
             if (distance > 400){
-                distances.push_back(distance / 4 );
+                distances.push_back(distance / 8 );
                 angles.push_back(angle);
                 angle = -angle;
                 recordTime = true;
