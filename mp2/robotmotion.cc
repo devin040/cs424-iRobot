@@ -45,7 +45,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                   if (distance > 400){
                     distances.push_back(distance / 4);
                     angles.push_back(angle);
-                    angle *= -1;  
+                    angle = -angle;  
                     cout << "Wrote a left turn distance: " << distance << endl;
                   }
               }
@@ -126,7 +126,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             if (distance > 400){
                 distances.push_back(distance / 4 );
                 angles.push_back(angle);
-                angle *= -1;
+                angle = -angle;
                 recordTime = true;
                 cout << "Wrote a Write Turn distance: " << distance << endl;
             }
@@ -180,7 +180,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     int fintimer = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
     float distance = ((float) fintimer/ 1000 ) * (float) speed;
     distances.push_back(distance / 4);
-    angles.push_back(1.5707);
+    //angles.push_back(1.5707);
     robotContour(distances, angles);
     
 
