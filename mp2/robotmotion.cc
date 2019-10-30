@@ -41,7 +41,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                   float distance = ((float) bumpclock / 1000.0 ) * (float) speed;
                   distances.push_back(distance);
                   angles.push_back(-1.5707);  
-                  cout << "Wrote a left turn" << endl;
+                  cout << "Wrote a left turn distance: " << distance << endl;
               }
               enteredMaze = true;
               
@@ -59,7 +59,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
               std::chrono::steady_clock::time_point maxTime;
               while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 2200){
                   wallSignal = robot.wallSignal();
-                  cout << "Wall signal: " << wallSignal << endl;
+                  //cout << "Wall signal: " << wallSignal << endl;
                   if (wallSignal >= maxWallSignal ){
                       maxWallSignal = wallSignal;
                       maxTime = std::chrono::steady_clock::now();
@@ -80,7 +80,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
               */
               
               while ((wallSignal = robot.wallSignal()) < (maxWallSignal - 30)){
-                 cout << "Looking for max curr at :" << wallSignal << endl;
+                 //cout << "Looking for max curr at :" << wallSignal << endl;
                   std::this_thread::sleep_for(chrono::milliseconds(15));
               }
               
@@ -98,7 +98,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
       }
       int wallAvg = 10;
       wallSum += robot.wallSignal();
-      cout << "Lost wall  Wall sum: " << wallSum << endl;
+      //cout << "Lost wall  Wall sum: " << wallSum << endl;
       wallCount++;
       
       if (wallCount == 6){
@@ -118,7 +118,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             float distance = ((float) travTime/ 1000.0 ) * (float) speed;
             distances.push_back(distance);
             angles.push_back(1.5707);
-            cout << "Wrote a Write Turn" << endl;
+            cout << "Wrote a Write Turn distance: " << distance << endl;
         }
         
         
@@ -167,13 +167,13 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     robotContour(distances, angles);
     vector<float> distances2;
     vector<float> angles2;
-    distances2.push_back(10.0);
-    distances2.push_back(10.0);
-    //distances2.push_back(1000.0);
+    distances2.push_back(100.0);
+    distances2.push_back(100.0);
+    distances2.push_back(100.0);
     //distances2.push_back(1000.0);
     angles2.push_back(1.5707);
     angles2.push_back(-1.5707);
-    //angles2.push_back(1.5707);
+    angles2.push_back(1.5707);
     //angles2.push_back(-1.5707);
     robotContour(distances2, angles2);
 
