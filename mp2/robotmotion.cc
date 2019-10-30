@@ -23,10 +23,12 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     vector<float> angles;
     std::chrono::steady_clock::time_point distclock0;
     std::chrono::steady_clock::time_point distclock1;
+    std::chrono::steady_clock::time_point progTimer0;
+    std::chrono::steady_clock::time_point progTimer1;
 
     pthread_mutex_lock(robomutex);
     while(!robot.playButton()){
-      //pthread_mutex_lock(robomutex);
+      progTimer0 = std::chrono::steady_clock::now();
       
       robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
       this_thread::sleep_for(chrono::milliseconds(20));
@@ -160,6 +162,9 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
           this_thread::sleep_for(chrono::milliseconds(50));   
       }
       pthread_mutex_unlock(robomutex);
+      progTimer1 = std::chrono::steady_clock::now();
+      int progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
+      cout << "Running time motion: " << progTime << endl;
       this_thread::sleep_for(chrono::milliseconds(200));
       pthread_mutex_lock(robomutex); 
 

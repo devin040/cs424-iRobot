@@ -13,6 +13,9 @@ using namespace std;
 
 void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
     cout << "In safety thread" << endl;
+    std::chrono::steady_clock::time_point progTimer0;
+    std::chrono::steady_clock::time_point progTimer1;
+
     bool wheeldropright = false;
     bool wheeldropleft = false;
     bool wheeldropcaster = false;
@@ -25,6 +28,7 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
     int overcurrent = 0;
     while(!stop){
         pthread_mutex_lock(robomutex);
+        progTimer0 = std::chrono::steady_clock::now();
         if ((wheeldropleft = robot.wheeldropLeft()) || 
             (wheeldropright = robot.wheeldropRight()) || 
             (wheeldropcaster = robot.wheeldropCaster()) ||
@@ -79,6 +83,9 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             overcurrent = 0;
         }
         pthread_mutex_unlock(robomutex);
+        progTimer1 = std::chrono::steady_clock::now();
+        int progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
+        cout << "Safety Thread Timer: " << progTime << endl;
         this_thread::sleep_for(chrono::milliseconds(300));
     } 
 }
