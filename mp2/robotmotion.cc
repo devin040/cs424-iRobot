@@ -24,6 +24,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     float angle = 1.5707;
     int lostWallAdjustmentCounter = 0;
     bool tryAdjust = true;
+    int numTurns = 0;
     std::chrono::steady_clock::time_point distclock0;
     std::chrono::steady_clock::time_point distclock1;
     std::chrono::steady_clock::time_point progTimer0;
@@ -38,6 +39,8 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
         if (robot.bumpLeft () || robot.bumpRight () ) {
             lostTurn = false;
             lostWallAdjustmentCounter = 0;
+            tryAdjust = true;
+            numTurns = 0;
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
             if (enteredMaze && !bumpTurn){
@@ -126,8 +129,10 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
             tryAdjust = true;
+            numTurns = 0;
         }
-        if (enteredMaze && (wallAvg < 2 || lostWallAdjustmentCounter > 3 ) ){
+        if (enteredMaze && (wallAvg < 2 || lostWallAdjustmentCounter > 3 ) && numTurns < 2 ){
+            numTurns++;
             lostWallAdjustmentCounter = 0;
             tryAdjust = true;
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
