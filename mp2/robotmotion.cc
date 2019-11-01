@@ -108,7 +108,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
 
       this_thread::sleep_for(chrono::milliseconds(15));
       cout << "Continous wall sensor: " << robot.wallSignal() << endl;
-      if (enteredMaze && wallAvg < 2){
+      if (enteredMaze && wallAvg < 0){
         robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
         bumpTurn = false;
         bool recordTime = false;
@@ -125,29 +125,40 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             }
             
         }
-        
-        
         this_thread::sleep_for(chrono::milliseconds(15));  
 
           
-          short maxWallSignal = 0;
-          short wallSignal = -1;
+        short maxWallSignal = 0;
+        short wallSignal = -1;
 
-          speed = 200;
-          
-          robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
-          this_thread::sleep_for(chrono::milliseconds(1000));
-          
-          speed = 0;
-          robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-          this_thread::sleep_for(chrono::milliseconds(200));
-          speed = 200;
-          robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-          if (recordTime){
+        speed = 200;
+        
+        robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
+        this_thread::sleep_for(chrono::milliseconds(1000));
+        
+        speed = 0;
+        robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+        this_thread::sleep_for(chrono::milliseconds(200));
+        speed = 200;
+        robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
+        if (recordTime){
             distclock0 = std::chrono::steady_clock::now();
-          }
-          lostTurn = true;
-          this_thread::sleep_for(chrono::milliseconds(50));   
+        }
+        lostTurn = true;
+        this_thread::sleep_for(chrono::milliseconds(50));   
+      }
+      if (enteredMaze && (robot.wallSignal() < 10) ){
+          robot.sendDriveCommand(200, Create::DRIVE_INPLACE_CLOCKWISE);
+          this_thread::sleep_for(chrono::milliseconds(200));
+          robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
+          this_thread::sleep_for(chrono::milliseconds(200));
+      }
+      this_thread::sleep_for(chrono::milliseconds(15));
+      if (enteredMaze && (robot.wallSignal() > 140) ){
+          robot.sendDriveCommand(200, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
+          this_thread::sleep_for(chrono::milliseconds(200));
+          robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
+          this_thread::sleep_for(chrono::milliseconds(200));
       }
       pthread_mutex_unlock(robomutex);
       progTimer1 = std::chrono::steady_clock::now();
