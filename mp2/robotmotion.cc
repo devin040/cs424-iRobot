@@ -23,6 +23,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     vector<float> angles;
     float angle = 1.5707;
     int lostWallAdjustmentCounter = 0;
+    bool tryAdjust = true;
     std::chrono::steady_clock::time_point distclock0;
     std::chrono::steady_clock::time_point distclock1;
     std::chrono::steady_clock::time_point progTimer0;
@@ -109,11 +110,12 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
         this_thread::sleep_for(chrono::milliseconds(15));
 
         cout << "Continous wall sensor: " << robot.wallSignal() << endl;  
-        if (enteredMaze && (robot.wallSignal() < 5) ){
+        if (enteredMaze && tryAdjust && (robot.wallSignal() < 5) ){
+            tryAdjust = false;
             robot.sendDriveCommand(200, Create::DRIVE_INPLACE_CLOCKWISE);
             this_thread::sleep_for(chrono::milliseconds(50));
             robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(150));
+            this_thread::sleep_for(chrono::milliseconds(100));
             lostWallAdjustmentCounter++;
         }
         this_thread::sleep_for(chrono::milliseconds(15));
@@ -123,9 +125,11 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             this_thread::sleep_for(chrono::milliseconds(50));
             robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
+            tryAdjust = true;
         }
-        if (enteredMaze && (wallAvg < 0 || lostWallAdjustmentCounter > 3 ) ){
+        if (enteredMaze && (wallAvg < 2 || lostWallAdjustmentCounter > 3 ) ){
             lostWallAdjustmentCounter = 0;
+            tryAdjust = true;
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             bumpTurn = false;
             bool recordTime = false;
