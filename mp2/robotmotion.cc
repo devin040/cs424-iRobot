@@ -111,9 +111,9 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
         cout << "Continous wall sensor: " << robot.wallSignal() << endl;  
         if (enteredMaze && (robot.wallSignal() < 5) ){
             robot.sendDriveCommand(200, Create::DRIVE_INPLACE_CLOCKWISE);
-            this_thread::sleep_for(chrono::milliseconds(100));
+            this_thread::sleep_for(chrono::milliseconds(50));
             robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(100));
+            this_thread::sleep_for(chrono::milliseconds(150));
             lostWallAdjustmentCounter++;
         }
         this_thread::sleep_for(chrono::milliseconds(15));
