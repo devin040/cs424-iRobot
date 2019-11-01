@@ -149,12 +149,12 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
       }
       if (enteredMaze && (robot.wallSignal() < 10) ){
           robot.sendDriveCommand(200, Create::DRIVE_INPLACE_CLOCKWISE);
-          this_thread::sleep_for(chrono::milliseconds(200));
+          this_thread::sleep_for(chrono::milliseconds(100));
           robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
           this_thread::sleep_for(chrono::milliseconds(200));
       }
       this_thread::sleep_for(chrono::milliseconds(15));
-      if (enteredMaze && (robot.wallSignal() > 140) ){
+      if (enteredMaze && (robot.wallSignal() > 120) ){
           robot.sendDriveCommand(200, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
           this_thread::sleep_for(chrono::milliseconds(200));
           robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
