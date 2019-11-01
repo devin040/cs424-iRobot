@@ -85,7 +85,7 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
         pthread_mutex_unlock(robomutex);
         progTimer1 = std::chrono::steady_clock::now();
         int progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
-        cout << "Safety Thread Timer: " << progTime << endl;
+        //cout << "Safety Thread Timer: " << progTime << endl;
         this_thread::sleep_for(chrono::milliseconds(300));
     } 
 }

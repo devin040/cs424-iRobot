@@ -33,7 +33,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
       
       robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
       this_thread::sleep_for(chrono::milliseconds(20));
-      if (robot.bumpLeft () || robot.bumpRight () || (robot.wallSignal() > 180)) {
+      if (robot.bumpLeft () || robot.bumpRight () ) {
               lostTurn = false;
               
               robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
@@ -68,22 +68,15 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                   //cout << "Wall signal: " << wallSignal << endl;
                   if (wallSignal >= maxWallSignal ){
                       maxWallSignal = wallSignal;
-                      //maxTime = std::chrono::steady_clock::now();
+                      
                   }
                   this_thread::sleep_for(chrono::milliseconds(15));
               }
-              //std::chrono::steady_clock::time_point maxEnd = std::chrono::steady_clock::now();
-              
-              //int time = std::chrono::duration_cast<std::chrono::milliseconds>(maxEnd - maxTime).count() - 100;
+
               cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
-              //std::chrono::steady_clock::time_point startReturn = std::chrono::steady_clock::now();
+              
               robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
-              /**
-              while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startReturn).count() < time){
-                  
-                  std::this_thread::sleep_for(chrono::milliseconds(30));
-              }
-              */
+
               
               while ((wallSignal = robot.wallSignal()) < (maxWallSignal - 30)){
                  //cout << "Looking for max curr at :" << wallSignal << endl;
@@ -114,7 +107,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
       }
 
       this_thread::sleep_for(chrono::milliseconds(15));
-      //cout << "Continous wall sensor: " << robot.wallSignal() << endl;
+      cout << "Continous wall sensor: " << robot.wallSignal() << endl;
       if (enteredMaze && wallAvg < 2){
         robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
         bumpTurn = false;
@@ -144,18 +137,6 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
           
           robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
           this_thread::sleep_for(chrono::milliseconds(1000));
-          /**
-          while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startReturn).count() < time){
-              
-              std::this_thread::sleep_for(chrono::milliseconds(30));
-          }
-          */
-          /**
-          while ((wallSignal = robot.wallSignal()) < maxWallSignal){
-              cout << "Looking for max curr at :" << wallSignal << endl;
-              std::this_thread::sleep_for(chrono::milliseconds(30));
-          }
-          */
           
           speed = 0;
           robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
@@ -171,7 +152,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
       pthread_mutex_unlock(robomutex);
       progTimer1 = std::chrono::steady_clock::now();
       int progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
-      cout << "Running time motion: " << progTime << endl;
+      //cout << "Running time motion: " << progTime << endl;
       this_thread::sleep_for(chrono::milliseconds(200));
       pthread_mutex_lock(robomutex); 
 
