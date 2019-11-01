@@ -59,7 +59,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(200));
+            this_thread::sleep_for(chrono::milliseconds(50));
             
             short maxWallSignal = 0;
             short wallSignal = -1;
@@ -89,11 +89,11 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             }
               
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(100));
+            this_thread::sleep_for(chrono::milliseconds(50));
             robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
             this_thread::sleep_for(chrono::milliseconds(200));
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(100));
+            this_thread::sleep_for(chrono::milliseconds(50));
             speed = 200;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             distclock0 = std::chrono::steady_clock::now();
@@ -122,7 +122,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             lostWallAdjustmentCounter++;
         }
         this_thread::sleep_for(chrono::milliseconds(15));
-        if (enteredMaze && (robot.wallSignal() > 110) ){
+        if (enteredMaze && (robot.wallSignal() > 100) ){
             lostWallAdjustmentCounter = 0;
             robot.sendDriveCommand(200, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
             this_thread::sleep_for(chrono::milliseconds(50));
