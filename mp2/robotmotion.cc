@@ -46,6 +46,9 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
             if (enteredMaze && !bumpTurn){
+                distclock0 = std::chrono::steady_clock::now();
+            }
+            if (enteredMaze && bumpTurn){
                 distclock1 = std::chrono::steady_clock::now();
                 int bumpclock = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
                 float distance = ((float) bumpclock / 1000.0 ) * (float) speed;
@@ -140,15 +143,16 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             numAdjust = 0;
         }
         if (enteredMaze && (wallAvg < 2 || lostWallAdjustmentCounter > 3 ) && numTurns < 2 ){
+            
             numTurns++;
             lostWallAdjustmentCounter = 0;
             tryAdjust = true;
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             bumpTurn = false;
             bool recordTime = false;
-            if (!lostTurn){
+            if (numTurns == 1){
                 distclock1 = std::chrono::steady_clock::now();
-                int travTime = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count();
+                int travTime = std::chrono::duration_cast<std::chrono::milliseconds>(distclock1-distclock0).count() - 1000;
                 float distance = ((float) travTime/ 1000.0 ) * (float) speed;
                 if (distance > 400){
                     distances.push_back(distance / 8 );
