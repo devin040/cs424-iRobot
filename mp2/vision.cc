@@ -2,7 +2,7 @@
 
 void processImages(vector<Mat> images) {
     cout << "Starting processImages" << endl;
-    RobotIdentification test;
+    RobotIdentification test();
     cout << "image size " << images.size() << endl;
     for (int i = 0; i < images.size(); i++) {
         cout << "Image #" << i << endl;
