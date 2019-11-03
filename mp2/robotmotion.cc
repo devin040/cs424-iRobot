@@ -6,8 +6,6 @@
 #include "robotmotion.hh"
 #include "robotcontour.hh"
 
-
-
 using namespace iRobot;
 using namespace std;
 
@@ -132,7 +130,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             lostWallAdjustmentCounter++;
         }
         this_thread::sleep_for(chrono::milliseconds(15));
-        if (enteredMaze && (robot.wallSignal() > 100) ){
+        if (enteredMaze && (robot.wallSignal() > 90) ){
             lostWallAdjustmentCounter = 0;
             robot.sendDriveCommand(200, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
             this_thread::sleep_for(chrono::milliseconds(50));

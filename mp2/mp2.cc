@@ -100,7 +100,6 @@ int main() {
     pthread_join(thread_camera, NULL);
 
     processImages(images);
-
   }
   catch (InvalidArgument& e)
   {
@@ -112,7 +111,7 @@ int main() {
     cerr << e.what () << endl;
     return 4;
   }
-
+  return 0;
 }
 
 void *RobotMotion(void *x){
