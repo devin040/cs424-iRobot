@@ -22,7 +22,7 @@ using std::vector;
 RobotIdentification::RobotIdentification() {
     DIR *pDIR;
     struct dirent * image;
-    string dir = "../query-image/low-resolution";
+    string dir = "./query-image/low-resolution";
     if(pDIR = opendir(dir.c_str())) {
         while(image = readdir(pDIR)) {
             if(strcmp(image->d_name, ".") != 0 && strcmp(image->d_name, "..") != 0) {
