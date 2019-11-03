@@ -1,11 +1,13 @@
 #include "vision.hh"
 
 void processImages(vector<Mat> images) {
-    int counterimage = 0;
+    cout << "Starting processImages" << endl;
     RobotIdentification test;
     for (int i = 0; i < images.size(); i++) {
+        cout << "Image #" << i << endl;
         test.runIdentify(images[i]);
     }
+    cout << "Ending processImages" << endl;
 }
 
 void robotCamera(Create& robot, raspicam::RaspiCam_Cv Camera, pthread_mutex_t *stream_mutex, vector<Mat> images, bool& end) {
