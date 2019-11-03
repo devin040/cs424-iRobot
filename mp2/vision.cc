@@ -4,6 +4,7 @@
 #include "irobot-create.hh"
 #include <pthread>
 #include <thread>
+#include <chrono>
 
 using namespace iRobot;
 using namespace std;
