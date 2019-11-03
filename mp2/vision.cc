@@ -1,4 +1,4 @@
-#include "../object-identification/RobotIdentification.hh"
+#include "./object-identification/RobotIdentification.hh"
 #include <dirent.h>
 
 using namespace cv;
