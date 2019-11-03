@@ -11,7 +11,7 @@ void processImages(vector<Mat> images) {
     cout << "Ending processImages" << endl;
 }
 
-void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat> &images, bool& end) {
+void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& images, bool& end) {
     raspicam::RaspiCam_Cv Camera;
     if (!Camera.open()) {
      cerr << "Error opening the camera" << endl;
