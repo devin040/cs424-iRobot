@@ -19,5 +19,6 @@ void robotCamera(Create& robot, raspicam::RaspiCam_Cv Camera, pthread_mutex_t *s
         Camera.grab();
         Camera.retrieve (bgr_image);
         images.push_back(bgr_image);
+        cout << "Took picture!" << endl;
     }
 }
