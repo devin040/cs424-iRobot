@@ -9,7 +9,7 @@
 #include <pthread.h>
 #include "robotmotion.hh"
 #include "robotsafety.hh"
-#include "vision.cc"
+#include "vision.hh"
 
 using namespace iRobot;
 using namespace LibSerial;
@@ -90,7 +90,7 @@ int main() {
 	pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);
     cout << "Motion Launced" << endl;
 
-    pthread_t thread_motion;
+    pthread_t thread_camera;
 	pthread_create(&thread_camera, &attrCamera, RobotCamera, (void *)0);
     cout << "Camera Launced" << endl;
 

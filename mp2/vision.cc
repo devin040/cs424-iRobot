@@ -1,16 +1,4 @@
-#include "./object-identification/RobotIdentification.hh"
-#include <dirent.h>
-#include <raspicam/raspicam_cv.h>
-#include "irobot-create.hh"
-#include <pthread>
-#include <thread>
-#include <chrono>
-
-using namespace iRobot;
-using namespace std;
-
-void processImages(vector<Mat>);
-void robotCamera(Create&, raspicam::RaspiCam_Cv, pthread_mutex_t *, vector<Mat>, bool&);
+#include "vision.hh"
 
 void processImages(vector<Mat> images) {
     int counterimage = 0;
