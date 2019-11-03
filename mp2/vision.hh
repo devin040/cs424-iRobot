@@ -2,7 +2,7 @@
 #include <dirent.h>
 #include <raspicam/raspicam_cv.h>
 #include "irobot-create.hh"
-#include <pthread>
+#include <pthread.h>
 #include <thread>
 #include <chrono>
 
