@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include "robotmotion.hh"
 #include "robotsafety.hh"
+#include "vision.cc"
 
 using namespace iRobot;
 using namespace LibSerial;
@@ -18,27 +19,25 @@ using namespace std;
 pthread_mutex_t mutex_robot = PTHREAD_MUTEX_INITIALIZER;
 void *RobotMotion(void*);
 void *RobotSafety(void*);
+void *RobotCamera(void*);
 
 char serial_loc[] = "/dev/ttyUSB0";
 SerialStream stream (serial_loc, LibSerial::SerialStreamBuf::BAUD_57600);
 //cout << "Opened Serial Stream to" << serial_loc << endl;
 //this_thread::sleep_for(chrono::milliseconds(1000));
 Create robot(stream);
+raspicam::RaspiCam_Cv Camera;
 bool stop = false;
+vector<Mat> images;
 
-
-
-int main ()
-{
-  
+int main() {
   try {
-    //raspicam::RaspiCam_Cv Camera;
     //cv::Mat rgb_image, bgr_image;
-    //if (!Camera.open()) {
-    //  cerr << "Error opening the camera" << endl;
-    //  return -1;
-    //}
-    //cout << "Opened Camera" << endl;
+    if (!Camera.open()) {
+     cerr << "Error opening the camera" << endl;
+     return -1;
+    }
+    cout << "Opened Camera" << endl;
 
     cout << "Created iRobot Object" << endl;
     robot.sendFullCommand();
@@ -56,41 +55,52 @@ int main ()
     robot.sendStreamCommand(sensors);
     cout << "Sensors Pushed" << endl;
     this_thread::sleep_for(chrono::milliseconds(1000));
-    
+
     Create::song_t song;
     song.push_back(Create::note_t(100, 8));
     song.push_back(Create::note_t(90, 8));
     robot.sendSongCommand(1,song);
 
     pthread_attr_t attrSafety;
-		sched_param paramSafety;
-		pthread_attr_init (&attrSafety);
-		pthread_attr_getschedparam (&attrSafety, &paramSafety);
-		paramSafety.sched_priority = 4;
-		pthread_attr_setschedparam (&attrSafety, &paramSafety); 
-    
-		pthread_attr_t attrMotion;
-		sched_param paramMotion;
-		pthread_attr_init (&attrMotion);
-		pthread_attr_getschedparam (&attrMotion, &paramMotion);
-		paramMotion.sched_priority = 3;
-		pthread_attr_setschedparam (&attrMotion, &paramMotion); 
+	sched_param paramSafety;
+	pthread_attr_init (&attrSafety);
+	pthread_attr_getschedparam (&attrSafety, &paramSafety);
+	paramSafety.sched_priority = 4;
+	pthread_attr_setschedparam (&attrSafety, &paramSafety);
 
-    
+	pthread_attr_t attrMotion;
+	sched_param paramMotion;
+	pthread_attr_init (&attrMotion);
+	pthread_attr_getschedparam (&attrMotion, &paramMotion);
+	paramMotion.sched_priority = 3;
+	pthread_attr_setschedparam (&attrMotion, &paramMotion);
+
+    pthread_attr_t attrCamera;
+	sched_param paramCamera;
+	pthread_attr_init (&attrCamera);
+	pthread_attr_getschedparam (&attrCamera, &paramCamera);
+	paramMotion.sched_priority = 2;
+	pthread_attr_setschedparam (&attrCamera, &paramCamera);
 
     pthread_t thread_safety;
     pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
     cout << "Safety Launced" << endl;
 
     pthread_t thread_motion;
-		pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);
-    cout << "Motion Launced" << endl;  
+	pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);
+    cout << "Motion Launced" << endl;
+
+    pthread_t thread_motion;
+	pthread_create(&thread_camera, &attrCamera, RobotCamera, (void *)0);
+    cout << "Camera Launced" << endl;
 
 
     pthread_join(thread_motion, NULL);
     pthread_join(thread_safety, NULL);
+    pthread_join(thread_camera, NULL);
 
-    
+    processImages(images);
+
   }
   catch (InvalidArgument& e)
   {
@@ -107,12 +117,18 @@ int main ()
 
 void *RobotMotion(void *x){
     robotMotion(std::ref(robot), &mutex_robot, std::ref(stop));
-    cout << "END MOTION!!!!!!!!!!!!!" << endl;
+    cout << "END Motion!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }
 
 void *RobotSafety(void *x){
     robotSafety(std::ref(robot), &mutex_robot, std::ref(stop));
     cout << "END Safety!!!!!!!!!!!!!" << endl;
+    pthread_exit(NULL);
+}
+
+void *RobotCamera(void *x){
+    robotCamera(std::ref(robot), Camera, &mutex_robot, images, std::ref(stop));
+    cout << "END Camera!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }

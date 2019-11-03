@@ -18,7 +18,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     int wallSum = 0;
     int speed = 200;
     bool bumpTurn = false;
-    bool lostTurn = false; 
+    bool lostTurn = false;
     vector<float> distances;
     vector<float> angles;
     float angle = 1.5707;
@@ -34,7 +34,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     pthread_mutex_lock(robomutex);
     while(!robot.playButton()){
         progTimer0 = std::chrono::steady_clock::now();
-      
+
         robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
         this_thread::sleep_for(chrono::milliseconds(20));
         if (robot.bumpLeft () || robot.bumpRight () ) {
@@ -55,17 +55,17 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                 if (distance > 400){
                     distances.push_back(distance / 8);
                     angles.push_back(angle);
-                    angle = -angle;  
+                    angle = -angle;
                     cout << "Wrote a left turn distance: " << distance << endl;
                 }
             }
             enteredMaze = true;
-            
+
             robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
-            
+
             short maxWallSignal = 0;
             short wallSignal = -1;
 
@@ -78,21 +78,21 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                 //cout << "Wall signal: " << wallSignal << endl;
                 if (wallSignal >= maxWallSignal ){
                     maxWallSignal = wallSignal;
-                    
+
                 }
                 this_thread::sleep_for(chrono::milliseconds(15));
             }
 
             cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
-            
+
             robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
 
-              
+
             while ((wallSignal = robot.wallSignal()) < (maxWallSignal - 30)){
                 //cout << "Looking for max curr at :" << wallSignal << endl;
                 std::this_thread::sleep_for(chrono::milliseconds(15));
             }
-              
+
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
             robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
@@ -103,13 +103,13 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             distclock0 = std::chrono::steady_clock::now();
             bumpTurn = true;
-            this_thread::sleep_for(chrono::milliseconds(50));         
+            this_thread::sleep_for(chrono::milliseconds(50));
         }
         int wallAvg = 10;
         wallSum += robot.wallSignal();
         //cout << "Lost wall  Wall sum: " << wallSum << endl;
         wallCount++;
-      
+
         if (wallCount == 6){
             wallAvg = wallSum / wallCount;
             wallCount = 0;
@@ -118,7 +118,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
         this_thread::sleep_for(chrono::milliseconds(15));
 
         cout << "Continous wall sensor: " << robot.wallSignal() << endl;
-        this_thread::sleep_for(chrono::milliseconds(15)); 
+        this_thread::sleep_for(chrono::milliseconds(15));
 
         if (enteredMaze && (robot.wallSignal() < 3) && numTurns == 0 && numAdjust < 2){
             tryAdjust = false;
@@ -143,7 +143,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             numAdjust = 0;
         }
         if (enteredMaze && (wallAvg < 2 || lostWallAdjustmentCounter > 3 ) && numTurns < 2 ){
-            
+
             numTurns++;
             lostWallAdjustmentCounter = 0;
             tryAdjust = true;
@@ -161,18 +161,18 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                     recordTime = true;
                     cout << "Wrote a Right Turn distance: " << distance << endl;
                 }
-                
+
             }
-            this_thread::sleep_for(chrono::milliseconds(15));  
+            this_thread::sleep_for(chrono::milliseconds(15));
 
             short maxWallSignal = 0;
             short wallSignal = -1;
 
             speed = 200;
-            
+
             robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
             this_thread::sleep_for(chrono::milliseconds(1000));
-            
+
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(200));
@@ -182,16 +182,16 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
                 distclock0 = std::chrono::steady_clock::now();
             }
             lostTurn = true;
-            this_thread::sleep_for(chrono::milliseconds(50));   
+            this_thread::sleep_for(chrono::milliseconds(50));
         }
-        
+
         //pthread_mutex_unlock(robomutex);
         pthread_mutex_unlock(robomutex);
         progTimer1 = std::chrono::steady_clock::now();
         int progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
         //cout << "Running time motion: " << progTime << endl;
         this_thread::sleep_for(chrono::milliseconds(200));
-        pthread_mutex_lock(robomutex); 
+        pthread_mutex_lock(robomutex);
 
     }
     distclock1 = std::chrono::steady_clock::now();
@@ -200,7 +200,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     distances.push_back(distance / 4);
     //angles.push_back(1.5707);
     robotContour(distances, angles);
-    
+
 
     std::cout << "Play button pressed, stopping Robot" << endl;
     robot.sendDriveCommand (0, Create::DRIVE_STRAIGHT);
@@ -208,4 +208,3 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     pthread_mutex_unlock(robomutex);
 
 }
-
