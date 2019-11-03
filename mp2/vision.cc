@@ -1,12 +1,13 @@
 #include "./object-identification/RobotIdentification.hh"
 #include <dirent.h>
+#include <raspicam/raspicam_cv.h>
+#include "irobot-create.hh"
 
-using namespace cv;
-using namespace cv::xfeatures2d;
+using namespace iRobot;
 using namespace std;
 
 void processImages(vector<Mat>);
-void vision (Create&, raspicam::RaspiCam_Cv, pthread_mutex_t *, vector<Mat>, bool&);
+void robotCamera(Create&, raspicam::RaspiCam_Cv, pthread_mutex_t *, vector<Mat>, bool&);
 
 void processImages(vector<Mat> images) {
     int counterimage = 0;
