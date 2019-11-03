@@ -26,19 +26,12 @@ SerialStream stream (serial_loc, LibSerial::SerialStreamBuf::BAUD_57600);
 //cout << "Opened Serial Stream to" << serial_loc << endl;
 //this_thread::sleep_for(chrono::milliseconds(1000));
 Create robot(stream);
-raspicam::RaspiCam_Cv Camera;
+
 bool stop = false;
 vector<Mat> images;
 
 int main() {
   try {
-    //cv::Mat rgb_image, bgr_image;
-    if (!Camera.open()) {
-     cerr << "Error opening the camera" << endl;
-     return -1;
-    }
-    cout << "Opened Camera" << endl;
-
     cout << "Created iRobot Object" << endl;
     robot.sendFullCommand();
     cout << "Setting iRobot to Full Mode" << endl;
@@ -127,7 +120,7 @@ void *RobotSafety(void *x){
 }
 
 void *RobotCamera(void *x){
-    robotCamera(std::ref(robot), Camera, &mutex_robot, images, std::ref(stop));
+    robotCamera(std::ref(robot), &mutex_robot, images, std::ref(stop));
     cout << "END Camera!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }
