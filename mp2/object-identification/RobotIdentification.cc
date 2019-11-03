@@ -43,11 +43,13 @@ bool RobotIdentification::runIdentify(Mat& scene_image) {
             ofstream myfile;
             myfile.open("./found_images.txt", ofstream::out | ofstream::app);
             myfile << "Found: " << to_string(objects_found) << ": " << << it->name << "\n\n";
+            cout << "Found: " << to_string(objects_found) << ": " << << it->name << endl;
             myfile.close();
             query_images.erase(it);
         }
         else {
             it++;
+            cout << "Nothing found: idiots" << endl;
         }
     }
 }
@@ -108,7 +110,7 @@ bool RobotIdentification::identify(Mat& img_query, Mat& scene_image_full, string
             query, scene, img_query, img_scene, scene_corners);
         cout << "Matching and alignment" << endl;
 
-        if (res) {  
+        if (res) {
           cout << "Object found" << endl;
           // Write output to file
           Mat img_matches;
