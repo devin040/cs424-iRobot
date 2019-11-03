@@ -32,6 +32,7 @@ RobotIdentification::RobotIdentification() {
                   image_mat
                 };
                 query_images.push_back(input);
+                cout << "query_images size "<< query_images.size() << endl;
             }
         }
     }
