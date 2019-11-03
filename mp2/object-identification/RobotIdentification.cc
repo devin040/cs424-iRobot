@@ -24,6 +24,7 @@ RobotIdentification::RobotIdentification() {
     struct dirent * image;
     string dir = "./query-image/low-resolution";
     if(pDIR = opendir(dir.c_str())) {
+        cout << "27" << endl;
         while(image = readdir(pDIR)) {
             if(strcmp(image->d_name, ".") != 0 && strcmp(image->d_name, "..") != 0) {
                 Mat image_mat = imread(dir + "/" + image->d_name, IMREAD_GRAYSCALE);
@@ -40,6 +41,7 @@ RobotIdentification::RobotIdentification() {
 
 bool RobotIdentification::runIdentify(Mat& scene_image) {
     for(std::vector<QueryImage>::iterator it = query_images.begin(); it != query_images.end();) {
+        cout << "See if it matches " << it->name << endl;
         if(identify(it->image, scene_image, "./found_image_" + to_string(++objects_found) + ".jpg")) {
             ofstream myfile;
             myfile.open("./found_images.txt", ofstream::out | ofstream::app);
@@ -69,7 +71,8 @@ bool RobotIdentification::identify(Mat& img_query, Mat& scene_image_full, string
         // the top 62.5% when camera mounted on front. When camera mounted on the
         // left side its the top 85% that contains useful information.
         cropBottom(scene_image_full, img_scene, 0.85);
-
+        cout << "cropped" << endl;
+        
         // Detect the keypoints and extract descriptors using SURF
         // Surf keypoint detector and descriptor.
         int minHessian = 100;
