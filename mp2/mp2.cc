@@ -120,7 +120,7 @@ void *RobotSafety(void *x){
 }
 
 void *RobotCamera(void *x){
-    robotCamera(std::ref(robot), &mutex_robot, images, std::ref(stop));
+    robotCamera(std::ref(robot), &mutex_robot, &images, std::ref(stop));
     cout << "END Camera!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }
