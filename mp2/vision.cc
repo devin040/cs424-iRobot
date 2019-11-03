@@ -15,10 +15,10 @@ void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat> image
     raspicam::RaspiCam_Cv Camera;
     if (!Camera.open()) {
      cerr << "Error opening the camera" << endl;
-     return -1;
+     return;
     }
     cout << "Opened Camera" << endl;
-    
+
     while (!end){
         // pthread_mutex_lock(stream_mutex);
         // int speed = 50;
