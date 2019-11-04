@@ -9,8 +9,8 @@
 using namespace iRobot;
 using namespace std;
 
-#define SPEED 400 //200
-#define SLEEP 100 //200
+#define SPEED 300 //200
+#define SLEEP 150 //200
 
 void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     cout << "In Motion Thread" << endl;
@@ -169,7 +169,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             short maxWallSignal = 0;
             short wallSignal = -1;
 
-            speed = SPEED;
+            speed = 200;
 
             robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
             this_thread::sleep_for(chrono::milliseconds(1000));

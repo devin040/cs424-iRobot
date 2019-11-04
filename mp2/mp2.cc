@@ -36,7 +36,6 @@ int main() {
     robot.sendFullCommand();
     cout << "Setting iRobot to Full Mode" << endl;
     cout << "Robot is ready" << endl;
-    int speed = 200;
     // Let's stream some sensors.
     Create::sensorPackets_t sensors;
     sensors.push_back(Create::SENSOR_BUMPS_WHEELS_DROPS);
