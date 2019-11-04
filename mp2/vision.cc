@@ -1,11 +1,11 @@
 #include "vision.hh"
 
 void processImages(vector<Mat> images) {
+    cout << images.size() << " images taken." << endl;
     cout << "Starting processImages" << endl;
     RobotIdentification test;
-    cout << "image size " << images.size() << endl;
     for (int i = 0; i < images.size(); i++) {
-        cout << "Image #" << i << endl;
+        cout << "runIdentify on Image #" << i << endl;
         test.runIdentify(images[i]);
     }
     cout << "Ending processImages" << endl;
@@ -29,7 +29,6 @@ void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& imag
         Camera.grab();
         Camera.retrieve(bgr_image);
         images.push_back(bgr_image);
-        cout << "image size " << images.size() << endl;
         cout << "Took picture!" << endl;
     }
 }
