@@ -9,8 +9,8 @@
 using namespace iRobot;
 using namespace std;
 
-#define SPEED 300 //200
-#define SLEEP 150 //200
+#define SPEED 200 //200
+#define SLEEP 200 //200
 
 void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     cout << "In Motion Thread" << endl;
