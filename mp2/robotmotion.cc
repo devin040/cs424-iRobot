@@ -9,12 +9,15 @@
 using namespace iRobot;
 using namespace std;
 
+#define SPEED 400 //200
+#define SLEEP 100 //200
+
 void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
     cout << "In Motion Thread" << endl;
     bool enteredMaze = false;
     int wallCount = 0;
     int wallSum = 0;
-    int speed = 200;
+    int speed = SPEED;
     bool bumpTurn = false;
     bool lostTurn = false;
     vector<float> distances;
@@ -97,7 +100,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             this_thread::sleep_for(chrono::milliseconds(200));
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
-            speed = 200;
+            speed = SPEED;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             distclock0 = std::chrono::steady_clock::now();
             bumpTurn = true;
@@ -125,7 +128,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             this_thread::sleep_for(chrono::milliseconds(100));
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
-            robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
+            robot.sendDriveCommand(SPEED, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(100));
             lostWallAdjustmentCounter++;
         }
@@ -134,7 +137,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             lostWallAdjustmentCounter = 0;
             robot.sendDriveCommand(200, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
             this_thread::sleep_for(chrono::milliseconds(50));
-            robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
+            robot.sendDriveCommand(SPEED, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
             tryAdjust = true;
             numTurns = 0;
@@ -166,7 +169,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             short maxWallSignal = 0;
             short wallSignal = -1;
 
-            speed = 200;
+            speed = SPEED;
 
             robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
             this_thread::sleep_for(chrono::milliseconds(1000));
@@ -174,7 +177,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(200));
-            speed = 200;
+            speed = SPEED;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             if (recordTime){
                 distclock0 = std::chrono::steady_clock::now();
@@ -188,7 +191,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
         progTimer1 = std::chrono::steady_clock::now();
         int progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
         //cout << "Running time motion: " << progTime << endl;
-        this_thread::sleep_for(chrono::milliseconds(200));
+        this_thread::sleep_for(chrono::milliseconds(SLEEP)); //fixed
         pthread_mutex_lock(robomutex);
 
     }
