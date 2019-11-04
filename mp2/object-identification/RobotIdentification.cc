@@ -23,6 +23,7 @@ RobotIdentification::RobotIdentification() {
     DIR *pDIR;
     struct dirent * image;
     string dir = "./query-image/low-resolution";
+    cout << "26" << endl;
     if(pDIR = opendir(dir.c_str())) {
         cout << "27" << endl;
         while(image = readdir(pDIR)) {
@@ -40,6 +41,7 @@ RobotIdentification::RobotIdentification() {
 }
 
 bool RobotIdentification::runIdentify(Mat& scene_image) {
+    cout << "query images size: " << query_images.size() << endl;
     for(std::vector<QueryImage>::iterator it = query_images.begin(); it != query_images.end();) {
         cout << "See if it matches " << it->name << endl;
         if(identify(it->image, scene_image, "./found_image_" + to_string(++objects_found) + ".jpg")) {
@@ -72,7 +74,7 @@ bool RobotIdentification::identify(Mat& img_query, Mat& scene_image_full, string
         // left side its the top 85% that contains useful information.
         cropBottom(scene_image_full, img_scene, 0.85);
         cout << "cropped" << endl;
-        
+
         // Detect the keypoints and extract descriptors using SURF
         // Surf keypoint detector and descriptor.
         int minHessian = 100;
