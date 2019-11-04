@@ -48,7 +48,6 @@ bool RobotIdentification::runIdentify(Mat& scene_image) {
             cout << "FOUND: " << to_string(objects_found) << ": " << it->name << "!!!!!!!!"<< endl;
             myfile.close();
             query_images.erase(it);
-            break;
         }
         else {
             it++;

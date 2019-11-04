@@ -24,7 +24,7 @@ void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& imag
         // int speed = 50;
         // robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
         // pthread_mutex_unlock(stream_mutex);
-        this_thread::sleep_for(std::chrono::milliseconds(2000));
+        this_thread::sleep_for(std::chrono::milliseconds(3000));
         Mat bgr_image;
         Camera.grab();
         Camera.retrieve(bgr_image);
