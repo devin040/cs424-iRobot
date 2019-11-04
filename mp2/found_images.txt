@@ -12,3 +12,17 @@ Found: 38: roman-glass-600.jpg
 
 Found: 85: mammoth-600.jpg
 
+Found: 2: pueblo-pot-600.jpg
+
+Found: 3: willow-plate-600.jpg
+
+Found: 8: mammoth-600.jpg
+
+Found: 10: ancient-lamp-600.jpg
+
+Found: 13: mayan-calendar-600.jpg
+
+Found: 53: roman-glass-600.jpg
+
+Found: 66: audio-cassette-600.jpg
+
