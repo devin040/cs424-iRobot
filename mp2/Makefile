@@ -24,3 +24,4 @@ RobotIdentification.o: ./object-identification/RobotIdentification.cc
 
 clean:
 	rm -f mp2 *.o
+	rm -f found_image*
