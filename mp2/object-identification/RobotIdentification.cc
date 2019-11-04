@@ -23,9 +23,7 @@ RobotIdentification::RobotIdentification() {
     DIR *pDIR;
     struct dirent * image;
     string dir = "object-identification/query-image/low-resolution";
-    cout << "26" << endl;
     if((pDIR = opendir(dir.c_str()))) {
-        cout << "27" << endl;
         while(image = readdir(pDIR)) {
             if(strcmp(image->d_name, ".") != 0 && strcmp(image->d_name, "..") != 0) {
                 Mat image_mat = imread(dir + "/" + image->d_name, IMREAD_GRAYSCALE);
@@ -34,32 +32,29 @@ RobotIdentification::RobotIdentification() {
                   image_mat
                 };
                 query_images.push_back(input);
-                cout << "query_images size "<< query_images.size() << endl;
             }
         }
     }
+    cout << "query_images size: "<< query_images.size() << endl;
 }
 
 bool RobotIdentification::runIdentify(Mat& scene_image) {
-    cout << "query images size: " << query_images.size() << endl;
+    cout << (10 - query_images.size()) << " images found so far." << endl;
     for(std::vector<QueryImage>::iterator it = query_images.begin(); it != query_images.end();) {
-        cout << "See if it matches " << it->name << endl;
         if(identify(it->image, scene_image, "./found_image_" + to_string(++objects_found) + ".jpg")) {
             ofstream myfile;
             myfile.open("./found_images.txt", ofstream::out | ofstream::app);
             myfile << "Found: " << to_string(objects_found) << ": " << it->name << "\n\n";
-            cout << "Found: " << to_string(objects_found) << ": " << it->name << endl;
+            cout << "FOUND: " << to_string(objects_found) << ": " << it->name << "!!!!!!!!"<< endl;
             myfile.close();
             query_images.erase(it);
+            break;
         }
         else {
             it++;
-            cout << "Nothing found: idiots" << endl;
         }
     }
 }
-
-
 
 bool RobotIdentification::identify(Mat& img_query, Mat& scene_image_full, string output_file_name) {
     try {
@@ -73,8 +68,6 @@ bool RobotIdentification::identify(Mat& img_query, Mat& scene_image_full, string
         // the top 62.5% when camera mounted on front. When camera mounted on the
         // left side its the top 85% that contains useful information.
         cropBottom(scene_image_full, img_scene, 0.85);
-        cout << "cropped" << endl;
-
         // Detect the keypoints and extract descriptors using SURF
         // Surf keypoint detector and descriptor.
         int minHessian = 100;
