@@ -12,3 +12,7 @@ Found: 38: roman-glass-600.jpg
 
 Found: 85: mammoth-600.jpg
 
+Found: 83: willow-plate-600.jpg
+
+Found: 112: mayan-calendar-600.jpg
+
