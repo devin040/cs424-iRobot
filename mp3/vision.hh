@@ -9,5 +9,5 @@
 using namespace iRobot;
 using namespace std;
 
-void processImages(vector<Mat> images);
+void robotImage(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& images, bool& end);
 void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& images, bool& end);

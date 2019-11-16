@@ -67,12 +67,12 @@ int main() {
 	paramMotion.sched_priority = 3;
 	pthread_attr_setschedparam (&attrMotion, &paramMotion);
 
-    pthread_attr_t attrCamera;
-	sched_param paramCamera;
-	pthread_attr_init (&attrCamera);
-	pthread_attr_getschedparam (&attrCamera, &paramCamera);
-	paramMotion.sched_priority = 2;
-	pthread_attr_setschedparam (&attrCamera, &paramCamera);
+    pthread_attr_t attrVision;
+	sched_param paramVision;
+	pthread_attr_init (&attrVision);
+	pthread_attr_getschedparam (&attrVision, &paramVision);
+	paramVision.sched_priority = 2;
+	pthread_attr_setschedparam (&attrVision, &paramVision);
 
     pthread_t thread_safety;
     pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
@@ -82,8 +82,8 @@ int main() {
 	pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);
     cout << "Motion Launced" << endl;
 
-    pthread_t thread_camera;
-	pthread_create(&thread_camera, &attrCamera, RobotCamera, (void *)0);
+    pthread_t thread_vision;
+	pthread_create(&thread_vision, &attrVision, RobotVision, (void *)0);
     cout << "Camera Launced" << endl;
 
 
@@ -118,8 +118,9 @@ void *RobotSafety(void *x){
     pthread_exit(NULL);
 }
 
-void *RobotCamera(void *x){
+void *RobotVision(void *x){
     robotCamera(std::ref(robot), &mutex_robot, std::ref(images), std::ref(stop));
+    robotImage(std::ref(robot), &mutex_robot, std::ref(images), std::ref(stop));
     cout << "END Camera!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }
