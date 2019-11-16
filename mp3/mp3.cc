@@ -91,7 +91,7 @@ int main() {
     pthread_join(thread_safety, NULL);
     pthread_join(thread_camera, NULL);
 
-    processImages(images);
+    // processImages(images);
   }
   catch (InvalidArgument& e)
   {
