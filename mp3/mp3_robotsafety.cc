@@ -46,7 +46,7 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             }
 
-        if ((bumpRight = robot.Right())
+        if ((bumpRight = robot.bumpRight())
 
            {
             //stop and wait the wall to be stable
