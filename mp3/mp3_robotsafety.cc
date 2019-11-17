@@ -21,13 +21,14 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
     bool wheeldropcaster = false;
     bool bumpLeft = false;
     bool bumpRight= false
-    bool cliff_left = false;
-    bool cliff_right = false;
-    bool cliff_frontleft = false;
-    bool cliff_frontright = false;
+    int cliff_left = 0;
+    int cliff_right = 0;
+    int cliff_frontleft = 0;
+    int cliff_frontright = 0;
     bool leftwheelo = false;
     bool rightwheelo = false;
     int overcurrent = 0;
+
     while(!stop){
         pthread_mutex_lock(robomutex);
         progTimer0 = std::chrono::steady_clock::now();
@@ -65,10 +66,10 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
         if ((wheeldropleft = robot.wheeldropLeft()) ||
             (wheeldropright = robot.wheeldropRight()) ||
             (wheeldropcaster = robot.wheeldropCaster()) ||
-            (cliff_left= robot.cliffLeft())||
-            (cliff_right= robot.cliffRight())||
-            (cliff_frontleft= robot.cliffFrontLeft())||
-            (cliff_frontright = robot.cliffFrontRight())||
+            (cliff_left < robot.cliffLeftSignal())||
+            (cliff_frontright < robot.cliffFrontRightSignal())||
+            (clifff_frontleft < robot.cliffFrontLeftSignal())||
+            (cliff_right < robot.cliffRightSignal())||
             overcurrent >= 3)
 
             {
@@ -91,10 +92,10 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
                 wheeldropleft = robot.wheeldropLeft();
                 wheeldropright = robot.wheeldropRight();
                 wheeldropcaster = robot.wheeldropCaster();
-                cliffleft = robot.cliffLeftSignal();
-                clifffrontright = robot.cliffFrontRightSignal();
-                clifffrontleft = robot.cliffFrontLeftSignal();
-                cliffright = robot.cliffRightSignal();
+                cliff_left = robot.cliffLeftSignal();
+                cliff_frontright = robot.cliffFrontRightSignal();
+                clifff_frontleft = robot.cliffFrontLeftSignal();
+                cliff_right = robot.cliffRightSignal();
                 leftwheelo = robot.leftWheelOvercurrent();
                 rightwheelo = robot.rightWheelOvercurrent();
                 cout << "wheel drop left : " << wheeldropleft << endl;
