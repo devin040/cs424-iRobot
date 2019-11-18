@@ -13,11 +13,9 @@ void processImages(vector<Mat> images) {
     }
     cout << "Ending processImages" << endl;
 }
-
 */
-pthread_mutex_t image_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-void robotImage(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& images, bool& end) {
+void robotImage(Create& robot, pthread_mutex_t *stream_mutex, phtread_mutex_t *image_mutex, vector<Mat>& images, bool& end) {
     bool usedWeapon = false;
     RobotIdentification test;
     while (!end) {
@@ -28,6 +26,7 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& image
             Mat image = images[0];
             images.erase(images.begin());
             pthread_mutex_unlock(&image_mutex);
+            cout << "Processing picture taken..." << endl;
             if (test.runIdentify(image)) {
                 cout << "found magic lamp!" << endl;
                 if (!usedWeapon) {
@@ -40,12 +39,11 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& image
             } else {
                 cout << "no magic lamp to be found" << endl;
             }
-            cout << "Processing picture taken..." << endl;
         }
     }
 }
 
-void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& images, bool& end) {
+void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, phtread_mutex_t *image_mutex, vector<Mat>& images, bool& end) {
     raspicam::RaspiCam_Cv Camera;
     if (!Camera.open()) {
      cerr << "Error opening the camera" << endl;
@@ -61,5 +59,6 @@ void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& imag
         pthread_mutex_lock(&image_mutex);
         images.push_back(bgr_image);
         pthread_mutex_unlock(&image_mutex);
+        cout << "Image taken and added to vector" << endl;
     }
 }

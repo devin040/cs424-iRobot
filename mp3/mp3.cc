@@ -17,6 +17,8 @@ using namespace std;
 
 
 pthread_mutex_t mutex_robot = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t image_mutex = PTHREAD_MUTEX_INITIALIZER;
+
 void *RobotMotion(void*);
 void *RobotSafety(void*);
 void *RobotVision(void*);
@@ -150,8 +152,8 @@ void *RobotSafety(void *x){
 }
 
 void *RobotVision(void *x){
-    robotCamera(std::ref(robot), &mutex_robot, std::ref(images), std::ref(stop));
-    robotImage(std::ref(robot), &mutex_robot, std::ref(images), std::ref(stop));
+    robotCamera(std::ref(robot), &mutex_robot, &image_mutex, std::ref(images), std::ref(stop));
+    robotImage(std::ref(robot), &mutex_robot, &image_mutex, std::ref(images), std::ref(stop));
     cout << "END Camera!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }
