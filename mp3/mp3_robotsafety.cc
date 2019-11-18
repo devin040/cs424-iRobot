@@ -6,6 +6,7 @@
 #include <ctime>
 #include "robotsafety.hh"
 #include <unistd.h>
+#include <stdlib.h>
 
 
 using namespace iRobot;
@@ -20,7 +21,7 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
     bool wheeldropleft = false;
     bool wheeldropcaster = false;
     bool bumpLeft = false;
-    bool bumpRight= false
+    bool bumpRight= false;
     int cliff_left = 0;
     int cliff_right = 0;
     int cliff_frontleft = 0;
@@ -28,38 +29,11 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
     bool leftwheelo = false;
     bool rightwheelo = false;
     int overcurrent = 0;
+    int speed = 0;
 
     while(!stop){
         pthread_mutex_lock(robomutex);
         progTimer0 = std::chrono::steady_clock::now();
-        if ((bumpLeft = robot.bumpLeft()))
-           {
-            //stop and wait the wall to be stable
-            robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(1000));
-            //Get away away from the  wall
-            speed= 50
-            robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
-            this_thread::sleep_for(chrono::milliseconds(500));
-            //Resume operation
-            speed= 200
-            robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-            }
-
-        if ((bumpRight = robot.bumpRight()))
-
-           {
-            //stop and wait the wall to be stable
-            robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(1000));
-            //Run away from the wall
-            speed= 50
-            robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
-            this_thread::sleep_for(chrono::milliseconds(500));
-            //Resume Operation
-            peed= 200
-            robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-            }
 
 
         if ((wheeldropleft = robot.wheeldropLeft()) ||
@@ -67,7 +41,7 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             (wheeldropcaster = robot.wheeldropCaster()) ||
             (cliff_left < robot.cliffLeftSignal())||
             (cliff_frontright < robot.cliffFrontRightSignal())||
-            (clifff_frontleft < robot.cliffFrontLeftSignal())||
+            (cliff_frontleft < robot.cliffFrontLeftSignal())||
             (cliff_right < robot.cliffRightSignal())||
             overcurrent >= 3)
 
@@ -77,10 +51,10 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             cout << "wheel drop left : " << wheeldropleft << endl;
             cout << "wheel drop right: " << wheeldropright << endl;
             cout << "wheel drop caster: " << wheeldropcaster << endl;
-            cout << "cliff left: " << cliffleft  << endl;
-            cout << "cliff front left: " << clifffrontleft << endl;
-            cout << "cliff right: " << cliffright << endl;
-            cout << "cliff front right: " << clifffrontright << endl;
+            cout << "cliff left: " << cliff_left  << endl;
+            cout << "cliff front left: " << cliff_frontleft << endl;
+            cout << "cliff right: " << cliff_right << endl;
+            cout << "cliff front right: " << cliff_frontright << endl;
             cout << "left wheel over : " << leftwheelo << endl;
             cout << "right wheel over: " << rightwheelo << endl;
             cout << "over current counter : " << overcurrent << endl;
@@ -93,17 +67,17 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
                 wheeldropcaster = robot.wheeldropCaster();
                 cliff_left = robot.cliffLeftSignal();
                 cliff_frontright = robot.cliffFrontRightSignal();
-                clifff_frontleft = robot.cliffFrontLeftSignal();
+                cliff_frontleft = robot.cliffFrontLeftSignal();
                 cliff_right = robot.cliffRightSignal();
                 leftwheelo = robot.leftWheelOvercurrent();
                 rightwheelo = robot.rightWheelOvercurrent();
                 cout << "wheel drop left : " << wheeldropleft << endl;
                 cout << "wheel drop right: " << wheeldropright << endl;
                 cout << "wheel drop caster: " << wheeldropcaster << endl;
-                cout << "cliff left: " << cliffleft  << endl;
-                cout << "cliff front left: " << clifffrontleft << endl;
-                cout << "cliff right: " << cliffright << endl;
-                cout << "cliff front right: " << clifffrontright << endl;
+                cout << "cliff left: " << cliff_left  << endl;
+                cout << "cliff front left: " << cliff_frontleft << endl;
+                cout << "cliff right: " << cliff_right << endl;
+                cout << "cliff front right: " << cliff_frontright << endl;
                 cout << "left wheel over : " << leftwheelo << endl;
                 cout << "right wheel over: " << rightwheelo << endl;
                 //this_thread::sleep_for(chrono::milliseconds(500));
