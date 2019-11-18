@@ -19,7 +19,7 @@ using namespace std;
 pthread_mutex_t mutex_robot = PTHREAD_MUTEX_INITIALIZER;
 void *RobotMotion(void*);
 void *RobotSafety(void*);
-void *RobotCamera(void*);
+void *RobotVision(void*);
 
 char serial_loc[] = "/dev/ttyUSB0";
 SerialStream stream (serial_loc, LibSerial::SerialStreamBuf::BAUD_57600);
@@ -119,7 +119,7 @@ int main() {
 
     pthread_join(thread_motion, NULL);
     pthread_join(thread_safety, NULL);
-    pthread_join(thread_camera, NULL);
+    pthread_join(thread_vision, NULL);
 
     // processImages(images);
   }
