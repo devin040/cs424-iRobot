@@ -24,7 +24,8 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& image
         this_thread::sleep_for(std::chrono::milliseconds(3000));
         if (images.size() > 0) {
             pthread_mutex_lock(&image_mutex);
-            Mat image = images.pop_back();
+            Mat image = images[0];
+            images.erase(images.begin());
             pthread_mutex_unlock(&image_mutex);
             if (test.runIdentify(image)) {
                 cout << "found magic lamp!" << endl;
