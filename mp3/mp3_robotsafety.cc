@@ -46,9 +46,9 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             cout << "wheel drop left : " << wheeldropleft << endl;
             cout << "wheel drop right: " << wheeldropright << endl;
             cout << "wheel drop caster: " << wheeldropcaster << endl;
-            cout << "cliff left: " << cliff_left  << endl;
+            cout << "cliff left: " << robot.cliffLeftSignal()  << endl;
             cout << "cliff front left: " << cliff_frontleft << endl;
-            cout << "cliff right: " << cliff_right << endl;
+            cout << "cliff right: " << robot.cliffRightSignal() << endl;
             cout << "cliff front right: " << cliff_frontright << endl;
             cout << "left wheel over : " << leftwheelo << endl;
             cout << "right wheel over: " << rightwheelo << endl;
