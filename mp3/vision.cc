@@ -22,6 +22,7 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& image
     RobotIdentification test;
     while (!end) {
         this_thread::sleep_for(std::chrono::milliseconds(3000));
+        cout << "robotImage" << endl;
         if (images.size() > 0) {
             pthread_mutex_lock(&image_mutex);
             Mat image = images[0];
@@ -36,6 +37,8 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, vector<Mat>& image
                     robot.sendLedCommand(Create::LED_PLAY, 0, 0);
                     pthread_mutex_unlock(stream_mutex);
                 }
+            } else {
+                cout << "no magic lamp to be found" << endl;
             }
             cout << "Processing picture taken..." << endl;
         }
