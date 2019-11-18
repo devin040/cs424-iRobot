@@ -32,8 +32,7 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
     while(!stop){
         pthread_mutex_lock(robomutex);
         progTimer0 = std::chrono::steady_clock::now();
-        if ((bumpLeft = robot.bumpLeft())
-
+        if ((bumpLeft = robot.bumpLeft()))
            {
             //stop and wait the wall to be stable
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
@@ -47,7 +46,7 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             }
 
-        if ((bumpRight = robot.bumpRight())
+        if ((bumpRight = robot.bumpRight()))
 
            {
             //stop and wait the wall to be stable
