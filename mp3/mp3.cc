@@ -52,6 +52,36 @@ int main() {
     song.push_back(Create::note_t(100, 8));
     song.push_back(Create::note_t(90, 8));
     robot.sendSongCommand(1,song);
+  bool wheeldropright = false;
+  bool wheeldropleft = false;
+  bool wheeldropcaster = false;
+  int cliff_left = 0;
+  int cliff_right = 0;
+  int cliff_frontleft = 0;
+  int cliff_frontright = 0;
+  bool leftwheelo = false;
+  bool rightwheelo = false;
+  while (true){
+    wheeldropleft = robot.wheeldropLeft();
+    wheeldropright = robot.wheeldropRight();
+    wheeldropcaster = robot.wheeldropCaster();
+    cliff_left = robot.cliffLeftSignal();
+    cliff_frontright = robot.cliffFrontRightSignal();
+    cliff_frontleft = robot.cliffFrontLeftSignal();
+    cliff_right = robot.cliffRightSignal();
+    leftwheelo = robot.leftWheelOvercurrent();
+    rightwheelo = robot.rightWheelOvercurrent();
+    cout << "wheel drop left : " << wheeldropleft << endl;
+    cout << "wheel drop right: " << wheeldropright << endl;
+    cout << "wheel drop caster: " << wheeldropcaster << endl;
+    cout << "cliff left: " << cliff_left  << endl;
+    cout << "cliff front left: " << cliff_frontleft << endl;
+    cout << "cliff right: " << cliff_right << endl;
+    cout << "cliff front right: " << cliff_frontright << endl;
+    cout << "left wheel over : " << leftwheelo << endl;
+    cout << "right wheel over: " << rightwheelo << endl;
+    this_thread::sleep_for(chrono::milliseconds(2000));
+  }
 
     pthread_attr_t attrSafety;
 	sched_param paramSafety;
