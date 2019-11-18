@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#define CLIFF_VAL 100
 
 using namespace iRobot;
 using namespace std;
@@ -22,8 +23,6 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
     bool wheeldropcaster = false;
     bool bumpLeft = false;
     bool bumpRight= false;
-    int cliff_left = 100;
-    int cliff_right = 100;
     int cliff_frontleft = 0;
     int cliff_frontright = 0;
     bool leftwheelo = false;
@@ -39,11 +38,9 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
         if ((wheeldropleft = robot.wheeldropLeft()) ||
             (wheeldropright = robot.wheeldropRight()) ||
             (wheeldropcaster = robot.wheeldropCaster()) ||
-            (cliff_left > robot.cliffLeftSignal())||
-            (cliff_right > robot.cliffRightSignal())||
-            overcurrent >= 3)
-
-            {
+            (CLIFF_VAL > robot.cliffLeftSignal())||
+            (CLIFF_VAL > robot.cliffRightSignal())||
+            overcurrent >= 3) {
             //stop
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             cout << "wheel drop left : " << wheeldropleft << endl;
@@ -63,10 +60,10 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
                 wheeldropleft = robot.wheeldropLeft();
                 wheeldropright = robot.wheeldropRight();
                 wheeldropcaster = robot.wheeldropCaster();
-                cliff_left = robot.cliffLeftSignal();
+                int cliff_left = robot.cliffLeftSignal();
                 cliff_frontright = robot.cliffFrontRightSignal();
                 cliff_frontleft = robot.cliffFrontLeftSignal();
-                cliff_right = robot.cliffRightSignal();
+                int cliff_right = robot.cliffRightSignal();
                 leftwheelo = robot.leftWheelOvercurrent();
                 rightwheelo = robot.rightWheelOvercurrent();
                 cout << "wheel drop left : " << wheeldropleft << endl;
