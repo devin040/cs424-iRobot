@@ -13,8 +13,8 @@ robotmotion.o: robotmotion.cc
 vision.o: vision.cc
 	g++ -std=c++11 -c vision.cc
 
-robotsafety.o: robotsafety.cc
-	g++ -std=c++11 -c robotsafety.cc
+robotsafety.o: mp3_robotsafety.cc
+	g++ -std=c++11 -c mp3_robotsafety.cc
 
 robotcontour.o: robotcontour.cc
 	g++ -std=c++11 -c robotcontour.cc
