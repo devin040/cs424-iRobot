@@ -52,6 +52,7 @@ int main() {
     song.push_back(Create::note_t(100, 8));
     song.push_back(Create::note_t(90, 8));
     robot.sendSongCommand(1,song);
+  /**
   bool wheeldropright = false;
   bool wheeldropleft = false;
   bool wheeldropcaster = false;
@@ -82,8 +83,8 @@ int main() {
     cout << "right wheel over: " << rightwheelo << endl;
     this_thread::sleep_for(chrono::milliseconds(2000));
   }
-
-    pthread_attr_t attrSafety;
+  */
+  pthread_attr_t attrSafety;
 	sched_param paramSafety;
 	pthread_attr_init (&attrSafety);
 	pthread_attr_getschedparam (&attrSafety, &paramSafety);
@@ -97,24 +98,24 @@ int main() {
 	paramMotion.sched_priority = 3;
 	pthread_attr_setschedparam (&attrMotion, &paramMotion);
 
-    pthread_attr_t attrVision;
+  pthread_attr_t attrVision;
 	sched_param paramVision;
 	pthread_attr_init (&attrVision);
 	pthread_attr_getschedparam (&attrVision, &paramVision);
 	paramVision.sched_priority = 2;
 	pthread_attr_setschedparam (&attrVision, &paramVision);
 
-    pthread_t thread_safety;
-    pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
-    cout << "Safety Launced" << endl;
+  pthread_t thread_safety;
+  pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
+  cout << "Safety Launced" << endl;
 
-    pthread_t thread_motion;
-	pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);
-    cout << "Motion Launced" << endl;
+  pthread_t thread_motion;
+  pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);
+  cout << "Motion Launced" << endl;
 
-    pthread_t thread_vision;
+  pthread_t thread_vision;
 	pthread_create(&thread_vision, &attrVision, RobotVision, (void *)0);
-    cout << "Camera Launced" << endl;
+  cout << "Camera Launced" << endl;
 
 
     pthread_join(thread_motion, NULL);

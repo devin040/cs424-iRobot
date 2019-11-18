@@ -22,8 +22,8 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
     bool wheeldropcaster = false;
     bool bumpLeft = false;
     bool bumpRight= false;
-    int cliff_left = 0;
-    int cliff_right = 0;
+    int cliff_left = 100;
+    int cliff_right = 100;
     int cliff_frontleft = 0;
     int cliff_frontright = 0;
     bool leftwheelo = false;
@@ -39,10 +39,8 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
         if ((wheeldropleft = robot.wheeldropLeft()) ||
             (wheeldropright = robot.wheeldropRight()) ||
             (wheeldropcaster = robot.wheeldropCaster()) ||
-            (cliff_left < robot.cliffLeftSignal())||
-            (cliff_frontright < robot.cliffFrontRightSignal())||
-            (cliff_frontleft < robot.cliffFrontLeftSignal())||
-            (cliff_right < robot.cliffRightSignal())||
+            (cliff_left > robot.cliffLeftSignal())||
+            (cliff_right > robot.cliffRightSignal())||
             overcurrent >= 3)
 
             {
