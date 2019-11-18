@@ -46,7 +46,7 @@ bool RobotIdentification::runIdentify(Mat& scene_image) {
             myfile.open("./found_images.txt", ofstream::out | ofstream::app);
             myfile << "Found: " << to_string(objects_found) << ": " << it->name << "\n\n";
             cout << "FOUND: " << to_string(objects_found) << ": " << it->name << "!!!!!!!!"<< endl;
-            if (strstr(it->name, "magic")) {
+            if (it->name.find("magic") != string::npos) {
                 return true;
             }
             myfile.close();
