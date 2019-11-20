@@ -62,8 +62,8 @@ void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *
         pthread_mutex_lock(image_mutex);
         images.push_back(bgr_image);
         pthread_mutex_unlock(image_mutex);
-        cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
-        cv::imwrite("irobot_image" + (count++) + ".jpg", rgb_image);
+        string name = "irobot_image" + (count++) + ".jpg";
+        cv::imwrite(name, bgr_image);
 
         cout << "Image taken and added to vector" << endl;
     }
