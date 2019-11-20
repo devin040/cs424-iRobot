@@ -140,13 +140,19 @@ int main() {
     int progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
 
     while (progTime < 120000) {
+        progTimer1 = std::chrono::steady_clock::now();
         progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
+        this_thread::sleep_for(chrono::milliseconds(1000));
+        
     }
 
     stop = true;
 
     while (progTime < 500000) {
+        progTimer1 = std::chrono::steady_clock::now();
         progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
+        this_thread::sleep_for(chrono::milliseconds(3000));
+        
     }
 
     image_stop = true;
