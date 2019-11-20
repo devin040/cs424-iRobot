@@ -25,3 +25,4 @@ RobotIdentification.o: ./object-identification/RobotIdentification.cc
 clean:
 	rm -f mp3 *.o
 	rm -f found_image*
+	rm -f irobot_image*
