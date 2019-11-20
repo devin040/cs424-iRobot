@@ -57,9 +57,9 @@ void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, phtread_mutex_t *
         Mat bgr_image;
         Camera.grab();
         Camera.retrieve(bgr_image);
-        pthread_mutex_lock(&image_mutex);
+        pthread_mutex_lock(image_mutex);
         images.push_back(bgr_image);
-        pthread_mutex_unlock(&image_mutex);
+        pthread_mutex_unlock(image_mutex);
         cout << "Image taken and added to vector" << endl;
     }
 }
