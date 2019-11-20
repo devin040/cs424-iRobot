@@ -33,6 +33,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
     std::chrono::steady_clock::time_point progTimer1;
 
     pthread_mutex_lock(robomutex);
+    pthread_mutex_lock(cam_mutex);
     while(!robot.playButton()){
         progTimer0 = std::chrono::steady_clock::now();
 
@@ -81,7 +82,9 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
                     maxWallSignal = wallSignal;
 
                 }
+                pthread_mutex_unlock(cam_mutex);
                 this_thread::sleep_for(chrono::milliseconds(15));
+                pthread_mutex_lock(cam_mutex);
             }
 
             cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
