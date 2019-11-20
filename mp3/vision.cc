@@ -22,10 +22,10 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, phtread_mutex_t *i
         this_thread::sleep_for(std::chrono::milliseconds(3000));
         cout << "robotImage" << endl;
         if (images.size() > 0) {
-            pthread_mutex_lock(&image_mutex);
+            pthread_mutex_lock(image_mutex);
             Mat image = images[0];
             images.erase(images.begin());
-            pthread_mutex_unlock(&image_mutex);
+            pthread_mutex_unlock(image_mutex);
             cout << "Processing picture taken..." << endl;
             if (test.runIdentify(image)) {
                 cout << "found magic lamp!" << endl;
