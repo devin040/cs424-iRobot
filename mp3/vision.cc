@@ -35,6 +35,7 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, phtread_mutex_t *i
                     this_thread::sleep_for(chrono::milliseconds(2000));
                     robot.sendLedCommand(Create::LED_PLAY, 0, 0);
                     pthread_mutex_unlock(stream_mutex);
+                    usedWeapon = true;
                 }
             } else {
                 cout << "no magic lamp to be found" << endl;
