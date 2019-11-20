@@ -15,7 +15,7 @@ void processImages(vector<Mat> images) {
 }
 */
 
-void robotImage(Create& robot, pthread_mutex_t *stream_mutex, phtread_mutex_t *image_mutex, vector<Mat>& images, bool& end) {
+void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *image_mutex, vector<Mat>& images, bool& end) {
     bool usedWeapon = false;
     RobotIdentification test;
     while (!end) {
@@ -44,7 +44,7 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, phtread_mutex_t *i
     }
 }
 
-void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, phtread_mutex_t *image_mutex, vector<Mat>& images, bool& end) {
+void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *image_mutex, vector<Mat>& images, bool& end) {
     raspicam::RaspiCam_Cv Camera;
     if (!Camera.open()) {
      cerr << "Error opening the camera" << endl;
