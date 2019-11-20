@@ -16,6 +16,7 @@ void processImages(vector<Mat> images) {
 
 void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *image_mutex, vector<Mat>& images, bool& end) {
     bool usedWeapon = false;
+    int procimagecount = 0;
     RobotIdentification test;
     vector<Mat> rest_images;
     while (!end) {
@@ -60,6 +61,7 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
                     test.runIdentify(image);
                 }
             }
+            cout << "CURRENTLY PROCESSING TAKEN IMAGE: " << procimagecount << endl;
         }
 
     }
