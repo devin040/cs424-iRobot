@@ -76,14 +76,16 @@ void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *
     int count = 1;
 
     while (!end){
-        this_thread::sleep_for(std::chrono::milliseconds(3000));
+        this_thread::sleep_for(std::chrono::milliseconds(300));
         Mat bgr_image;
+        pthread_mutex_lock(stream_mutex);
         Camera.grab();
         Camera.retrieve(bgr_image);
+        pthread_mutex_unlock(stream_mutex);
         pthread_mutex_lock(image_mutex);
         images.push_back(bgr_image);
         pthread_mutex_unlock(image_mutex);
         cv::imwrite("irobot_image" + to_string(count++) + ".jpg", bgr_image);
-        cout << "Image taken and added to vector" << endl;
+        cout << "Image count: " << count << endl;
     }
 }
