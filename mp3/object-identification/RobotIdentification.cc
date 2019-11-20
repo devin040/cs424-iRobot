@@ -61,7 +61,6 @@ bool RobotIdentification::isMagicLamp(Mat& scene_image) {
 }
 
 bool RobotIdentification::runIdentify(Mat& scene_image) {
-    bool found_magic = false;
     cout << (10 - query_images.size()) << " images found so far." << endl;
     for(std::vector<QueryImage>::iterator it = query_images.begin(); it != query_images.end();) {
         if(identify(it->image, scene_image, "./found_image_" + to_string(++objects_found) + ".jpg")) {
@@ -76,7 +75,6 @@ bool RobotIdentification::runIdentify(Mat& scene_image) {
             it++;
         }
     }
-    return found_magic;
 }
 
 bool RobotIdentification::identify(Mat& img_query, Mat& scene_image_full, string output_file_name) {

@@ -20,32 +20,49 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
     vector<Mat> rest_images;
     while (!end) {
         this_thread::sleep_for(std::chrono::milliseconds(500));
-        if (images.size() > 0) {
-            pthread_mutex_lock(image_mutex);
-            Mat image = images[0];
-            images.erase(images.begin());
-            pthread_mutex_unlock(image_mutex);
-            cout << "Comparing to Magic Lamp..." << endl;
-            if (test.isMagicLamp(image)) {
-                if (!usedWeapon) {
+        if (!usedWeapon) {
+            if (images.size() > 0) {
+                pthread_mutex_lock(image_mutex);
+                Mat image = images[0];
+                images.erase(images.begin());
+                pthread_mutex_unlock(image_mutex);
+                cout << "Comparing to Magic Lamp..." << endl;
+                if (test.isMagicLamp(image)) {
                     pthread_mutex_lock(stream_mutex);
                     robot.sendLedCommand(Create::LED_NONE, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
                     this_thread::sleep_for(chrono::milliseconds(2000));
                     robot.sendLedCommand(Create::LED_NONE, 0, 0);
                     pthread_mutex_unlock(stream_mutex);
                     usedWeapon = true;
+                } else {
+                    rest_images.push_back(image);
                 }
             } else {
-                rest_images.push_back(image);
+                if (rest_images.size() > 0) {
+                    cout << "Comparing to other objects..." << endl;
+                    Mat image = rest_images[0];
+                    rest_images.erase(rest_images.begin());
+                    test.runIdentify(image);
+                }
             }
         } else {
             if (rest_images.size() > 0) {
-                cout << "Comparing to other objects..." << endl;
+                cout << "Lamp Found; Comparing to other objects..." << endl;
                 Mat image = rest_images[0];
                 rest_images.erase(rest_images.begin());
                 test.runIdentify(image);
+            } else {
+                if (images.size() > 0) {
+                    cout << "Lamp Found; Comparing to other objects..." << endl;
+                    pthread_mutex_lock(image_mutex);
+                    Mat image = images[0];
+                    images.erase(images.begin());
+                    pthread_mutex_unlock(image_mutex);
+                    test.runIdentify(image);
+                }
             }
         }
+
     }
 }
 
