@@ -61,7 +61,7 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
                     test.runIdentify(image);
                 }
             }
-            cout << "CURRENTLY PROCESSING TAKEN IMAGE: " << procimagecount << endl;
+            cout << "CURRENTLY PROCESSING TAKEN IMAGE: " << ++procimagecount << endl;
         }
 
     }
@@ -79,7 +79,7 @@ void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *
     int count = 1;
 
     while (!end){
-        this_thread::sleep_for(std::chrono::milliseconds(400));
+        this_thread::sleep_for(std::chrono::milliseconds(800));
         Mat bgr_image;
         pthread_mutex_lock(cam_mutex);
         Camera.grab();
