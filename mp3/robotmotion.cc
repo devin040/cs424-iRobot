@@ -12,7 +12,7 @@ using namespace std;
 #define SPEED 200 //200
 #define SLEEP 200 //200
 
-void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
+void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam_mutex, bool& end){
     cout << "In Motion Thread" << endl;
     bool enteredMaze = false;
     int wallCount = 0;
@@ -172,9 +172,9 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, bool& end){
             speed = 200;
 
             robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
-            pthread_mutex_unlock(robomutex);
+            pthread_mutex_unlock(cam_mutex);
             this_thread::sleep_for(chrono::milliseconds(1000));
-            pthread_mutex_lock(robomutex);
+            pthread_mutex_lock(cam_mutex);
 
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);

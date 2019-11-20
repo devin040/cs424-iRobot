@@ -10,4 +10,4 @@ using namespace iRobot;
 using namespace std;
 
 
-void robotMotion(Create&, pthread_mutex_t*, bool& );
+void robotMotion(Create&, pthread_mutex_t*, pthread_mutex_t*, bool& );

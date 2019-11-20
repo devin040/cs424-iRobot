@@ -65,7 +65,8 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
     }
 }
 
-void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *image_mutex, vector<Mat>& images, bool& end) {
+void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *image_mutex, 
+                    pthread_mutex_t *cam_mutex, vector<Mat>& images, bool& end) {
     raspicam::RaspiCam_Cv Camera;
     if (!Camera.open()) {
      cerr << "Error opening the camera" << endl;
@@ -78,10 +79,10 @@ void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *
     while (!end){
         this_thread::sleep_for(std::chrono::milliseconds(300));
         Mat bgr_image;
-        pthread_mutex_lock(stream_mutex);
+        pthread_mutex_lock(cam_mutex);
         Camera.grab();
         Camera.retrieve(bgr_image);
-        pthread_mutex_unlock(stream_mutex);
+        pthread_mutex_unlock(cam_mutex);
         pthread_mutex_lock(image_mutex);
         images.push_back(bgr_image);
         pthread_mutex_unlock(image_mutex);
