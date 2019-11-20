@@ -42,7 +42,7 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
             if (rest_images.size() > 0) {
                 cout << "Comparing to other objects..." << endl;
                 Mat image = rest_images[0];
-                rest_images.erase(rest_images.begin())
+                rest_images.erase(rest_images.begin());
                 test.runIdentify(image);
             }
         }
