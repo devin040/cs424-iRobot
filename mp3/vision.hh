@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include <thread>
 #include <chrono>
+#include <string>
 
 using namespace iRobot;
 using namespace std;
