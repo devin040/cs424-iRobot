@@ -18,7 +18,6 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
     bool usedWeapon = false;
     RobotIdentification test;
     while (!end) {
-        this_thread::sleep_for(std::chrono::milliseconds(3000));
         cout << "robotImage" << endl;
         if (images.size() > 0) {
             pthread_mutex_lock(image_mutex);

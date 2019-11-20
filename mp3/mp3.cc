@@ -35,6 +35,7 @@ vector<Mat> images;
 
 int main() {
     std::chrono::steady_clock::time_point progTimer0;
+    std::chrono::steady_clock::time_point progTimer1;
     progTimer0 = std::chrono::steady_clock::now();
     try {
         cout << "Created iRobot Object" << endl;
@@ -136,7 +137,7 @@ int main() {
     progTimer1 = std::chrono::steady_clock::now();
     int progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
 
-    while (progtime < 120000) {
+    while (progTime < 120000) {
         progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
     }
 
