@@ -52,6 +52,8 @@ void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *
     }
     cout << "Opened Camera" << endl;
 
+    int count = 1;
+
     while (!end){
         this_thread::sleep_for(std::chrono::milliseconds(3000));
         Mat bgr_image;
@@ -60,6 +62,9 @@ void robotCamera(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *
         pthread_mutex_lock(image_mutex);
         images.push_back(bgr_image);
         pthread_mutex_unlock(image_mutex);
+        cv::cvtColor(bgr_image, rgb_image, CV_RGB2BGR);
+        cv::imwrite("irobot_image" + (count++) + ".jpg", rgb_image);
+
         cout << "Image taken and added to vector" << endl;
     }
 }
