@@ -35,7 +35,7 @@ RobotIdentification::RobotIdentification() {
                   image_mat
                 };
 
-                if (image->d_name.find("magic") != string::npos) {
+                if (input.name.find("magic") != string::npos) {
                     magic_image = input;
                 } else {
                     magic_idx++;
