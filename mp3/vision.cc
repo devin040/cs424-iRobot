@@ -30,9 +30,9 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
                 cout << "found magic lamp!" << endl;
                 if (!usedWeapon) {
                     pthread_mutex_lock(stream_mutex);
-                    robot.sendLedCommand(Create::LED_PLAY, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
+                    robot.sendLedCommand(Create::LED_NONE, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
                     this_thread::sleep_for(chrono::milliseconds(2000));
-                    robot.sendLedCommand(Create::LED_PLAY, 0, 0);
+                    robot.sendLedCommand(Create::LED_NONE, 0, 0);
                     pthread_mutex_unlock(stream_mutex);
                     usedWeapon = true;
                 }
