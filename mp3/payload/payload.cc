@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
+using namespace std;
 int main(int argc, char const *argv[]) {
     int array1[10000];
     int array2[20000];
