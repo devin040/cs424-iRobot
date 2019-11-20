@@ -22,6 +22,7 @@ pthread_mutex_t image_mutex = PTHREAD_MUTEX_INITIALIZER;
 void *RobotMotion(void*);
 void *RobotSafety(void*);
 void *RobotVision(void*);
+void *RobotImage(void*);
 
 char serial_loc[] = "/dev/ttyUSB0";
 SerialStream stream (serial_loc, LibSerial::SerialStreamBuf::BAUD_57600);
@@ -107,6 +108,13 @@ int main() {
 	paramVision.sched_priority = 2;
 	pthread_attr_setschedparam (&attrVision, &paramVision);
 
+    pthread_attr_t attrImage;
+  	sched_param paramImage;
+  	pthread_attr_init (&attrImage);
+  	pthread_attr_getschedparam (&attrImage, &paramImage);
+  	paramSafety.sched_priority = 2;
+  	pthread_attr_setschedparam (&attrImage, &paramImage);
+
   pthread_t thread_safety;
   pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
   cout << "Safety Launced" << endl;
@@ -119,10 +127,15 @@ int main() {
 	pthread_create(&thread_vision, &attrVision, RobotVision, (void *)0);
   cout << "Camera Launced" << endl;
 
+  pthread_t thread_image;
+	pthread_create(&thread_image, &attrImage, RobotImage, (void *)0);
+  cout << "Image Launced" << endl;
+
 
     pthread_join(thread_motion, NULL);
     pthread_join(thread_safety, NULL);
     pthread_join(thread_vision, NULL);
+    pthread_join(thread_image, NULL);
 
     // processImages(images);
   }
@@ -153,7 +166,12 @@ void *RobotSafety(void *x){
 
 void *RobotVision(void *x){
     robotCamera(std::ref(robot), &mutex_robot, &image_mutex, std::ref(images), std::ref(stop));
-    robotImage(std::ref(robot), &mutex_robot, &image_mutex, std::ref(images), std::ref(stop));
     cout << "END Camera!!!!!!!!!!!!!" << endl;
+    pthread_exit(NULL);
+}
+
+void *RobotImage(void *x) {
+    robotImage(std::ref(robot), &mutex_robot, &image_mutex, std::ref(images), std::ref(stop));
+    cout << "END Image!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }
