@@ -17,6 +17,7 @@ void processImages(vector<Mat> images) {
 void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *image_mutex, vector<Mat>& images, bool& end) {
     bool usedWeapon = false;
     RobotIdentification test;
+    vector<Mat> rest_images;
     while (!end) {
         this_thread::sleep_for(std::chrono::milliseconds(500));
         if (images.size() > 0) {
@@ -24,7 +25,7 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
             Mat image = images[0];
             images.erase(images.begin());
             pthread_mutex_unlock(image_mutex);
-            cout << "Processing picture taken..." << endl;
+            cout << "Comparing to Magic Lamp..." << endl;
             if (test.isMagicLamp(image)) {
                 if (!usedWeapon) {
                     pthread_mutex_lock(stream_mutex);
@@ -34,8 +35,16 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
                     pthread_mutex_unlock(stream_mutex);
                     usedWeapon = true;
                 }
+            } else {
+                rest_images.push_back(image);
             }
-            test.runIdentify(image);
+        } else {
+            if (rest_images.size() > 0) {
+                cout << "Comparing to other objects..." << endl;
+                Mat image = rest_images[0];
+                rest_images.erase(rest_images.begin())
+                test.runIdentify(image);
+            }
         }
     }
 }
