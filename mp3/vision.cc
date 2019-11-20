@@ -18,7 +18,7 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
     bool usedWeapon = false;
     RobotIdentification test;
     while (!end) {
-        cout << "robotImage" << endl;
+        this_thread::sleep_for(std::chrono::milliseconds(500));
         if (images.size() > 0) {
             pthread_mutex_lock(image_mutex);
             Mat image = images[0];
@@ -26,7 +26,7 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
             pthread_mutex_unlock(image_mutex);
             cout << "Processing picture taken..." << endl;
             if (test.runIdentify(image)) {
-                cout << "found magic lamp!" << endl;
+                cout << "FOUND MAGIC LAMP!" << endl;
                 if (!usedWeapon) {
                     pthread_mutex_lock(stream_mutex);
                     robot.sendLedCommand(Create::LED_NONE, Create::LED_COLOR_RED, Create::LED_INTENSITY_FULL);
@@ -35,8 +35,6 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
                     pthread_mutex_unlock(stream_mutex);
                     usedWeapon = true;
                 }
-            } else {
-                cout << "no magic lamp to be found" << endl;
             }
         }
     }

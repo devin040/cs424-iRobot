@@ -115,7 +115,7 @@ int main() {
     sched_param paramImage;
     pthread_attr_init (&attrImage);
     pthread_attr_getschedparam (&attrImage, &paramImage);
-    paramSafety.sched_priority = 2;
+    paramSafety.sched_priority = 3;
     pthread_attr_setschedparam (&attrImage, &paramImage);
 
     pthread_t thread_safety;
