@@ -25,6 +25,7 @@ class RobotIdentification {
     public:
         RobotIdentification();
         bool runIdentify(Mat& scene_image);
+        bool isMagicLamp(Mat& scene_image);
         vector<QueryImage> query_images;
         int objects_found = 0;
 

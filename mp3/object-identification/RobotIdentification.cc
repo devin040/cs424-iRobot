@@ -19,6 +19,8 @@ using std::endl;
 using std::string;
 using std::vector;
 
+QueryImage magic_image;
+
 RobotIdentification::RobotIdentification() {
     DIR *pDIR;
     struct dirent * image;
@@ -31,11 +33,28 @@ RobotIdentification::RobotIdentification() {
                   image->d_name,
                   image_mat
                 };
+
+                if (image->d_name.find("magic") != string::npos) {
+                    magic_image = input;
+                }
                 query_images.push_back(input);
             }
         }
     }
     cout << "query_images size: "<< query_images.size() << endl;
+}
+
+bool RobotIdentification::isMagicLamp(Mat& scene_image) {
+    if(identify(magic_image->image, scene_image, "./found_image_magic.jpg")) {
+        query_images.erase(magic_image);
+        ofstream myfile;
+        myfile.open("./found_images.txt", ofstream::out | ofstream::app);
+        myfile << "Found: " << magic_image->name << "\n\n";
+        myfile.close();
+        cout << "FOUND MAGIC LAMP!" << endl;
+        return true;
+    }
+    return false;
 }
 
 bool RobotIdentification::runIdentify(Mat& scene_image) {
@@ -47,9 +66,6 @@ bool RobotIdentification::runIdentify(Mat& scene_image) {
             myfile.open("./found_images.txt", ofstream::out | ofstream::app);
             myfile << "Found: " << to_string(objects_found) << ": " << it->name << "\n\n";
             cout << "FOUND: " << to_string(objects_found) << ": " << it->name << "!!!!!!!!"<< endl;
-            if (it->name.find("magic") != string::npos) {
-                found_magic = true;
-            }
             myfile.close();
             query_images.erase(it);
         }
