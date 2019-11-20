@@ -31,6 +31,7 @@ SerialStream stream (serial_loc, LibSerial::SerialStreamBuf::BAUD_57600);
 Create robot(stream);
 
 bool stop = false;
+bool image_stop = false;
 vector<Mat> images;
 
 int main() {
@@ -143,6 +144,12 @@ int main() {
 
     stop = true;
 
+    while (progTime < 500000) {
+        progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
+    }
+
+    image_stop = true;
+
     pthread_join(thread_motion, NULL);
     pthread_join(thread_safety, NULL);
     pthread_join(thread_vision, NULL);
@@ -178,7 +185,7 @@ void *RobotVision(void *x){
 }
 
 void *RobotImage(void *x) {
-    robotImage(std::ref(robot), &mutex_robot, &image_mutex, std::ref(images), std::ref(stop));
+    robotImage(std::ref(robot), &mutex_robot, &image_mutex, std::ref(images), std::ref(image_stop));
     cout << "END Image!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }

@@ -34,9 +34,8 @@ void robotImage(Create& robot, pthread_mutex_t *stream_mutex, pthread_mutex_t *i
                     robot.sendLedCommand(Create::LED_NONE, 0, 0);
                     pthread_mutex_unlock(stream_mutex);
                     usedWeapon = true;
-                } else {
-                    rest_images.push_back(image);
                 }
+                rest_images.push_back(image);
             } else {
                 if (rest_images.size() > 0) {
                     cout << "Comparing to other objects..." << endl;
