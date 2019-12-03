@@ -9,7 +9,7 @@
 using namespace iRobot;
 using namespace std;
 
-#define SPEED 200 //200
+#define SPEED 150 //200
 #define SLEEP 200 //200
 
 void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam_mutex, bool& end){
@@ -63,7 +63,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             }
             enteredMaze = true;
 
-            robot.sendDriveCommand(-speed, Create::DRIVE_STRAIGHT);
+            robot.sendDriveCommand(-200, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
@@ -181,7 +181,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
 
             speed = 0;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(200));
+            this_thread::sleep_for(chrono::milliseconds(100));
             speed = SPEED;
             robot.sendDriveCommand(speed, Create::DRIVE_STRAIGHT);
             if (recordTime){
