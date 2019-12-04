@@ -1040,6 +1040,12 @@ namespace iRobot
   MK_SENSOR_GETTER (short, requestedRadius)
   MK_SENSOR_GETTER (short, requestedLeftVelocity)
   MK_SENSOR_GETTER (short, requestedRightVelocity)
+  MK_SENSOR_GETTER (short, lbLeft)
+  MK_SENSOR_GETTER (short, lbFrontLeft)
+  MK_SENSOR_GETTER (short, lbCenterLeft)
+  MK_SENSOR_GETTER (short, lbCenterRight)
+  MK_SENSOR_GETTER (short, lbFrontRight)
+  MK_SENSOR_GETTER (short, lbRight)
 
   Create::Mode
   Create::mode () throw ()

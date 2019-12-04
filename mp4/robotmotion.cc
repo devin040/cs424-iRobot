@@ -22,8 +22,20 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
     pthread_mutex_lock(robomutex);
 
     while(!robot.playButton()){
+<<<<<<< HEAD
 
         robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
+=======
+        short maxWallSignal = 0;
+        short wallSignal = -1;
+        short lbleft = 0;
+        short frontleft = 0;
+        short centerleft = 0;
+        short frontright = 0;
+        short centerright = 0;
+        short lbright = 0;
+       // robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
+>>>>>>> da08eee42a438f9f9b3551666ae3a2dfee70a159
         this_thread::sleep_for(chrono::milliseconds(20));
         if (robot.bumpLeft () || robot.bumpRight () ) {
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
@@ -36,15 +48,22 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
 
-            short maxWallSignal = 0;
-            short wallSignal = -1;
+
+
 
             speed = 100;
             robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
             std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-            
+
             while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 2200){
-                wallSignal = robot.wallSignal();
+                // wallSignal = robot.wallSignal();
+                // left = robot.lbLeft();
+                // frontleft = robot.lbFrontLeft();
+                // centerleft = robot.lbCenterLeft();
+                // centerright = robot.lbCenterRight();
+                // frontright = robot.lbFrontRight();
+                // right = robot.lbRight();
+
                 //cout << "Wall signal: " << wallSignal << endl;
                 if (wallSignal >= maxWallSignal ){
                     maxWallSignal = wallSignal;
@@ -53,7 +72,14 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
                 this_thread::sleep_for(chrono::milliseconds(15));
             }
 
-            cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
+
+            // cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
+            // cout << "LB LEFT: " << left << endl;
+            // cout << "LB FRONT LEFT: " << frontleft << endl;
+            // cout << "LB CENTER LEFT: " << centerleft << endl;
+            // cout << "LB CENTER RIGHT: " << centerright << endl;
+            // cout << "LB FRONT RIGHT: " << frontright << endl;
+            // cout << "LB RIGHT: " << right << endl;
             robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
 
 
@@ -72,7 +98,6 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
         }
-        while (true){
             short desiredWallSigLow = 50;
             short desiredWallSigHigh = 70;
             short wallsig = 0;
@@ -83,11 +108,6 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             }
         }
 /**
-        if (enteredMaze && (robot.wallSignal() < 3) && numTurns == 0 && numAdjust < 2){
- 
-            robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_INPLACE_CLOCKWISE);
-            this_thread::sleep_for(chrono::milliseconds(100));
-            robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(15));
             robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(100));
