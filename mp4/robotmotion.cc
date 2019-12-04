@@ -117,12 +117,12 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
         }
 */
         wallSignal = robot.wallSignal();
-        left = robot.lbLeft();
+        lbleft = robot.lbLeft();
         frontleft = robot.lbFrontLeft();
         centerleft = robot.lbCenterLeft();
         centerright = robot.lbCenterRight();
         frontright = robot.lbFrontRight();
-        right = robot.lbRight();
+        lbright = robot.lbRight();
 
         cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
         cout << "LB LEFT: " << lbleft << endl;
