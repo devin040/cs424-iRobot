@@ -8,7 +8,7 @@
 using namespace iRobot;
 using namespace std;
 
-#define TRAVELSPEED 150 //200
+#define TRAVELSPEED 100 //200
 #define SLEEP 200 //
 #define TSLEEP(x) this_thread::sleep_for(chrono::milliseconds(x))
 
@@ -84,13 +84,18 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             if ((wallsig = robot.wallSignal()) < desiredWallSigLow){
                 short radius = -250 + wallsig / (float) desiredWallSigLow * -750;
                 robot.sendDriveCommand(TRAVELSPEED, radius);
+                
+                cout << "Radius : " << radius << endl;
                 TSLEEP(100);
             }
-            if ((wallsig = robot.wallSignal()) > desiredWallSigHigh){
+            if ((wallsig) > desiredWallSigHigh){
                 short radius = 1000 - (wallsig - desiredWallSigHigh)/ (float) desiredWallSigHigh * 750;
                 robot.sendDriveCommand(TRAVELSPEED, radius);
+                
+                cout << "Radius : " << radius << endl;
                 TSLEEP(100);
             }
+            cout << "Wall Sig: " << wallsig << endl;
             TSLEEP(100);
 
         }
