@@ -22,7 +22,14 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
     pthread_mutex_lock(robomutex);
 
     while(!robot.playButton()){
-
+        short maxWallSignal = 0;
+        short wallSignal = -1;
+        short left = 0;
+        short frontleft = 0;
+        short centerleft = 0;
+        short frontright = 0;
+        short centerright = 0;
+        short right = 0;
        // robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
         this_thread::sleep_for(chrono::milliseconds(20));
         if (robot.bumpLeft () || robot.bumpRight () ) {
@@ -36,14 +43,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
 
-            short maxWallSignal = 0;
-            short wallSignal = -1;
-            short left = 0;
-            short frontleft = 0;
-            short centerleft = 0;
-            short frontright = 0;
-            short centerright = 0;
-            short right = 0;
+
 
 
             speed = 100;
@@ -123,7 +123,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
         centerright = robot.lbCenterRight();
         frontright = robot.lbFrontRight();
         right = robot.lbRight();
-        
+
         cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
         cout << "LB LEFT: " << left << endl;
         cout << "LB FRONT LEFT: " << frontleft << endl;
