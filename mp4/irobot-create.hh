@@ -803,6 +803,13 @@ namespace iRobot
     short requestedRadius ();
     short requestedLeftVelocity ();
     short requestedRightVelocity ();
+    short lbLeft();
+    short lbFrontLeft();
+    short lbCenterLeft();
+    short lbCenterRight();
+    short lbFrontRight();
+    short lbRight();
+
 
     /// \}
 
