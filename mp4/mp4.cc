@@ -9,7 +9,6 @@
 #include <pthread.h>
 #include "robotmotion.hh"
 #include "robotsafety.hh"
-#include "vision.hh"
 
 using namespace iRobot;
 using namespace LibSerial;
@@ -33,7 +32,6 @@ Create robot(stream);
 
 bool stop = false;
 bool image_stop = false;
-vector<Mat> images;
 
 int main() {
     std::chrono::steady_clock::time_point progTimer0;
@@ -76,7 +74,7 @@ int main() {
     pthread_attr_setschedparam (&attrMotion, &paramMotion);
 
     pthread_t thread_safety;
-    pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
+   // pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
     cout << "Safety Launced" << endl;
 
     pthread_t thread_motion;
