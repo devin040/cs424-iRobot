@@ -4,13 +4,14 @@
 #include <thread>
 #include <iostream>
 #include "robotmotion.hh"
-#include "robotcontour.hh"
 
 using namespace iRobot;
 using namespace std;
 
 #define TRAVELSPEED 150 //200
-#define SLEEP 200 //200
+#define SLEEP 200 //
+#define TSLEEP(x) this_thread::sleep_for(chrono::milliseconds(x))
+
 
 void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam_mutex, bool& end){
     cout << "In Motion Thread" << endl;
@@ -83,7 +84,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             this_thread::sleep_for(chrono::milliseconds(15));
             robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(100));
-            lostWallAdjustmentCounter++;
+
         }
         this_thread::sleep_for(chrono::milliseconds(15));
         if (enteredMaze && (robot.wallSignal() > 90) ){
@@ -91,10 +92,61 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             this_thread::sleep_for(chrono::milliseconds(50));
             robot.sendDriveCommand(SPEED, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
-            tryAdjust = true;
-            numTurns = 0;
-            numAdjust = 0;
+
         }
+
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, -1999);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, 1999);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, -1000);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, 1000);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, -500);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, 500);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, -250);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, 250);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, -100);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, 100);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, -50);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, 50);
+        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        TSLEEP(8000);
+
+
 
         pthread_mutex_unlock(robomutex);
 

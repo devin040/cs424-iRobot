@@ -75,20 +75,6 @@ int main() {
     paramMotion.sched_priority = 3;
     pthread_attr_setschedparam (&attrMotion, &paramMotion);
 
-    pthread_attr_t attrVision;
-    sched_param paramVision;
-    pthread_attr_init (&attrVision);
-    pthread_attr_getschedparam (&attrVision, &paramVision);
-    paramVision.sched_priority = 2;
-    pthread_attr_setschedparam (&attrVision, &paramVision);
-
-    pthread_attr_t attrImage;
-    sched_param paramImage;
-    pthread_attr_init (&attrImage);
-    pthread_attr_getschedparam (&attrImage, &paramImage);
-    paramSafety.sched_priority = 3;
-    pthread_attr_setschedparam (&attrImage, &paramImage);
-
     pthread_t thread_safety;
     pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
     cout << "Safety Launced" << endl;
@@ -96,14 +82,6 @@ int main() {
     pthread_t thread_motion;
     pthread_create(&thread_motion, &attrMotion, RobotMotion, (void *)0);
     cout << "Motion Launced" << endl;
-
-    pthread_t thread_vision;
-    pthread_create(&thread_vision, &attrVision, RobotVision, (void *)0);
-    cout << "Camera Launced" << endl;
-
-    pthread_t thread_image;
-    pthread_create(&thread_image, &attrImage, RobotImage, (void *)0);
-    cout << "Image Launced" << endl;
 
     progTimer1 = std::chrono::steady_clock::now();
     int progTime = std::chrono::duration_cast<std::chrono::milliseconds>(progTimer1-progTimer0).count();
@@ -120,8 +98,7 @@ int main() {
 
     pthread_join(thread_motion, NULL);
     pthread_join(thread_safety, NULL);
-    pthread_join(thread_vision, NULL);
-    pthread_join(thread_image, NULL);
+
 
     // processImages(images);
     } catch (InvalidArgument& e) {
@@ -143,17 +120,5 @@ void *RobotMotion(void *x){
 void *RobotSafety(void *x){
     robotSafety(std::ref(robot), &mutex_robot, std::ref(stop));
     cout << "END Safety!!!!!!!!!!!!!" << endl;
-    pthread_exit(NULL);
-}
-
-void *RobotVision(void *x){
-    robotCamera(std::ref(robot), &mutex_robot, &image_mutex, &cam_mutex, std::ref(images), std::ref(stop));
-    cout << "END Camera!!!!!!!!!!!!!" << endl;
-    pthread_exit(NULL);
-}
-
-void *RobotImage(void *x) {
-    robotImage(std::ref(robot), &mutex_robot, &image_mutex, std::ref(images), std::ref(image_stop));
-    cout << "END Image!!!!!!!!!!!!!" << endl;
     pthread_exit(NULL);
 }
