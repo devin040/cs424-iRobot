@@ -186,7 +186,14 @@ namespace iRobot
     requestedVelocity_ (),                      \
     requestedRadius_ (),                        \
     requestedLeftVelocity_ (),                  \
-    requestedRightVelocity_ ()
+    requestedRightVelocity_ (),                 \
+    lbLeft_ (),                                 \
+    lbFrontLeft_ (),                            \
+    lbCenterLeft_ (),                           \
+    lbCenterRight_ (),                          \
+    lbFrontRight_ (),                           \
+    lbRight_ ()
+
 
   Create::Create (std::iostream& stream)
     throw (InvalidArgument)
@@ -520,7 +527,7 @@ namespace iRobot
     if (currentMode_ < IROBOT_CREATE_PASSIVE)
       throw CommandNotAvailable ();
     if (packet < SENSOR_GROUP_0
-        || packet > SENSOR_REQUESTED_LEFT_VELOCITY)
+        || packet > SENSOR_LB_RIGHT)
       throw InvalidArgument ();
 
     const unsigned char op  = OPCODE_SENSORS;
@@ -543,7 +550,7 @@ namespace iRobot
        it != packets.end (); ++it)                              \
     {                                                           \
       if (*it < SENSOR_GROUP_0                                  \
-          || *it > SENSOR_REQUESTED_LEFT_VELOCITY)              \
+          || *it > SENSOR_LB_RIGHT)              \
         throw InvalidArgument ();                               \
       const unsigned char p = *it;                              \
       ss << p;                                                  \
@@ -894,6 +901,22 @@ namespace iRobot
             v.test (SENSOR_BIT_INTERNALCHARGERAVAILABLE);
           break;
         }
+
+        case SENSOR_LB:
+          {
+            std::bitset<8> v = 0;
+            unsigned char tmp = 0;
+        if (!safeGet (stream, tmp))
+          return false;
+            v = tmp;
+            lbLeft_ = v.test (SENSOR_LB_LEFT);
+            lbFrontLeft_ = v.test (SENSOR_LB_FRONT_LEFT);
+            lbCenterLeft_ = v.test (SENSOR_LB_CENTER_LEFT);
+            lbCenterRight_ = v.test (SENSOR_LB_CENTER_RIGHT);
+            lbFrontRight_ = v.test (SENSOR_LB_FRONT_RIGHT);
+            lbRight_ = v.test (SENSOR_LB_RIGHT);
+            break;
+          }
 
         //FIXME: trigger a warning if not corresponding to current value?
         GEN_SENSOR (SENSOR_OI_MODE, currentMode_, Mode);

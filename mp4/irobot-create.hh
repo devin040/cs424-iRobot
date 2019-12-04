@@ -457,7 +457,16 @@ namespace iRobot
         /// Requested right velocity.
         SENSOR_REQUESTED_RIGHT_VELOCITY = 41,
         /// Requested left velocity.
-        SENSOR_REQUESTED_LEFT_VELOCITY = 42
+        SENSOR_REQUESTED_LEFT_VELOCITY = 42,
+
+        // Light Bump Signals
+        SENSOR_LB = 45,
+        SENSOR_LB_LEFT = 46,
+        SENSOR_LB_FRONT_LEFT = 47,
+        SENSOR_LB_CENTER_LEFT = 48,
+        SENSOR_LB_CENTER_RIGHT = 49,
+        SENSOR_LB_FRONT_RIGHT = 50,
+        SENSOR_LB_RIGHT = 51,
       };
 
     /// \brief Define a vector of opcodes and arguments (a script).
@@ -918,6 +927,13 @@ namespace iRobot
     short requestedLeftVelocity_;
     /// Last requested right velocity (drive direct command).
     short requestedRightVelocity_;
+
+    short lbLeft_;
+    short lbFrontLeft_;
+    short lbCenterLeft_;
+    short lbCenterRight_;
+    short lbFrontRight_;
+    short lbRight_;
 
     /// \}
   };
