@@ -23,7 +23,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
 
     while(!robot.playButton()){
 
-       // robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
+        robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
         this_thread::sleep_for(chrono::milliseconds(20));
         if (robot.bumpLeft () || robot.bumpRight () ) {
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
@@ -72,9 +72,16 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
         }
- 
-        cout << "Continous wall sensor: " << robot.wallSignal() << endl;
-        this_thread::sleep_for(chrono::milliseconds(15));
+        while (true){
+            short desiredWallSigLow = 50;
+            short desiredWallSigHigh = 70;
+            short wallsig = 0;
+            robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+            TSLEEP(15);
+            if (wallsig = robot.wallSignal() < 50 ){
+
+            }
+        }
 /**
         if (enteredMaze && (robot.wallSignal() < 3) && numTurns == 0 && numAdjust < 2){
  
@@ -95,67 +102,67 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
 
         }
 */
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, 1);
-        cout << "Turn at 1" << endl; 
-        TSLEEP(5000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, 1000);
-        cout << "Turn at 1000" << endl; 
-        TSLEEP(5000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, -1000);
-        cout << "Turn at -1000" << endl; 
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, 1000);
-        cout << "Turn at 1000" << endl; 
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, -500);
-        cout << "Turn at -500" << endl; 
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, 500);
-        cout << "Turn at 500" << endl; 
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, -250);
-        cout << "Turn at -250" << endl; 
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, 250);
-        cout << "Turn at 250" << endl; 
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, -100);
-        cout << "Turn at -100" << endl; 
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, 100);
-        cout << "Turn at 100" << endl; 
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, -50);
-        cout << "Turn at -50" << endl; 
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, 50);
-        cout << "Turn at 50" << endl; 
-        TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, 1);
+        // cout << "Turn at 1" << endl; 
+        // TSLEEP(5000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, 1000);
+        // cout << "Turn at 1000" << endl; 
+        // TSLEEP(5000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, -1000);
+        // cout << "Turn at -1000" << endl; 
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, 1000);
+        // cout << "Turn at 1000" << endl; 
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, -500);
+        // cout << "Turn at -500" << endl; 
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, 500);
+        // cout << "Turn at 500" << endl; 
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, -250);
+        // cout << "Turn at -250" << endl; 
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, 250);
+        // cout << "Turn at 250" << endl; 
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, -100);
+        // cout << "Turn at -100" << endl; 
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, 100);
+        // cout << "Turn at 100" << endl; 
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, -50);
+        // cout << "Turn at -50" << endl; 
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, 50);
+        // cout << "Turn at 50" << endl; 
+        // TSLEEP(2000);
+        // robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
 
         pthread_mutex_unlock(robomutex);
 
