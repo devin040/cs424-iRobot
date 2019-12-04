@@ -38,13 +38,27 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
 
             short maxWallSignal = 0;
             short wallSignal = -1;
+            short left = 0;
+            short frontleft = 0;
+            short centerleft = 0;
+            short frontright = 0;
+            short centerright = 0;
+            short right = 0;
+
 
             speed = 100;
             robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
             std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-            
+
             while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 2200){
-                wallSignal = robot.wallSignal();
+                // wallSignal = robot.wallSignal();
+                // left = robot.lbLeft();
+                // frontleft = robot.lbFrontLeft();
+                // centerleft = robot.lbCenterLeft();
+                // centerright = robot.lbCenterRight();
+                // frontright = robot.lbFrontRight();
+                // right = robot.lbRight();
+
                 //cout << "Wall signal: " << wallSignal << endl;
                 if (wallSignal >= maxWallSignal ){
                     maxWallSignal = wallSignal;
@@ -53,7 +67,14 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
                 this_thread::sleep_for(chrono::milliseconds(15));
             }
 
-            cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
+
+            // cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
+            // cout << "LB LEFT: " << left << endl;
+            // cout << "LB FRONT LEFT: " << frontleft << endl;
+            // cout << "LB CENTER LEFT: " << centerleft << endl;
+            // cout << "LB CENTER RIGHT: " << centerright << endl;
+            // cout << "LB FRONT RIGHT: " << frontright << endl;
+            // cout << "LB RIGHT: " << right << endl;
             robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
 
 
@@ -72,12 +93,12 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
             this_thread::sleep_for(chrono::milliseconds(50));
         }
- 
+
         cout << "Continous wall sensor: " << robot.wallSignal() << endl;
         this_thread::sleep_for(chrono::milliseconds(15));
 /**
         if (enteredMaze && (robot.wallSignal() < 3) && numTurns == 0 && numAdjust < 2){
- 
+
             robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_INPLACE_CLOCKWISE);
             this_thread::sleep_for(chrono::milliseconds(100));
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
@@ -95,65 +116,81 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
 
         }
 */
+        wallSignal = robot.wallSignal();
+        left = robot.lbLeft();
+        frontleft = robot.lbFrontLeft();
+        centerleft = robot.lbCenterLeft();
+        centerright = robot.lbCenterRight();
+        frontright = robot.lbFrontRight();
+        right = robot.lbRight();
+        
+        cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
+        cout << "LB LEFT: " << left << endl;
+        cout << "LB FRONT LEFT: " << frontleft << endl;
+        cout << "LB CENTER LEFT: " << centerleft << endl;
+        cout << "LB CENTER RIGHT: " << centerright << endl;
+        cout << "LB FRONT RIGHT: " << frontright << endl;
+        cout << "LB RIGHT: " << right << endl;
+
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, 1);
-        cout << "Turn at 1" << endl; 
+        cout << "Turn at 1" << endl;
         TSLEEP(5000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, 1000);
-        cout << "Turn at 1000" << endl; 
+        cout << "Turn at 1000" << endl;
         TSLEEP(5000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, -1000);
-        cout << "Turn at -1000" << endl; 
+        cout << "Turn at -1000" << endl;
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, 1000);
-        cout << "Turn at 1000" << endl; 
+        cout << "Turn at 1000" << endl;
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, -500);
-        cout << "Turn at -500" << endl; 
+        cout << "Turn at -500" << endl;
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, 500);
-        cout << "Turn at 500" << endl; 
+        cout << "Turn at 500" << endl;
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, -250);
-        cout << "Turn at -250" << endl; 
+        cout << "Turn at -250" << endl;
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, 250);
-        cout << "Turn at 250" << endl; 
+        cout << "Turn at 250" << endl;
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, -100);
-        cout << "Turn at -100" << endl; 
+        cout << "Turn at -100" << endl;
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, 100);
-        cout << "Turn at 100" << endl; 
+        cout << "Turn at 100" << endl;
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, -50);
-        cout << "Turn at -50" << endl; 
+        cout << "Turn at -50" << endl;
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, 50);
-        cout << "Turn at 50" << endl; 
+        cout << "Turn at 50" << endl;
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
 
