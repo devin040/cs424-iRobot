@@ -23,7 +23,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
 
     while(!robot.playButton()){
 
-        robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
+       // robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
         this_thread::sleep_for(chrono::milliseconds(20));
         if (robot.bumpLeft () || robot.bumpRight () ) {
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
@@ -94,17 +94,17 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             this_thread::sleep_for(chrono::milliseconds(50));
 
         }
-
+*/
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, -1999);
-        cout << "Turn at -1999" << endl; 
-        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, 1);
+        cout << "Turn at 1" << endl; 
+        TSLEEP(5000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
-        robot.sendDriveCommand(TRAVELSPEED, 1999);
-        cout << "Turn at 1999" << endl; 
-        TSLEEP(2000);
+        robot.sendDriveCommand(TRAVELSPEED, 1000);
+        cout << "Turn at 1000" << endl; 
+        TSLEEP(5000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, -1000);
@@ -156,9 +156,6 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
         cout << "Turn at 50" << endl; 
         TSLEEP(2000);
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-        */
-        cout << "Wall Signal : " << robot.wallSignal() << endl;
-        TSLEEP(2000);
 
         pthread_mutex_unlock(robomutex);
 
