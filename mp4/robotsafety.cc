@@ -34,49 +34,32 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
         pthread_mutex_lock(robomutex);
         progTimer0 = std::chrono::steady_clock::now();
 
-
         if ((wheeldropleft = robot.wheeldropLeft()) ||
             (wheeldropright = robot.wheeldropRight()) ||
             (wheeldropcaster = robot.wheeldropCaster()) ||
             (CLIFF_VAL > robot.cliffLeftSignal())||
-            (CLIFF_VAL > robot.cliffRightSignal())||
-            overcurrent >= 3) {
+            (CLIFF_VAL > robot.cliffRightSignal())) {
+            robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
+            while ((wheeldropleft = robot.wheeldropLeft()) ||
+                (wheeldropright = robot.wheeldropRight()) ||
+                (wheeldropcaster = robot.wheeldropCaster()) ||
+                (CLIFF_VAL > robot.cliffLeftSignal())||
+                (CLIFF_VAL > robot.cliffRightSignal())) {
+                robot.sendPlaySongCommand(1);
+                sleep(2);
+            }
+            robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        }
+
+        if (overcurrent >= 3) {
             //stop
             robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            cout << "wheel drop left : " << wheeldropleft << endl;
-            cout << "wheel drop right: " << wheeldropright << endl;
-            cout << "wheel drop caster: " << wheeldropcaster << endl;
-            cout << "cliff left: " << robot.cliffLeftSignal()  << endl;
-            cout << "cliff front left: " << cliff_frontleft << endl;
-            cout << "cliff right: " << robot.cliffRightSignal() << endl;
-            cout << "cliff front right: " << cliff_frontright << endl;
-            cout << "left wheel over : " << leftwheelo << endl;
-            cout << "right wheel over: " << rightwheelo << endl;
-            cout << "over current counter : " << overcurrent << endl;
-
             //play song
             while (!robot.advanceButton()) {
                 robot.sendPlaySongCommand(1);
-                wheeldropleft = robot.wheeldropLeft();
-                wheeldropright = robot.wheeldropRight();
-                wheeldropcaster = robot.wheeldropCaster();
-                cliff_frontright = robot.cliffFrontRightSignal();
-                cliff_frontleft = robot.cliffFrontLeftSignal();
-                leftwheelo = robot.leftWheelOvercurrent();
-                rightwheelo = robot.rightWheelOvercurrent();
-                cout << "wheel drop left : " << wheeldropleft << endl;
-                cout << "wheel drop right: " << wheeldropright << endl;
-                cout << "wheel drop caster: " << wheeldropcaster << endl;
-                cout << "cliff left: " << robot.cliffLeftSignal()  << endl;
-                cout << "cliff front left: " << cliff_frontleft << endl;
-                cout << "cliff right: " << robot.cliffRightSignal() << endl;
-                cout << "cliff front right: " << cliff_frontright << endl;
-                cout << "left wheel over : " << leftwheelo << endl;
-                cout << "right wheel over: " << rightwheelo << endl;
                 //this_thread::sleep_for(chrono::milliseconds(500));
                 sleep(2);
             }
-
             //start again
             //robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
 
