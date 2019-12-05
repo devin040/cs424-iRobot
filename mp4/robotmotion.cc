@@ -85,29 +85,32 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             wallsig = robot.wallSignal();
 
             if (wallsig < 30){
-                robot.sendDriveCommand(TRAVELSPEED - 50, Create::DRIVE_STRAIGHT);
+                robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
                 TSLEEP(200);
                 cout << "WOAH: WAll sig: " << wallsig << endl;
                 findMax(std::ref(robot));
                 cout << "OKAY: Wall sig: " << robot.wallSignal() << endl;
                 robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-            }
-
-            if (wallsig < desiredWallSigLow){
+                TSLEEP(50);
+            } else {
+                if (wallsig < desiredWallSigLow){
                 short radius = -100 + wallsig / (float) desiredWallSigLow * -750;
                 robot.sendDriveCommand(TRAVELSPEED, radius);
                 prevWall = wallsig;
                 cout << "Radius : " << radius << endl;
                 TSLEEP(15);
-            }
-            if ((wallsig) > desiredWallSigHigh){
-                short radius = 1000 - (wallsig - desiredWallSigHigh)/ (float) desiredWallSigHigh * 750;
-                robot.sendDriveCommand(TRAVELSPEED, radius);
-                prevWall = wallsig;
-                cout << "Radius : " << radius << endl;
-                TSLEEP(15);
+                }
+                if ((wallsig) > desiredWallSigHigh){
+                    short radius = 1000 - (wallsig - desiredWallSigHigh)/ (float) desiredWallSigHigh * 750;
+                    robot.sendDriveCommand(TRAVELSPEED, radius);
+                    prevWall = wallsig;
+                    cout << "Radius : " << radius << endl;
+                    TSLEEP(15);
 
+                }
             }
+
+            
             // if (wallsig < 20){
             //     robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
             //     this_thread::sleep_for(chrono::milliseconds(50));
