@@ -11,7 +11,7 @@ using namespace std;
 #define TRAVELSPEED 100
 #define SLEEP 200 
 #define TSLEEP(x) this_thread::sleep_for(chrono::milliseconds(x))
-
+void findMax(Create&);
 
 void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam_mutex, bool& end){
     cout << "In Motion Thread" << endl;
@@ -84,14 +84,12 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             prevWall = wallsig;
             wallsig = robot.wallSignal();
 
-            if (wallsig < 50){
+            if (wallsig < 30){
                 robot.sendDriveCommand(TRAVELSPEED - 50, Create::DRIVE_STRAIGHT);
+                TSLEEP(200);
                 cout << "WOAH: WAll sig: " << wallsig << endl;
-                while ((wallsig = robot.wallSignal()) < 80){
-                    TSLEEP(200);
-		    cout << "WOAH Cont wall sig: " << wallsig << endl;
-                }
-                cout << "OKAY: Wall sig: " << wallsig << endl;
+                findMax(std::ref(robot);
+                cout << "OKAY: Wall sig: " << robot.wallSignal() << endl;
                 robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
             }
 
@@ -257,4 +255,45 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
     end = true;
     pthread_mutex_unlock(robomutex);
 
+}
+
+void findMax(Create& robot){
+    robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
+        this_thread::sleep_for(chrono::milliseconds(50));
+
+        short maxWallSignal = 0;
+        short wallSignal = -1;
+
+        short speed = 100;
+        robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
+        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+        
+        while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 2000){
+            wallSignal = robot.wallSignal();
+            //cout << "Wall signal: " << wallSignal << endl;
+            if (wallSignal >= maxWallSignal ){
+                maxWallSignal = wallSignal;
+
+            }
+            this_thread::sleep_for(chrono::milliseconds(15));
+        }
+
+        cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
+        robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
+
+
+        while ((wallSignal = robot.wallSignal()) < (maxWallSignal)){
+
+            std::this_thread::sleep_for(chrono::milliseconds(15));
+        }
+
+        robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
+        this_thread::sleep_for(chrono::milliseconds(50));
+        // robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
+        // this_thread::sleep_for(chrono::milliseconds(200));
+        // robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
+        // this_thread::sleep_for(chrono::milliseconds(50));
+        speed = TRAVELSPEED;
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
+        this_thread::sleep_for(chrono::milliseconds(50));
 }
