@@ -122,7 +122,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
         pthread_mutex_unlock(robomutex);
 
         //cout << "Running time motion: " << progTime << endl;
-        this_thread::sleep_for(chrono::milliseconds(SLEEP)); //fixed
+        TSLEEP(15); //fixed
         pthread_mutex_lock(robomutex);
 
     }
