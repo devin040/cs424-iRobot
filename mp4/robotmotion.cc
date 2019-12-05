@@ -292,10 +292,10 @@ void findMax(Create& robot){
 
         robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
         this_thread::sleep_for(chrono::milliseconds(50));
-        // robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
-        // this_thread::sleep_for(chrono::milliseconds(200));
-        // robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-        // this_thread::sleep_for(chrono::milliseconds(50));
+        robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
+        this_thread::sleep_for(chrono::milliseconds(50));
+        robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
+        this_thread::sleep_for(chrono::milliseconds(50));
         speed = TRAVELSPEED;
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         this_thread::sleep_for(chrono::milliseconds(50));

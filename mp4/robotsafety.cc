@@ -9,6 +9,7 @@
 #include <stdlib.h>
 
 #define CLIFF_VAL 100
+#define TRAVELSPEED 100
 
 using namespace iRobot;
 using namespace std;
@@ -61,7 +62,7 @@ void robotSafety(Create& robot, pthread_mutex_t* robomutex, bool& stop){
                 sleep(2);
             }
             //start again
-            //robot.sendDriveCommand(200, Create::DRIVE_STRAIGHT);
+            robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
 
         }
         if ((leftwheelo = robot.leftWheelOvercurrent() )||
