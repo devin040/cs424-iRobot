@@ -88,7 +88,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
                 robot.sendDriveCommand(TRAVELSPEED - 50, Create::DRIVE_STRAIGHT);
                 TSLEEP(200);
                 cout << "WOAH: WAll sig: " << wallsig << endl;
-                findMax(std::ref(robot);
+                findMax(std::ref(robot));
                 cout << "OKAY: Wall sig: " << robot.wallSignal() << endl;
                 robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
             }
