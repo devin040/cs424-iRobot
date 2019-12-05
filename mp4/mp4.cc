@@ -74,7 +74,7 @@ int main() {
     pthread_attr_setschedparam (&attrMotion, &paramMotion);
 
     pthread_t thread_safety;
-   // pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
+    pthread_create(&thread_safety, &attrSafety, RobotSafety, (void *)0);
     cout << "Safety Launced" << endl;
 
     pthread_t thread_motion;
