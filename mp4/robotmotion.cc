@@ -84,6 +84,14 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             prevWall = wallsig;
             wallsig = robot.wallSignal();
 
+            if (wallsig < 15){
+                robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
+                while (true){
+                    cout << "WOAH: WAll sig: " << wallsig << endl;
+                    TSLEEP(1000);
+                }
+            }
+
             if (wallsig < desiredWallSigLow){
                 short radius = -100 + wallsig / (float) desiredWallSigLow * -750;
                 robot.sendDriveCommand(TRAVELSPEED, radius);
@@ -145,7 +153,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
 
 
             cout << "Wall Sig: " << wallsig << endl;
-            TSLEEP(15);
+            TSLEEP(500);
 
         }
 /**
