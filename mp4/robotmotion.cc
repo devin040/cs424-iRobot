@@ -91,7 +91,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
                 findMax(std::ref(robot));
                 cout << "OKAY: Wall sig: " << robot.wallSignal() << endl;
                 robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-                TSLEEP(50);
+                TSLEEP(1000);
             } else {
                 if (wallsig < desiredWallSigLow){
                     short radius = -100 + wallsig / (float) desiredWallSigLow * -750;
