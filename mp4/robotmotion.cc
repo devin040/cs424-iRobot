@@ -79,8 +79,8 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             short prevWall = wallsig;
             
             robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-            short desiredWallSigLow = 40;
-            short desiredWallSigHigh = 60;
+            short desiredWallSigLow = 20; //40
+            short desiredWallSigHigh = 40; //60 work good
             prevWall = wallsig;
             
 
