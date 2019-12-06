@@ -8,7 +8,8 @@
 using namespace iRobot;
 using namespace std;
 
-#define TRAVELSPEED 100
+#define TRAVELSPEED 200
+#define SLOWTRAVELSPEED 100
 #define SLEEP 200 
 #define TSLEEP(x) this_thread::sleep_for(chrono::milliseconds(x))
 void findMax(Create&);
@@ -54,7 +55,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             } else {
                 if (enteredMaze && (wallsig < desiredWallSigLow)){
                     short radius = -100 + wallsig / (float) desiredWallSigLow * -750;
-                    robot.sendDriveCommand(TRAVELSPEED, radius);
+                    robot.sendDriveCommand(SLOWTRAVELSPEED, radius);
                     prevWall = wallsig;
                     cout << "Radius : " << radius << endl;
                     TSLEEP(15);
