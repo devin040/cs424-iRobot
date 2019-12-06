@@ -26,8 +26,9 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
         robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
         this_thread::sleep_for(chrono::milliseconds(20));
         if (robot.bumpLeft () || robot.bumpRight () ) {
-            findMax(robot);            
-        } else {
+            findMax(robot);
+            enteredMaze = true;            
+        } else if (enteredMaze) {
  
             cout << "Continous wall sensor: " << robot.wallSignal() << endl;
             this_thread::sleep_for(chrono::milliseconds(15));
@@ -51,14 +52,14 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
                 robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
                 TSLEEP(1000);
             } else {
-                if (wallsig < desiredWallSigLow){
+                if (enteredMaze && (wallsig < desiredWallSigLow)){
                     short radius = -100 + wallsig / (float) desiredWallSigLow * -750;
                     robot.sendDriveCommand(TRAVELSPEED, radius);
                     prevWall = wallsig;
                     cout << "Radius : " << radius << endl;
                     TSLEEP(15);
                 }
-                if ((wallsig) > desiredWallSigHigh){
+                if (enteredMaze && ((wallsig) > desiredWallSigHigh)){
                     //short radius = 1000 - (wallsig - desiredWallSigHigh)/ (float) desiredWallSigHigh * 750;
                     //short radius = 1000 - ( (wallsig - desiredWallSigHigh) / 100.0 ) * 900;
                     short radius = 300 - ( (wallsig - desiredWallSigHigh) / 50.0 ) * 299;
