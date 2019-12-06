@@ -79,12 +79,12 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             short prevWall = wallsig;
             
             robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-            short desiredWallSigLow = 80;
-            short desiredWallSigHigh = 100;
+            short desiredWallSigLow = 40;
+            short desiredWallSigHigh = 60;
             prevWall = wallsig;
             
 
-            if (wallsig < 30){
+            if (false){
                 robot.sendDriveCommand(25, Create::DRIVE_STRAIGHT);
                 
                 while (true){
@@ -122,7 +122,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
         pthread_mutex_unlock(robomutex);
 
         //cout << "Running time motion: " << progTime << endl;
-        TSLEEP(50); //fixed
+        TSLEEP(15); //fixed
         pthread_mutex_lock(robomutex);
 
     }
