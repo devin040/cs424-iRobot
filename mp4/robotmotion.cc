@@ -104,7 +104,8 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
                     TSLEEP(15);
                 }
                 if ((wallsig) > desiredWallSigHigh){
-                    short radius = 1000 - (wallsig - desiredWallSigHigh)/ (float) desiredWallSigHigh * 750;
+                    //short radius = 1000 - (wallsig - desiredWallSigHigh)/ (float) desiredWallSigHigh * 750;
+                    short radius = 1000 - ( (wallsig - desiredWallSigHigh) / 100.0 ) * 900;
                     robot.sendDriveCommand(TRAVELSPEED, radius);
                     prevWall = wallsig;
                     cout << "Radius : " << radius << endl;
