@@ -8,7 +8,7 @@
 using namespace iRobot;
 using namespace std;
 
-#define TRAVELSPEED 200
+#define TRAVELSPEED 100
 #define SLOWTRAVELSPEED 100
 #define SLEEP 200 
 #define TSLEEP(x) this_thread::sleep_for(chrono::milliseconds(x))
@@ -110,7 +110,7 @@ void findMax(Create& robot){
         robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         
-        while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 2000){
+        while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 1500){
             wallSignal = robot.wallSignal();
             //cout << "Wall signal: " << wallSignal << endl;
             if (wallSignal >= maxWallSignal ){
