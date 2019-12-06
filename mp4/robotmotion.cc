@@ -26,51 +26,7 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
         robot.sendDriveCommand (speed, Create::DRIVE_STRAIGHT);
         this_thread::sleep_for(chrono::milliseconds(20));
         if (robot.bumpLeft () || robot.bumpRight () ) {
-            robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(15));
-
-            enteredMaze = true;
-
-            robot.sendDriveCommand(-200, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(15));
-            robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(50));
-
-            short maxWallSignal = 0;
-            short wallSignal = -1;
-
-            speed = 100;
-            robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
-            std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-            
-            while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() < 2200){
-                wallSignal = robot.wallSignal();
-                //cout << "Wall signal: " << wallSignal << endl;
-                if (wallSignal >= maxWallSignal ){
-                    maxWallSignal = wallSignal;
-
-                }
-                this_thread::sleep_for(chrono::milliseconds(15));
-            }
-
-            cout << "MAX WALL SIGNAL: " << maxWallSignal << endl;
-            robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_CLOCKWISE);
-
-
-            while ((wallSignal = robot.wallSignal()) < (maxWallSignal - 30)){
-
-                std::this_thread::sleep_for(chrono::milliseconds(15));
-            }
-
-            robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(50));
-            robot.sendDriveCommand(speed, Create::DRIVE_INPLACE_COUNTERCLOCKWISE);
-            this_thread::sleep_for(chrono::milliseconds(200));
-            robot.sendDriveCommand(0, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(50));
-            speed = TRAVELSPEED;
-            robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
-            this_thread::sleep_for(chrono::milliseconds(50));
+            findMax(robot);            
         } else {
  
             cout << "Continous wall sensor: " << robot.wallSignal() << endl;
@@ -83,7 +39,6 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
             short desiredWallSigHigh = 40; //60 work good
             prevWall = wallsig;
             
-
             if (false){
                 robot.sendDriveCommand(25, Create::DRIVE_STRAIGHT);
                 
