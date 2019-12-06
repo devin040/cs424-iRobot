@@ -107,10 +107,16 @@ void robotMotion(Create& robot, pthread_mutex_t* robomutex, pthread_mutex_t* cam
                     //short radius = 1000 - (wallsig - desiredWallSigHigh)/ (float) desiredWallSigHigh * 750;
                     //short radius = 1000 - ( (wallsig - desiredWallSigHigh) / 100.0 ) * 900;
                     short radius = 300 - ( (wallsig - desiredWallSigHigh) / 50.0 ) * 299;
+                    if (wallsig > 90){
+                        radius = 5;
+                    }
                     robot.sendDriveCommand(TRAVELSPEED, radius);
                     prevWall = wallsig;
                     cout << "Radius : " << radius << endl;
                     TSLEEP(200);
+                    if (wallsig > 60){
+                        findMax(robot);
+                    }
 
                 }
             }
@@ -175,4 +181,9 @@ void findMax(Create& robot){
         speed = TRAVELSPEED;
         robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
         this_thread::sleep_for(chrono::milliseconds(50));
+        while (robot.wallSignal() > 40 ){
+            robot.sendDriveCommand(TRAVELSPEED, 500);
+            TSLEEP(15);
+        }
+        robot.sendDriveCommand(TRAVELSPEED, Create::DRIVE_STRAIGHT);
 }
